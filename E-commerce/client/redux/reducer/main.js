@@ -5,7 +5,7 @@ import {
 
 
 const initialState = {
-  incognita: [],
+  products: [],
   filter: [],
   backUp: []
 }
@@ -17,12 +17,12 @@ export const reducer = (state = initialState, action) =>{
         case GET_ALL: 
         return {
           ...state,
-          incognita: action.payload,
+          products: action.payload,
           filter: action.payload
         }
 
         case SEARCH_BY_NAME:
-          const nameSearch = state.incognita.filter((e) => {
+          const nameSearch = state.products.filter((e) => {
             return e.name === action.payload;
           });
           if (nameSearch.length !== 0) {
