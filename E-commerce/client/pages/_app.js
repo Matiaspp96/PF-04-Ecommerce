@@ -8,9 +8,14 @@
 
 import React from "react"
 import { wrapper } from "../redux/store"
+import { ChakraProvider } from '@chakra-ui/react'
 
 const MyApp = ({ Component, pageProps}) => (
-  <Component {...pageProps} />
+  <ChakraProvider>
+    <Component {...pageProps} />
+  </ChakraProvider>
 )
 
+
 export default wrapper.withRedux(MyApp);
+
