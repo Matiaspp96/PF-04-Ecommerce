@@ -9,7 +9,6 @@ export const URL_INCOGNITA = ""
 
 const rootReducer = combineReducers({
   //main: main
-
 })
 
 export default rootReducer; 
