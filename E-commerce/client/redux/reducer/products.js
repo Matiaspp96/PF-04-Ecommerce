@@ -3,16 +3,16 @@ import {
   GET_DETAILS,
   GET_PRODUCTS_BY_NAME,
   ORDER_BY_NAME,
-} from './actions/actionstype.js' 
+} from '../actions/actionstype.js' 
 
-initialState = {
+const initialState = {
   products: [],
   filter: [],
   details: {},
   backUp: [],
 }
 
-export default function productReducer() {
+export default function productReducer(state= initialState, action) {
   switch (action.type) {
 
     case GET_PRODUCTS:
