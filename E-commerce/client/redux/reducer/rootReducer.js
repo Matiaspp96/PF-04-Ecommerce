@@ -1,12 +1,12 @@
 import { combineReducers } from "redux"
-import main from "./main"
-
-
-/////////////////////////////// RUTAS AL BACK  /////////////////////////////////
-export const URL_INCOGNITA = ""
+import categoriesReducer from "./categories"
+import productReducer from "./products"
+import shoppingCartReducer from "./shoppingCart"
 
 const rootReducer = combineReducers({
-  //main: main
+  categoriesReducer,
+  productReducer,
+  shoppingCartReducer
 })
 
 export default rootReducer; 
