@@ -1,14 +1,13 @@
 import { combineReducers } from "redux"
-import main from "./main"
+import categoriesReducer from "./categories"
+import productReducer from "./products"
+import shoppingCartReducer from "./shoppingCart"
 
-export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
-
-
-/////////////////////////////// RUTAS AL BACK  /////////////////////////////////
-export const URL_INCOGNITA = ""
 
 const rootReducer = combineReducers({
-  //main: main
+  categoriesReducer,
+  productReducer,
+  shoppingCartReducer
 })
 
 export default rootReducer; 
