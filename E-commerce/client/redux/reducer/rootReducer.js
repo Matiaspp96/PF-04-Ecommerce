@@ -3,7 +3,6 @@ import categoriesReducer from "./categories"
 import productReducer from "./products"
 import shoppingCartReducer from "./shoppingCart"
 
-
 const rootReducer = combineReducers({
   categoriesReducer,
   productReducer,
