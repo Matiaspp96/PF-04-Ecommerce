@@ -1,12 +1,15 @@
 const { Router } = require("express");
 const router = Router();
-const { getItems, getItem, createItem, updateItem, deleteItem } = require("../controllers/user");
-
-router.get("/:id", getItem);
+//const authMiddleware = require("../middleware/auth");
+const { getItems, getItem, updateItem, deleteItem } = require("../controllers/user");
+const {
+    validateId,
+    validateObjectDataUpdate,
+  } = require("../validators/user")
+router.get("/:id", validateId, getItem);
 router.get("/", getItems);
-router.post("/", createItem);
-router.put("/:id", updateItem);
-router.delete("/:id", deleteItem);
+router.put("/:id", validateObjectDataUpdate,updateItem);
+router.delete("/:id", validateId,deleteItem);
 
 
 module.exports = router;

@@ -1,9 +1,11 @@
 
 const { catergoryModel} = require("../models");
+const { matchedData } = require("express-validator");
+const { handleHttpError } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
   try {
-    const data = await catergoryModel.findAllData({});
+    const data = await catergoryModel.find();
     res.send({ data });
   } catch (e) {
     console.log(e)
@@ -14,7 +16,7 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
   try{
     const {id} = req.params;
-    const data = await catergoryModel.findOneData(id);
+    const data = await catergoryModel.findById(id);
     res.send({ data });
   }catch(e){
     handleHttpError(res,"ERROR_GET_ITEM")
@@ -24,7 +26,7 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const body = matchedData(req);
+    const body = req.body
     const data = await catergoryModel.create(body);
     res.status(201);
     res.send({ data });
@@ -37,7 +39,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const {id, ...body} = matchedData(req);
-    const data = await catergoryModel.findOneAndUpdate(
+    const data = await catergoryModel.findByIdAndUpdate(
       id, body
     );
     res.send({ data });
@@ -51,7 +53,7 @@ const deleteItem = async (req, res) => {
   try{
     req = matchedData(req);
     const {id} = req.params;
-    const deleteResponse = await catergoryModel.delete({_id:id});
+    const deleteResponse = await catergoryModel.findByIdAndRemove({_id:id});
     const data = {
       deleted: deleteResponse.matchedCount
     }
