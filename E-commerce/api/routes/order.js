@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const authMiddleware = require("../middleware/auth");
+//const authMiddleware = require("../middleware/auth");
 const {getItems, getItem, createItem, updateItem, deleteItem } = require("../controllers/order");
 
 router.get("/:id", getItem);
