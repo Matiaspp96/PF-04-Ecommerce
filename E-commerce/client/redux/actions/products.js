@@ -1,12 +1,11 @@
 import axios from "axios"; 
 import alert from 'sweetalert2';
 import { GET_PRODUCTS,
-    GET_PRODUCTS,
     GET_PRODUCTS_BY_NAME,
     GET_DETAIL,
 } from "./actionstype";
 
-export const BASEURL = 'http://localhost:3001' || process.env.API_URL;
+export const BASEURL = 'https://fakestoreapi.com';
 
 export const getAllProducts = () => async (dispatch) => {
   try {

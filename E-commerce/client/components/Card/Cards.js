@@ -1,8 +1,11 @@
 
 import { Grid, Center, Box } from '@chakra-ui/react'
 import Card from './Card';
+import { useSelector } from 'react-redux';
 
-export default function Cards({ productos }) {
+export default function Cards() {
+  const productos = useSelector((state)=> state.productReducer.products);
+
   return (
     <Box margin='3em'>
       <Center fontSize='4xl'>Products</Center>
