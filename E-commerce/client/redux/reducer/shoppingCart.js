@@ -1,6 +1,6 @@
 import {
   DELETE_PRODUCT ,
-} from './actions/actionstype.js' 
+} from '../actions/actionstype.js' 
 
 const initialState = {
   backUp: [],

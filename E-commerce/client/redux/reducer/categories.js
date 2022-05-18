@@ -1,7 +1,7 @@
 import {
   GET_CATEGORIES,
   FILTER_BY_CATEGORIES
-} from './actions/actionstype.js' 
+} from '../actions/actionstype.js' 
 
 const initialState = {
   categories: [],
@@ -19,7 +19,7 @@ export default function categoriesReducer(state = initialState, action) {
         let categoriesProducts = 
         action.payload === 'All'
           ? allCategories
-          : allCategories.filter(e => e.categoria.nombre === action.payload) // ajustar el categoria.nombre
+          : allCategories.filter(e => e.category === action.payload) // ajustar el categoria.nombre
       return {
         ...state,
         backUp: categoriesProducts,

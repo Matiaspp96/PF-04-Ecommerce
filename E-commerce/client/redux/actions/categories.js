@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GET_CATEGORIES,
     FILTER_BY_CATEGORIES,
-} from './types';
+} from './actionstype.js';
 const BASEURL = 'http://localhost:3001' || process.env.API_URL;
 
 
