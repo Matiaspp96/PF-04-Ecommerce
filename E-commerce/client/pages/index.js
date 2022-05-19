@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar/Navbar'
 import { useEffect } from 'react'
 import { getAllProducts } from '../redux/actions/products.js'
 import { useDispatch } from 'react-redux';
+import { Grid } from '@chakra-ui/react'
 
 
 
@@ -17,17 +18,9 @@ export default function Home() {
   },[dispatch]);
 
   return (   
-    <div>
-      <Navbar/>
+    <Grid row={2}>
+      <Navbar />
       <Cards />
-    </div>
+    </Grid>
   )
 }
-
-// Home.getInitialProps = async (ctx) => {
-//   const res = await axios.get('https://fakestoreapi.com/products')
-//   const producto = res.data;
-//   return {
-//     msg: producto
-//   }
-// }
