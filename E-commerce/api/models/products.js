@@ -16,17 +16,21 @@ const ProductSchema = new mongoose.Schema(
     },
     stock: {
         type: Number,
+        min:0,
         default:0,
-        required: true,
     },
     image: {
         type:String,        
         required: true,
     },
     category: {
-        type: ObjectId,//Array
-        ref: "categories",
+      type:String,         
+      required: true,
     },
+    sales: {
+      type: Number,
+      default:0,
+  },
   },
   {
     timestamps: true,

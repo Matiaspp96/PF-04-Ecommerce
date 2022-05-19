@@ -21,6 +21,7 @@ export const getAllProducts = () => async (dispatch) => {
 
 export const getProductsByName = (name) => async (dispatch) => {
   try {
+    console.log(name)
     // const responseProduct = await axios.get(`${BASEURL}/products?title=${title}`);
     const response = await axios.get(`${BASEURL}/products/:${name}`);
     return dispatch({
