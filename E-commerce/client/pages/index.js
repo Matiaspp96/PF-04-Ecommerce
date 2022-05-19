@@ -5,8 +5,9 @@ import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
 import { useEffect } from 'react'
 import { getAllProducts } from '../redux/actions/products.js'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@chakra-ui/react'
+import { addItemToCart } from '../redux/actions/cart.js'
 
 
 
@@ -16,6 +17,8 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllProducts())
   },[dispatch]);
+
+  /*----- Cart -----*/
 
   return (   
     <Grid row={2}>
