@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../../redux/actions/cart';
 import { addItemToFav } from '../../redux/actions/favorites';
 import { handleAddToCartOrFav } from '../../utils/handles';
+import Link from 'next/link';
+
 
 export default function Card({ producto }) {
   const dispatch = useDispatch()
@@ -41,6 +43,12 @@ export default function Card({ producto }) {
               <Text fontSize='xl'>{title.substring(0,15)}</Text>
               <Text as='i'>{category}</Text>
               <Text fontWeight='bold'>${price}</Text>
+              <Link href={{
+                pathname:'product/[id]',
+                query: {id:id}
+              }}>
+              <a>See Details</a>
+              </Link>
               <Button onClick={e=>handleAddCartOnClick(e,producto)} color='blackAlpha.800' borderRadius='15px' p='0'><IoCartOutline size='2em'/></Button>
               <Button onClick={e=>handleAddFavOnClick(e,producto)} color='blackAlpha.800' borderRadius='15px' p='0'><IoHeartOutline size='2em'/></Button>
       </GridItem>
