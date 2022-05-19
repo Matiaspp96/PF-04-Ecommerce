@@ -13,7 +13,7 @@ const Navbar = (props) => {
   return (
         <Flex as='header' p='10px' h='auto' gap='2' justifyContent='space-between'
         top='0px'
-        pos='fixed'
+        pos='sticky'
         w='100%'
         bgColor='#1884BE'
         >
@@ -24,9 +24,6 @@ const Navbar = (props) => {
                 <Search isOpen={isOpen}/>
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <MenuLinks isOpen={isOpen} />
-                <ButtonGroup gap='2'>
-                    <Button color='#6D6475'>Log in</Button>
-                </ButtonGroup>
             </NavBarContainer>
             
         </Flex>

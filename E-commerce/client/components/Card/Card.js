@@ -10,7 +10,7 @@ export default function Card({ producto }) {
                 src={image} 
                 alt={title}  
                 boxSize='150px'/>
-              <Text fontSize='xl'>{title}</Text>
+              <Text fontSize='xl'>{title.substring(0,15)}</Text>
               <Text as='i'>{category}</Text>
               <Text fontWeight='bold'>${price}</Text>
       </GridItem>
