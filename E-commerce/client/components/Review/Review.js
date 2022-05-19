@@ -33,7 +33,7 @@ export default function Review(){
 
 return (
     <Flex align='center' justify='center' direction='column' >
-        <Heading mb={4}>What others clients are saying about this...</Heading>
+        <Heading textAlign='center' mb={4}>What others clients are saying about this...</Heading>
         <Center>
             <Avatar size='lg' name={name} src={image} />
         </Center>
