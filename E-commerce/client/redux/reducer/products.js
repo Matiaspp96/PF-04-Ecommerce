@@ -22,8 +22,7 @@ export default function productReducer(state= initialState, action) {
         filter: action.payload,
       }
       
-    case GET_DETAIL:
-      console.log(action.payload) 
+    case GET_DETAIL: 
       return {
         ...state,
         details: action.payload
