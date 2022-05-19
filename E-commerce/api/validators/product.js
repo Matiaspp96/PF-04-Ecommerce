@@ -3,8 +3,8 @@ const { validateResult } = require("../utils/handleValidator");
 const validateObjectDataCreate = [
   check("name").exists().notEmpty(),
   check("description").exists().notEmpty(),
-  check("price").exists().notEmpty().isMongoId(),
-  check("stock").exists().notEmpty().isURL(),
+  check("price").exists().notEmpty(),
+  check("stock").exists().notEmpty(),
   check("image").exists().notEmpty(),
   check("category").exists().notEmpty(),
   (req, res, next) => {
@@ -15,8 +15,8 @@ const validateObjectDataCreate = [
 const validateObjectDataUpdate = [
     check("name").exists().notEmpty(),
     check("description").exists().notEmpty(),
-    check("price").exists().notEmpty().isMongoId(),
-    check("stock").exists().notEmpty().isURL(),
+    check("price").exists().notEmpty(),
+    check("stock").exists().notEmpty(),
     check("image").exists().notEmpty(),
     check("category").exists().notEmpty(),
   (req, res, next) => {
