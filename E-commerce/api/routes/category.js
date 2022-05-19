@@ -33,8 +33,8 @@ router.put(
 );
 router.delete(
   "/:id",
-  // authMiddleware,
-  // authRolMiddleware(["admin"]),
+   authMiddleware,
+   authRolMiddleware(["admin"]),
   validateId,
   deleteItem
 );
