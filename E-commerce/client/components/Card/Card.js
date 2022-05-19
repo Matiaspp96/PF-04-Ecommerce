@@ -16,7 +16,7 @@ export default function Card({ producto }) {
               <Text fontWeight='bold'>${price}</Text>
               <Link href={{
                 pathname: 'product/[id]',
-                query: {product: 'product', id:id}
+                query: {id:id}
               }}>
                 <a>Ver Detalle</a>
               </Link>
