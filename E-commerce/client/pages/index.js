@@ -8,7 +8,7 @@ import Navbar from '../components/Navbar/Navbar'
 export default function Home({msg}) {
   return (   
     <div>
-      <Navbar/>
+      <Navbar />
       <Cards productos={msg}/>
     </div>
   )
