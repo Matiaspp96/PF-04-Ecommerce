@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
 import {
     Box,
     chakra,
@@ -31,9 +30,6 @@ import {
     
     return (
       <Container maxW={'7xl'}>
-        <Link href={'/'}>
-          <a>Back</a>
-        </Link>
           {console.log(product)}
         <SimpleGrid
           columns={{ base: 1, lg: 2 }}
