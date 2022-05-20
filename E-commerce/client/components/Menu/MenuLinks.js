@@ -17,6 +17,7 @@ const MenuLinks = ({isOpen}) => {
             pt={[4, 4, 0, 0]}>
                 <Text><Link href="/">Home</Link></Text>
                 <Text><Link href="/product/categories">Categories</Link></Text>
+                <Text><Link href="/favorites">Favorites</Link></Text>
                 {/* <Link href="/orders"><Button w='fit-content' borderRadius='15px'><GoClippy size='1.5em' />Orders</Button></Link> */}
                 <Link href="/cart"><Button  color='blackAlpha.800' borderRadius='15px' p='0'><IoCartOutline size='2em'/></Button></Link>
                 <Link href="/cart"><Button  color='blackAlpha.800' borderRadius='15px' p='0.5em'>Log in</Button></Link>
