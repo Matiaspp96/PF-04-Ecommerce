@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function Card({ producto }) {
   const dispatch = useDispatch()
-  const { title, price, category, image } = producto;
+  const { title, price, category, image, id } = producto;
 
   const itemsCart = useSelector((state) => state.shoppingCartReducer.itemsCart)
   // const handleAddToCart = (item) => {

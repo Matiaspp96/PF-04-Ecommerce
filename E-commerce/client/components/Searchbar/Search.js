@@ -34,7 +34,6 @@ const Search = () => {
     <Stack spacing={4} width='50%' >
       <InputGroup>
         <Input 
-        onKey = "Enter"
         onKeyDown = {(e) => handleKeyDown(e)}
         borderRadius='15px' 
         bgColor='#FAFAFC'
@@ -52,3 +51,4 @@ const Search = () => {
 }
 
 export default Search
+
