@@ -16,22 +16,22 @@ const {
 router.get(
   "/:id",
   authMiddleware,
-  authRolMiddleware(["admin"]),
+  authRolMiddleware("admin"),
   validateId,
   getItem
 );
-router.get("/", authMiddleware, authRolMiddleware(["admin"]), getItems);
+router.get("/", authMiddleware, authRolMiddleware("admin"), getItems);
 router.put(
   "/:id",
   authMiddleware,
-  authRolMiddleware(["admin"]),
+  authRolMiddleware("admin"),
   validateObjectDataUpdate,
   updateItem
 );
 router.delete(
   "/:id",
   authMiddleware,
-  authRolMiddleware(["admin"]),
+  authRolMiddleware("admin"),
   validateId,
   deleteItem
 );

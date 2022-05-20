@@ -7,7 +7,7 @@ const {getItems, getItem, createItem, updateItem, deleteItem } = require("../con
 router.get("/:id",authMiddleware, getItem);
 router.get("/",authMiddleware, getItems);
 router.post("/",authMiddleware, createItem);
-router.put("/:id",authRolMiddleware(["admin"]),authMiddleware, updateItem);
-router.delete("/:id",authRolMiddleware(["admin"]),authMiddleware, deleteItem);
+router.put("/:id",authRolMiddleware("admin"),authMiddleware, updateItem);
+router.delete("/:id",authRolMiddleware("admin"),authMiddleware, deleteItem);
 
 module.exports = router;

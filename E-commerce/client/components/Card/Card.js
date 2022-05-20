@@ -44,7 +44,7 @@ export default function Card({ producto }) {
               <Text as='i'>{category}</Text>
               <Text fontWeight='bold'>${price}</Text>
               <Link href={{
-                pathname:'product/[id]',
+                pathname: 'product/[id]',
                 query: {id:id}
               }}>
               <a>See Details</a>
