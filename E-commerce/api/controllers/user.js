@@ -1,6 +1,5 @@
 
 const { userModel} = require("../models");
-const { matchedData } = require("express-validator");
 const { handleHttpError } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
@@ -26,7 +25,7 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const body = req.body
+    const {body} = req.body
     const data = await userModel.create(body);
     res.status(201);
     res.send({ data });
@@ -38,7 +37,8 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
-    const {id, ...body} = matchedData(req);
+    const {id} = req.params;
+    const {body} = req.body;
     const data = await userModel.findByIdAndUpdate(
       id, body
     );
@@ -51,7 +51,6 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
   try{
-    req = matchedData(req);
     const {id} = req.params;
     const deleteResponse = await userModel.findByIdAndRemove({_id:id});
     const data = {

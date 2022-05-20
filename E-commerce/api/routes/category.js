@@ -20,21 +20,21 @@ router.get("/", getItems);
 router.post(
   "/",
   authMiddleware,
-  authRolMiddleware(["admin"]),
+  authRolMiddleware("admin"),
   validateObjectDataCreate,
   createItem
 );
 router.put(
   "/:id",
   authMiddleware,
-  authRolMiddleware(["admin"]),
+  authRolMiddleware("admin"),
   validateObjectDataUpdate,
   updateItem
 );
 router.delete(
   "/:id",
-   authMiddleware,
-   authRolMiddleware(["admin"]),
+  authMiddleware,
+  authRolMiddleware("admin"),
   validateId,
   deleteItem
 );

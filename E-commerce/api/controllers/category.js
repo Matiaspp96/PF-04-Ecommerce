@@ -1,7 +1,7 @@
 
 const { catergoryModel} = require("../models");
-const { matchedData } = require("express-validator");
-const { handleHttpError } = require("../utils/handleError");
+const { handleHttpError,
+  handleErrorResponse } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
   try {
@@ -27,6 +27,11 @@ const getItem = async (req, res) => {
 const createItem = async (req, res) => {
   try {
     const body = req.body
+    const checkIsExist = await catergoryModel.findOne({ name: body.name });
+    if (checkIsExist) {
+      handleErrorResponse(res, "CATEGORY_EXISTS", 401);
+      return;
+    }
     const data = await catergoryModel.create(body);
     res.status(201);
     res.send({ data });
@@ -38,7 +43,8 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
-    const {id, ...body} = matchedData(req);
+    const {id} = req.params;
+    const body = req.body;
     const data = await catergoryModel.findByIdAndUpdate(
       id, body
     );
@@ -51,7 +57,6 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
   try{
-    req = matchedData(req);
     const {id} = req.params;
     const deleteResponse = await catergoryModel.findByIdAndRemove({_id:id});
     const data = {
