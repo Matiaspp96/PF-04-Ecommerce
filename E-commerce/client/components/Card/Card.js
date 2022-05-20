@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function Card({ producto }) {
   const dispatch = useDispatch()
-  const { title, price, category, image } = producto;
+  const { title, price, category, image, id } = producto;
 
   const itemsCart = useSelector((state) => state.shoppingCartReducer.itemsCart)
   // const handleAddToCart = (item) => {
@@ -44,7 +44,7 @@ export default function Card({ producto }) {
               <Text as='i'>{category}</Text>
               <Text fontWeight='bold'>${price}</Text>
               <Link href={{
-                pathname:'product/[id]',
+                pathname: 'product/[id]',
                 query: {id:id}
               }}>
               <a>See Details</a>
