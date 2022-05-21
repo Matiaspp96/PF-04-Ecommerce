@@ -1,23 +1,25 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types;
 
 const ReviewSchema = new mongoose.Schema(
   {
-    product: {
-      ref: "product",
-      type: ObjectId,
-    },
     user: {
       ref: "user",
-      type: ObjectId,
+      type: mongoose.Types.ObjectId,
     },
-    punctuation: Number,
-    opinion: String,
-    date: String,
-    modified: String,
+    punctuation: { type: Number, required: true },
+    opinion: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+    },
+    modified: {
+      type: String,
+    },
   },
   {
-    timestamps: false,
+    timestamps: true,
     versionKey: false,
   }
 );
