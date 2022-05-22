@@ -1,19 +1,22 @@
-import { Grid, Center, Box } from '@chakra-ui/react'
+import { SimpleGrid, Center, Box, Heading } from '@chakra-ui/react'
 import Card from './Card';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
-export default function Cards() {
+export default function ProductCart() {
   const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
 
   return (
-    <Box margin='3em'>
-      <Center fontSize='4xl'>Products</Center>
-      <Grid templateColumns='repeat(5, 1fr)' gap={8} marginTop='2rem'>
-        {productsCart.map(ps=>{ return (
-          <Card key={ps.id} producto={ps}></Card>
-        )})}
-      </Grid>
+    <Box margin={{base: '.5em', md:'1em', lg:'3em'}}>
+      <Box>
+        <SimpleGrid
+          columns={{ base: 2, sm: 3, md: 4, lg:5 }}
+          gap={'5'} 
+          marginTop='2rem'>
+            {productsCart.map(ps=>{ return (
+              <Card key={ps.id} producto={ps.product} quantity={ps.quantity} ></Card>
+            )})}
+        </SimpleGrid>
+      </Box>
     </Box>
     )
   }

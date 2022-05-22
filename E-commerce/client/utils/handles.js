@@ -7,7 +7,8 @@ export const handleAddToCartOrFav = (e, item) => {
         price: item.price,
         description: item.description ,
         category: item.category,
-        image: item.image
+        image: item.image,
+        rating: item.rating
     };
     return product
 }
