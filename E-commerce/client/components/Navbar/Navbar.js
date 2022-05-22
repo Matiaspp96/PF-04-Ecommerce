@@ -1,24 +1,32 @@
-import { Box, Button, ButtonGroup, Container, Flex, Heading, Spacer, Text } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Container, Flex, Heading, Spacer, Stack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
+import MenuToggle from '../Menu/MenuToggle'
 import Search from '../Searchbar/Search'
+import NavBarContainer from './NavBarContainer'
+import MenuLinks from '../Menu/MenuLinks'
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen);
+
   return (
-    <Flex m='10px' alignItems='center' gap='2' justifyContent='space-between'>
-        <Box p='2'>
-            <Heading size='md'>
-                <Link href='/'>
-                    E-Commerce
-                </Link> 
-            </Heading>
-        </Box>
-        <Search />
-        <ButtonGroup gap='2'>
-            <Button color='rgba(21, 76, 148, 1)'>Sign Up</Button>
-            <Button colorScheme='teal'>Log in</Button>
-        </ButtonGroup>
-    </Flex>
+        <Flex as='header' p='10px' h='auto' gap='2' justifyContent='space-between'
+        top='0px'
+        pos='sticky'
+        w='100%'
+        bgColor='#1884BE'
+        >
+            <NavBarContainer {...props}>
+                    <Link href='/'> 
+                        E-Commerce
+                    </Link>
+                <Search isOpen={isOpen}/>
+                <MenuToggle toggle={toggle} isOpen={isOpen} />
+                <MenuLinks isOpen={isOpen} />
+            </NavBarContainer>
+            
+        </Flex>
   )
 }
 

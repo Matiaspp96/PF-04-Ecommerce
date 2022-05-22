@@ -1,6 +1,8 @@
-const { productModel } = require("../models");
-const { matchedData } = require("express-validator");
-const { handleHttpError } = require("../utils/handleError");
+
+
+const { productModel} = require("../models");
+const { handleHttpError,
+  handleErrorResponse } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
   try {
@@ -24,7 +26,12 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const body = req.body;
+    const {body} = req.body
+    const checkIsExist = await catergoryModel.findOne({ name: body.name });
+    if (checkIsExist) {
+      handleErrorResponse(res, "PRODUCT_EXISTS", 401);
+      return;
+    }
     const data = await productModel.create(body);
     res.status(201);
     res.send({ data });
@@ -36,8 +43,11 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
-    const { id, ...body } = matchedData(req);
-    const data = await productModel.findByIdAndUpdate(id, body);
+    const {id} = req.params;
+    const {body} = req.body;
+    const data = await productModel.findByIdAndUpdate(
+      id, body
+    );
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_UPDATE_ITEMS");
@@ -45,10 +55,9 @@ const updateItem = async (req, res) => {
 };
 
 const deleteItem = async (req, res) => {
-  try {
-    req = matchedData(req);
-    const { id } = req.params;
-    const deleteResponse = await productModel.findByIdAndRemove({ _id: id });
+  try{
+    const {id} = req.params;
+    const deleteResponse = await productModel.findByIdAndRemove({_id:id});
     const data = {
       deleted: deleteResponse.matchedCount,
     };

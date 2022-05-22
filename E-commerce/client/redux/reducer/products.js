@@ -1,6 +1,6 @@
 import {
   GET_PRODUCTS,
-  GET_DETAILS,
+  GET_DETAIL,
   GET_PRODUCTS_BY_NAME,
   ORDER_BY_NAME,
 } from '../actions/actionstype.js' 
@@ -22,7 +22,7 @@ export default function productReducer(state= initialState, action) {
         filter: action.payload,
       }
       
-    case GET_DETAILS: 
+    case GET_DETAIL: 
       return {
         ...state,
         details: action.payload

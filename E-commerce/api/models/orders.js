@@ -11,6 +11,14 @@ const OrderSchema = new mongoose.Schema(
           type: Number,
           default: 1,
         },
+        paymentmethod: {
+          type: String,
+        },
+        status: {
+          type: ["created", "inprogress","canceled","complete"],
+       default: "created",
+        },
+        
       },
     ],
   },
