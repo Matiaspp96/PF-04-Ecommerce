@@ -13,7 +13,6 @@ export default function Card({ producto, quantity }) {
   const [addCart, setAddCart] = useBoolean()
   
   const { title, price, category, image, id, rating } = producto;
-  // console.log(producto)
 
   const itemsCart = useSelector((state) => state.shoppingCartReducer.itemsCart)
   // const handleAddToCart = (item) => {
