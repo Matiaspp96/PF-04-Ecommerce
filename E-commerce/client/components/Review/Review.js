@@ -1,7 +1,7 @@
 import reviews from './ReviewMock.js'
 import { useState, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, } from '@chakra-ui/react'
+import { Box, Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, } from '@chakra-ui/react'
 
 export default function Review(){
     const [index,setIndex] = useState(0);
@@ -47,21 +47,32 @@ export default function Review(){
 
 return (
   <>
-    <Flex align='center' justify='center' direction='column' >
-        <Heading textAlign='center' mb={4}>What others clients are saying about this...</Heading>
+    <Flex alignItems={'center'} justifyContent={'center'}>
+      <Stack>
         <Center>
-            <Avatar size='lg' name={name} src={image} />
+          <Avatar size='lg' name={name} src={image} />
         </Center>
-        <Text>{name}</Text>
-        <Container maxW='md' h={'28'}>
-            <Text padding='2' align='justify'>{text}</Text>
-        </Container>
-        <Stack direction='row' spacing={4} padding='2'>
-            <Button onClick={prevReview} leftIcon={<FaChevronLeft/>} colorScheme='blue' variant='solid'></Button>
-            <Button onClick={nextReview} rightIcon={<FaChevronRight />} colorScheme='blue' variant='solid'></Button>
-        </Stack>
-        <Button onClick={onOpen} colorScheme='blue' variant='outline'>Leave a Review</Button>
+        <Text textAlign={'center'} fontWeight={'bold'}>{name}</Text>  
+      </Stack>
+      <Flex maxW='md' h={'64'} ml={'1rem'}>
+          <Text  padding='2' align='justify' fontSize={'larger'}>{text}</Text>
+      </Flex>
     </Flex>
+    <Center>
+        <Flex padding='2'>
+          <Button
+            me={'1em'} 
+            onClick={prevReview} 
+            leftIcon={<FaChevronLeft/>} 
+            colorScheme='blue' 
+            variant='solid'></Button>
+          <Button me={'1em'} onClick={nextReview} rightIcon={<FaChevronRight />} colorScheme='blue' variant='solid'></Button>
+          <Button onClick={onOpen} colorScheme='blue' variant='outline'>Leave a Review</Button>
+        </Flex>
+        
+    </Center>
+    
+    
     <Modal
     isOpen={isOpen}
     onClose={onClose}
