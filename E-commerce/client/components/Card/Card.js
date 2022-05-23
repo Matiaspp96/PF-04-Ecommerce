@@ -18,6 +18,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
     dispatch(getItemsCart())
   }, [dispatch])
 
+  
   const { title, price, category, image, id, rating } = producto;
 
   // const handleAddToCart = (item) => {
