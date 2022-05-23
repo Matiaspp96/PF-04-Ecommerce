@@ -8,14 +8,12 @@ import ProductCart from '../components/Card/ProductsCart';
 
 
 export default function Cart() {
-  const totalPrice = useSelector(state => state.shoppingCartReducer.totalPrice)
+  const itemsCart = useSelector(state => state.shoppingCartReducer.itemsCart)
+
   return (   
     <Grid row={2}>
       <Navbar />
       <ProductCart />
-      <Box>
-        <Center>${!totalPrice ? 0 : totalPrice}</Center>
-      </Box>
     </Grid>
   )
 }

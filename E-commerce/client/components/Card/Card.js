@@ -1,20 +1,26 @@
 import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center } from '@chakra-ui/react'
-import { IoCartOutline, IoHeartOutline, IoStarSharp } from 'react-icons/io5'
+import { IoCartOutline, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart } from '../../redux/actions/cart';
-import { addItemToFav } from '../../redux/actions/favorites';
-import { handleAddToCartOrFav } from '../../utils/handles';
+import { addItemToCart, deleteItemOfCart, getItemsCart } from '../../redux/actions/cart';
+import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
+import { handleAddToCartOrFav, handleRemoveFromCart } from '../../utils/handles';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 
-export default function Card({ producto }) {
+export default function Card({ producto, quantity, cart, setCart }) {
   const dispatch = useDispatch()
   const [addFavorite, setAddFavorite] = useBoolean()
   const [addCart, setAddCart] = useBoolean()
+  const [removeCart, setRemoveCart] = useBoolean()
+
+  useEffect(()=>{
+    dispatch(getItemsCart())
+  }, [dispatch])
+
   
   const { title, price, category, image, id, rating } = producto;
 
-  const itemsCart = useSelector((state) => state.shoppingCartReducer.itemsCart)
   // const handleAddToCart = (item) => {
   //   item.preventDefault();
   //   const product = {
@@ -35,6 +41,12 @@ export default function Card({ producto }) {
   function handleAddFavOnClick(e, producto){
     dispatch(addItemToFav(handleAddToCartOrFav(e, producto)))
     setAddFavorite.toggle()
+  }
+
+  function handleRemoveOnClick(e, producto){
+    dispatch(deleteItemOfCart(handleRemoveFromCart(e, producto)))
+    setCart(getItemsCart())
+    setRemoveCart.toggle()
   }
 
   return (
@@ -75,12 +87,13 @@ export default function Card({ producto }) {
               
           <Flex justifyContent={'space-between'}>
             <Text color={'#1884BE'}>${price}</Text>
+            <Text color={'#1884BE'}>{quantity}</Text>
             <Flex alignItems={'center'}>
               <Text
                 fontWeight={300}
                 fontSize={'smaller'}
                 me={'.4em'}>
-                  {rating.rate}
+                  {rating ? rating.rate : null}
               </Text>
               <IoStarSharp size='1em' />
             </Flex>
@@ -99,6 +112,14 @@ export default function Card({ producto }) {
               icon={<IoHeartOutline size='2em'/>}
               color={addFavorite ? '#1884BE' : 'grey'}
             />
+            {cart ? 
+              <IconButton 
+                onClick={e=>handleRemoveOnClick(e,producto)}
+                backgroundColor='transparent'
+                icon={<IoTrashOutline size='2em'/>}
+                color={removeCart ? '#1884BE' : 'grey'}
+              />
+              : null}
           </Flex>
         </Stack>      
       </Stack>
