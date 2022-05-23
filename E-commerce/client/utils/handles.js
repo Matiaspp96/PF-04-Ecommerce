@@ -12,3 +12,13 @@ export const handleAddToCartOrFav = (e, item) => {
     };
     return product
 }
+
+export const handleRemoveFromCart = (e, item) => {
+    e.preventDefault();
+    const product = {
+        id: item.id,
+        title: item.title,
+        price: item.price,
+    };
+    return product
+}
