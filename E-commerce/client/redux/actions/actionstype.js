@@ -21,6 +21,7 @@ export const GET_ALL_FAV = "GET_ALL_FAV"
 export const ADD_ITEM = "ADD_ITEM"
 export const DELETE_ITEM = "DELETE_ITEM"
 export const GET_ALL_CART = "GET_ALL_CART"
+export const GET_TOTAL_PRICE = "GET_TOTAL_PRICE"
 
 
 
