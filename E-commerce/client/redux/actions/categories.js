@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GET_CATEGORIES,
     FILTER_BY_CATEGORIES,
 } from './actionstype.js';
-const BASEURL = 'http://localhost:3001' || process.env.API_URL;
+const BASEURL = "https://fakestoreapi.com";
 
 
 export const getAllCategories = () => async (dispatch) => {
