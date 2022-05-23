@@ -1,7 +1,9 @@
 import axios from "axios"; 
 import alert from 'sweetalert2';
 import { ADD_ITEM,
-    DELETE_ITEM
+    DELETE_ITEM,
+    GET_ALL_CART,
+    GET_TOTAL_PRICE
 } from "./actionstype";
 
 export const BASEURL = 'https://fakestoreapi.com';
@@ -32,6 +34,16 @@ export const getItemsCart = () => {
   try {
     return {
       type: GET_ALL_CART,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+export const getTotalPrice = () => {
+  try {
+    return {
+      type: GET_TOTAL_PRICE,
     }
   } catch (err) {
     console.log(err)

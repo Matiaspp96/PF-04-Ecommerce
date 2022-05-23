@@ -16,7 +16,7 @@ const Navbar = (props) => {
         pos='sticky'
         w='100%'
         bgColor='#1884BE'
-        zIndex='10'
+        zIndex='2'
         >
             <NavBarContainer {...props}>
                     <Link href='/'> 

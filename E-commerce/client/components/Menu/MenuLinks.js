@@ -50,8 +50,8 @@ const MenuLinks = ({isOpen}) => {
 
                 </Select>
                 {/* <Link href="/orders"><Button w='fit-content' borderRadius='15px'><GoClippy size='1.5em' />Orders</Button></Link> */}
-                <Link href="/cart"><Button  color='blackAlpha.800' borderRadius='15px' p='0'><IoCartOutline size='2em'/></Button></Link>
-                <Link href="/cart"><Button  color='blackAlpha.800' borderRadius='15px' p='0.5em'>Log in</Button></Link>
+                <Link href="/cart"><Button color='blackAlpha.800' borderRadius='15px' p='0'><span>{getTotalItems()}</span><IoCartOutline size='2em'/></Button></Link>
+                <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='0.5em'>Log in</Button></Link>
             </Stack>
         </Box>
     )
