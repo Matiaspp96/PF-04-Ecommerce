@@ -1,43 +1,60 @@
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch} from 'react-redux';
 import { useEffect } from 'react'
-import { getDetail } from '../../redux/actions/products.js'
-import { Box,NumberInputField, NumberInput, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Tag, IconButton, Container, Stack, Flex, Text, Image, VStack, Button, Heading, SimpleGrid, Center, useBoolean, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { getDetail, getAllProducts } from '../../redux/actions/products.js'
+import { Divider, NumberInputField, NumberInput, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Tag, IconButton, Container, Stack, Flex, Text, Image, Button, Heading, SimpleGrid, Progress, Center, useBoolean, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { IoHeartSharp, IoStarSharp } from 'react-icons/io5'
 import { addItemToCart } from '../../redux/actions/cart.js';
-import { addItemToFav } from '../../redux/actions/favorites.js';
-import Review from '../Review/Review.js'
+import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites.js';
+import { handleAddToCartOrFav } from '../../utils/handles.js'
+import Review from '../Review/Review.js';
+import CardMinimal from '../Card/CardMinimal.js';
 
   export default function Detail() {
-    const router = useRouter()
-    const { id } = router.query
+    const router = useRouter();
+    const { id } = router.query;
     const dispatch = useDispatch();
-    const [flag, setFlag] = useBoolean()
+    const [flag, setFlag] = useBoolean();
 
     useEffect(() => {
       dispatch(getDetail(id))
     },[dispatch,id]);
 
     const product = useSelector((state)=> state.productReducer.details);
-    
+    const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{return ps.category === product.category}).slice(0,5)
+
+    useEffect(() => {
+      if (!sugestions.length){
+        dispatch(getAllProducts())
+      }
+    },[dispatch]);
+
     function buyItem(){
       dispatch(addItemToCart(product))
     }
-    function loveItem(){
-      dispatch(addItemToFav(product))
-      setFlag.toggle()
+    
+    const handleClickFav = ()=>{
+      if(!flag){
+        dispatch(addItemToFav(product))
+        setFlag.on()
+      } else {
+        console.log(Number(id))
+        dispatch(deleteItemOfFav(Number(id)))
+        setFlag.off()
+      }
     }
 
     return (
-      <Container maxW={'7xl'}>
+      <Container maxW={'7xl'} 
+      >
         {product.title
         ?
         <> 
           <SimpleGrid 
-            boxShadow='2xl'
+            
             me={{base:'1rem', md:'3rem', lg:'5rem'}}
             ml={{base:'1rem', md:'3rem', lg:'5rem'}}
-            columns={{ base: 1, lg: 2 }}
+            columns={{ base: 1, md: 2 }}
             spacing={{ base: 8, md: 10 }}
             py={{ base: 10, md: 10}}
             p={{base:3, md:5, lg:7}}>
@@ -87,7 +104,7 @@ import Review from '../Review/Review.js'
               </Flex>
               <Flex alignItems={'center'}>
                 <IconButton 
-                  onClick={loveItem} 
+                  onClick={handleClickFav} 
                   bg={'transparent'}
                   icon={<IoHeartSharp size='2em' color={flag ? '#1884BE' : 'grey'}/>}/>
                 <Text fontStyle={'italic'}>Add to Favorites</Text>
@@ -108,6 +125,7 @@ import Review from '../Review/Review.js'
                   </NumberInput>
                 </Stack>
                 <Button
+                  fontSize={{base: '.8rem', lg:'1rem'}}
                   onClick={buyItem}
                   rounded={'none'}
                   w={'40%'}
@@ -123,26 +141,28 @@ import Review from '../Review/Review.js'
                 </Button>
               </Flex>
             </Stack>
-          
           </SimpleGrid>
+
+          <Divider />
+          
           <SimpleGrid
             me={{base:'1rem', md:'3rem', lg:'5rem'}}
             ml={{base:'1rem', md:'3rem', lg:'5rem'}}
             columns={{ base: 1, lg: 2 }}
             spacing={{ base: 8, md: 10 }}
-            py={{ base: 10, md: 10}}
             p={{base:3, md:5, lg:7}}
+            
             height={'100px'}>
 
-              <Container boxShadow='2xl'>
+              <Container>
               <Tabs variant='enclosed'>
-                <TabList >
+                <TabList  >
                   <Tab>Description</Tab>
                   <Tab>Reviews</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel >
-                    <Flex h={'64'} alignItems={'center'}>
+                    <Flex  h={{base: 'fit-content'}} alignItems={'center'} overflow={'auto'}>
                     <Text
                       padding='2' fontSize={'larger'}>
                       {product.description}
@@ -155,16 +175,24 @@ import Review from '../Review/Review.js'
                 </TabPanels>
               </Tabs>
               </Container>
-              
-
-            
-
+              <Container
+              overflow={{base:'visible', lg:'auto' }}>
+                <Center fontSize='3xl' fontWeight={'bold'}>You may also like</Center>
+                {sugestions.map(ps=>{ return (
+                          <CardMinimal key={ps.id} producto={ps} />
+                        )})}
+              </Container>
           </SimpleGrid>
         </>
         :
-        <Center>
-          <Text>Loading...</Text>
-        </Center>}
+        <Center h={'100vh'}>
+          <Stack>
+            <Heading>Just a moment</Heading>
+            <Progress size='md' isIndeterminate />
+          </Stack>
+        </Center>
+        
+        }
       </Container>
     );
   }

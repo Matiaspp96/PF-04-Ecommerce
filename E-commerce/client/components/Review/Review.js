@@ -1,13 +1,16 @@
 import reviews from './ReviewMock.js'
 import { useState, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Box, Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, } from '@chakra-ui/react'
+import { IoStarSharp } from 'react-icons/io5'
+import { Box, FormHelperText, Radio, RadioGroup, Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, SimpleGrid, Grid, GridItem  } from '@chakra-ui/react'
 
 export default function Review(){
     const [index,setIndex] = useState(0);
-    const {name,image,text} = reviews[index];
+    const {name,image, opinion, punctuation} = reviews[index];
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const reviewRef = useRef()
+    const [points,setPoints] = useState('1')
+    const [msg,setMsg] = useState('')
+    const [charactersUse,setCharactersUse] = useState(0);
   
 
   const checkNumber = (num)=>{
@@ -34,75 +37,128 @@ export default function Review(){
     })
   }
 
-  const addReview = ()=> {
+  const handleMsgChange = (e)=>{
+    let input = e.target.value;
+    setCharactersUse(input.length)
+    setMsg(input)
+  }
+
+  
+  const addReview = (e)=> {
     reviews.push({
-      id: 12,
       name: "Guest",
-      image: 'image',
-      text: reviewRef.current.value
+      opinion: msg,
+      punctuation: points
+
     })
-    reviewRef.current = '';
+    setPoints('1')
+    setMsg('')
     onClose()
   }
 
 return (
   <>
-    <Flex alignItems={'center'} justifyContent={'center'}>
-      <Stack>
-        <Center>
-          <Avatar size='lg' name={name} src={image} />
-        </Center>
-        <Text textAlign={'center'} fontWeight={'bold'}>{name}</Text>  
-      </Stack>
-      <Flex maxW='md' h={'64'} ml={'1rem'}>
-          <Text  padding='2' align='justify' fontSize={'larger'}>{text}</Text>
-      </Flex>
-    </Flex>
+    <Grid 
+      alignItems={'center'} 
+      templateColumns={'repeat(3,1fr)'}
+      >
+        <GridItem colSpan={{base:'3', xl:'1'}}>
+          <Stack>
+              <Center>
+                <Avatar size='lg' name={name} src={image} />
+              </Center>
+              <Text textAlign={'center'} fontWeight={'bold'}>{name}</Text>
+              <Flex alignItems={'center'} justifyContent='center'>
+                <Text
+                  fontWeight={300}
+                  fontSize={'smaller'}
+                  me={'.4em'}>
+                    {punctuation}
+                </Text>
+                <IoStarSharp size='1em' />
+            </Flex> 
+            </Stack>
+        </GridItem>
+
+        <GridItem colSpan={{base:'3', xl:'2'}}>
+          <Flex maxW='md' h={'fit-content'} ml={{base:'0', xl:'1rem'}} alignItems={'center'}>
+            <Text  padding='2' align='justify' fontSize={'larger'}>{opinion.substring(0,200)}</Text>
+          </Flex>
+        </GridItem>
+    </Grid>
+
     <Center>
-        <Flex padding='2'>
+      <Flex padding='2' direction={{base:'column', xl:'row'}}>
+        <Flex justifyContent={'space-between'} paddingBottom={{base:'2'}}>
           <Button
             me={'1em'} 
             onClick={prevReview} 
             leftIcon={<FaChevronLeft/>} 
             colorScheme='blue' 
             variant='solid'></Button>
-          <Button me={'1em'} onClick={nextReview} rightIcon={<FaChevronRight />} colorScheme='blue' variant='solid'></Button>
-          <Button onClick={onOpen} colorScheme='blue' variant='outline'>Leave a Review</Button>
+          <Button 
+            me={{base:'0', xl:'1em'}}
+            onClick={nextReview}
+            rightIcon={<FaChevronRight />}
+            colorScheme='blue'
+            variant='solid'>  
+          </Button>
         </Flex>
-        
+        <Button
+          onClick={onOpen}
+          colorScheme='blue'
+          variant='outline'>
+            Leave a Review
+        </Button>
+      </Flex>
     </Center>
     
-    
     <Modal
-    isOpen={isOpen}
-    onClose={onClose}
-  >
-    <ModalOverlay />
-    <ModalContent>
-      <ModalHeader>
-        <Center>
-            <Avatar size='lg' name={'Weolcome guest'} src={'Welcome Guest'} />
-        </Center>
-        <Center>
-          <Text>Welcome Guest</Text>
-        </Center>
+      isOpen={isOpen}
+      onClose={onClose}>
+      <ModalOverlay/>
+      <ModalContent>
+        <ModalHeader>
+          <Center>
+              <Avatar size='lg' name={'Weolcome guest'} src={'Welcome Guest'} />
+          </Center>
+          <Center>
+            <Text>Welcome Guest</Text>
+          </Center>
         </ModalHeader>
-      <ModalCloseButton />
-      <ModalBody pb={6}>
-        <FormControl>
-          <FormLabel>Leave your review:</FormLabel>
-          <Textarea ref={reviewRef} placeholder='This was awesome! It meet all my needs. I fully recomended' />
-        </FormControl>
-      </ModalBody>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <FormControl>
+            <FormLabel>How much do you like this product?</FormLabel>
+            <RadioGroup onChange={setPoints} value={points} defaultValue='1'>
+              <Flex mb={'0.5rem'}>
+                <Radio value='1'>1 </Radio>
+                <Radio value='2'>2 </Radio>
+                <Radio value='3'>3 </Radio>
+                <Radio value='4'>4 </Radio>
+                <Radio value='5'>5 </Radio>
+              </Flex>
+            </RadioGroup>
 
-      <ModalFooter>
-        <Button onClick={addReview} colorScheme='blue' mr={3}>
-          Save
-        </Button>
-        <Button onClick={onClose}>Cancel</Button>
-      </ModalFooter>
-    </ModalContent>
-  </Modal>
+            <FormLabel>Leave your review:</FormLabel>
+            <Textarea 
+              name='opinion'
+              value= {msg}
+              onChange={handleMsgChange} 
+              placeholder='This was awesome! It meet all my needs. I fully recomend it'
+              maxLength={'250'} />
+              <FormHelperText>{charactersUse}/250</FormHelperText>
+          </FormControl>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button onClick={addReview} colorScheme='blue' mr={3}>
+            Save
+          </Button>
+          <Button onClick={onClose}>Cancel</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   </>
 )
 }
