@@ -19,7 +19,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   }, [dispatch])
 
   
-  const { title, price, category, image, id, rating } = producto;
+  const { name, price, category, image, _id, rating } = producto;
 
   // const handleAddToCart = (item) => {
   //   item.preventDefault();
@@ -67,7 +67,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
         <Center>
           <Image 
             src={image} 
-            alt={title}  
+            alt={name}  
             boxSize={{base:'80px', md:'100px', lg:'150px'}}
             alignItems='center'/>
         </Center>
@@ -76,13 +76,13 @@ export default function Card({ producto, quantity, cart, setCart }) {
           <Link 
             href={{
               pathname: 'product/[id]',
-              query: {id:id}
+              query: {id:_id}
               }}>
               <a>
                 <Text 
                   fontSize='xl' 
                   fontWeight='bold'>
-                    {title.substring(0,10)}
+                    {name}
                 </Text>
               </a>
           </Link>
