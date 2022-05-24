@@ -19,6 +19,11 @@ const ProductSchema = new mongoose.Schema(
         min:0,
         default:0,
     },
+    score: {
+      type: Number,
+      min:0,
+      default:0,
+  },
     image: {
         type:String,        
         required: true,
