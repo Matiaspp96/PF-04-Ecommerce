@@ -41,7 +41,6 @@ const Search = () => {
         type='text' 
         placeholder='Product...' 
         onChange = {(e) => handleInputProducts(e)}
-        on
         value = {name}
         />
         <Button onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/></Button>

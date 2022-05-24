@@ -17,6 +17,10 @@ const MenuLinks = ({isOpen}) => {
     dispatch(filterByCategory(e.target.value));
     setCategories(e.target.value);
   }
+  const numberItems = useSelector(state => state.shoppingCartReducer.itemsCart)
+  const getTotalItems = () => {
+    return numberItems?.reduce((acc,item) => acc + item.quantity, 0) 
+  }
 
     return (
         <Box
