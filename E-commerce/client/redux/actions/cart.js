@@ -3,7 +3,8 @@ import alert from 'sweetalert2';
 import { ADD_ITEM,
     DELETE_ITEM,
     GET_ALL_CART,
-    GET_TOTAL_PRICE
+    GET_TOTAL_PRICE,
+    GET_TOTAL_ITEMS
 } from "./actionstype";
 
 export const BASEURL = 'https://fakestoreapi.com';
@@ -44,6 +45,16 @@ export const getTotalPrice = () => {
   try {
     return {
       type: GET_TOTAL_PRICE,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+export const getTotalItems = () => {
+  try {
+    return {
+      type: GET_TOTAL_ITEMS,
     }
   } catch (err) {
     console.log(err)
