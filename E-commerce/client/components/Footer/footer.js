@@ -8,10 +8,12 @@ import {
   Input,
   Stack,
   Text,
+  Img,
 } from '@chakra-ui/react'
 
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
-// import { Logo } from './Logo'
+import Logo  from './'
+
 
 const Footer = () => {
   return (
@@ -24,7 +26,7 @@ const Footer = () => {
       py={{ base: '12', md: '16' }}
     >
       <Stack spacing={{ base: '6', md: '8' }} align="start">
-        {/* <Logo /> */}
+        <Img src= {Logo} alt = 'Logo Ecommerce'/>
         <Text color="muted">E-Commerce</Text>
       </Stack>
       <Stack
