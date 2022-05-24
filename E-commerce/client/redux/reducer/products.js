@@ -16,9 +16,10 @@ export default function productReducer(state= initialState, action) {
   switch (action.type) {
 
     case GET_PRODUCTS:
-      return {
+    console.log(action.payload.data)  
+    return {
         ...state,
-        products: action.payload,
+        products: action.payload.data,
         filter: action.payload,
       }
       
