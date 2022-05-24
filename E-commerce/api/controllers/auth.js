@@ -39,7 +39,7 @@ const loginCtrl = async (req, res) => {
 
 const registerCtrl = async (req, res) => {
   try {
-    const body = matchedData(req);
+    const body = req.body
     const checkIsExist = await userModel.findOne({ email: body.email });
     if (checkIsExist) {
       handleErrorResponse(res, "USER_EXISTS", 401);
