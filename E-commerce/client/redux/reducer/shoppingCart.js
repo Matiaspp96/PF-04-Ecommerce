@@ -57,13 +57,13 @@ export default function shoppingCartReducer(state = initialState, action) {
         itemsCart
       }
     case GET_TOTAL_PRICE:
-      console.log(itemsCart[0].totalPrice)
+      // console.log(itemsCart[0].totalPrice)
       return {
         ...state,
         totalPrice: itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
       }
     case GET_TOTAL_ITEMS:
-      console.log(totalItems)
+      // console.log(totalItems)
       return {
         ...state,
         totalItems: itemsCart?.reduce((acc,item) => acc + item.quantity, 0)

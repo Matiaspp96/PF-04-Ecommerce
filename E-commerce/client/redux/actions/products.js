@@ -42,9 +42,7 @@ export const getProductsByName = (name) => async (dispatch) => {
 export const getDetail = (id) => async (dispatch) => {
   try {
     // const responseProduct = await axios.get(`${BASEURL}/products/${id}`);
-    console.log(id)
     const response = await axios.get(`${BASEURL}/products/${id}`);
-    console.log(response)
     return dispatch({
       type: GET_DETAIL,
       payload: response.data.data,
