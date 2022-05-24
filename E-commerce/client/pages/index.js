@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Cards from '../components/Card/Cards.js'
 import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
+import Footer from '../components/Footer/Footer.js'
 import { useEffect } from 'react'
 import { getAllProducts } from '../redux/actions/products.js'
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +25,7 @@ export default function Home() {
     <Grid row={2}>
       <Navbar />
       <Cards />
+      <Footer />
     </Grid>
   )
 }

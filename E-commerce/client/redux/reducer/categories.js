@@ -5,6 +5,8 @@ import {
 
 const initialState = {
   categories: [],
+  filter: [],
+  backUp: [],
 }
 
 export default function categoriesReducer(state = initialState, action) {
@@ -16,10 +18,10 @@ export default function categoriesReducer(state = initialState, action) {
       }
     case FILTER_BY_CATEGORIES:
       const allCategories = state.filter
-        let categoriesProducts = 
+      const categoriesProducts = 
         action.payload === 'All'
           ? allCategories
-          : allCategories.filter(e => e.category === action.payload) // ajustar el categoria.nombre
+          : allCategories.filter((e) => e.category === action.payload) 
       return {
         ...state,
         backUp: categoriesProducts,

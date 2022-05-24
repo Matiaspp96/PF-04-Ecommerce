@@ -22,19 +22,18 @@ const Search = () => {
   }
 
 
-  // const handleKeyDown = (event) => { 
-  //   if(event.key === "Enter"){             
-  //     event.preventDefault();             
-  //     dispatch(getProductsByName(name));            
-  //     setName('');         
-  //   }    
-  // }
+  const handleKeyDown = (event) => { 
+    if(event.key === "Enter"){             
+      event.preventDefault();             
+      dispatch(getProductsByName(name));            
+      setName('');         
+    }    
+  }
 
   return (
     <Stack spacing={4} width='50%' >
       <InputGroup>
         <Input 
-        onKey = "Enter"
         onKeyDown = {(e) => handleKeyDown(e)}
         borderRadius='15px' 
         bgColor='#FAFAFC'
@@ -42,7 +41,6 @@ const Search = () => {
         type='text' 
         placeholder='Product...' 
         onChange = {(e) => handleInputProducts(e)}
-        on
         value = {name}
         />
         <Button onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/></Button>
@@ -52,3 +50,4 @@ const Search = () => {
 }
 
 export default Search
+
