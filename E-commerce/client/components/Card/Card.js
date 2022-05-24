@@ -1,7 +1,7 @@
-import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center } from '@chakra-ui/react'
+import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box } from '@chakra-ui/react'
 import { IoCartOutline, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, deleteItemOfCart, getItemsCart } from '../../redux/actions/cart';
+import { addItemToCart, deleteItemOfCart, getItemsCart, getTotalItems } from '../../redux/actions/cart';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
 import { handleAddToCartOrFav, handleRemoveFromCart } from '../../utils/handles';
 import Link from 'next/link';
@@ -35,6 +35,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   // }
   function handleAddCartOnClick(e, producto){
     dispatch(addItemToCart(handleAddToCartOrFav(e, producto)))
+    dispatch(getTotalItems())
     setAddCart.on()
   }
 
@@ -46,6 +47,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   function handleRemoveOnClick(e, producto){
     dispatch(deleteItemOfCart(handleRemoveFromCart(e, producto)))
     setCart(getItemsCart())
+    dispatch(getTotalItems())
     setRemoveCart.toggle()
   }
 
@@ -85,9 +87,15 @@ export default function Card({ producto, quantity, cart, setCart }) {
               </a>
           </Link>
               
-          <Flex justifyContent={'space-between'}>
+          <Flex justifyContent={'space-around'} columnGap='0.2em'>
             <Text color={'#1884BE'}>${price}</Text>
-            <Text color={'#1884BE'}>{quantity}</Text>
+            {cart ?
+            <Flex alignItems='center' >
+              <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech'>+</Button>
+              <Input size='1.2em' w='1.5em' h='1.5em' borderRadius='5px' type='text' display='flex' textAlign='center' placeholder={quantity}></Input> 
+              <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech'>-</Button>
+            </Flex>
+            : null}
             <Flex alignItems={'center'}>
               <Text
                 fontWeight={300}
@@ -99,28 +107,37 @@ export default function Card({ producto, quantity, cart, setCart }) {
             </Flex>
           </Flex>
               
-          <Flex justifyContent={'space-evenly'} width='100%'>
-            <IconButton 
-              onClick={e=>handleAddCartOnClick(e,producto)}
-              backgroundColor='transparent'
-              icon={<IoCartOutline size='2em'/>}
-              color={addCart ? '#1884BE' : 'grey'}
-            />
-            <IconButton 
-              onClick={e=>handleAddFavOnClick(e,producto)}
-              backgroundColor='transparent'
-              icon={<IoHeartOutline size='2em'/>}
-              color={addFavorite ? '#1884BE' : 'grey'}
-            />
-            {cart ? 
+          {cart ?
+            <Flex justifyContent={'space-evenly'} width='100%' alignItems='center'>
+              <IconButton 
+                onClick={e=>handleAddCartOnClick(e,producto)}
+                backgroundColor='transparent'
+                icon={<IoCartOutline size='2em'/>}
+                color={addCart ? '#1884BE' : 'grey'}
+              />
+              <Text color={'#1884BE'}>{quantity}</Text> 
               <IconButton 
                 onClick={e=>handleRemoveOnClick(e,producto)}
                 backgroundColor='transparent'
                 icon={<IoTrashOutline size='2em'/>}
                 color={removeCart ? '#1884BE' : 'grey'}
+              /> 
+            </Flex>
+              :
+            <Flex justifyContent={'space-evenly'} width='100%'>
+              <IconButton 
+                onClick={e=>handleAddCartOnClick(e,producto)}
+                backgroundColor='transparent'
+                icon={<IoCartOutline size='2em'/>}
+                color={addCart ? '#1884BE' : 'grey'}
               />
-              : null}
-          </Flex>
+              <IconButton 
+              onClick={e=>handleAddFavOnClick(e,producto)}
+              backgroundColor='transparent'
+              icon={<IoHeartOutline size='2em'/>}
+              color={addFavorite ? '#1884BE' : 'grey'}
+              />
+            </Flex>}
         </Stack>      
       </Stack>
     )

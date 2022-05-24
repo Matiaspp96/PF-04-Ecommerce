@@ -22,13 +22,13 @@ const Search = () => {
   }
 
 
-  // const handleKeyDown = (event) => { 
-  //   if(event.key === "Enter"){             
-  //     event.preventDefault();             
-  //     dispatch(getProductsByName(name));            
-  //     setName('');         
-  //   }    
-  // }
+  const handleKeyDown = (event) => { 
+    if(event.key === "Enter"){             
+      event.preventDefault();             
+      dispatch(getProductsByName(name));            
+      setName('');         
+    }    
+  }
 
   return (
     <Stack spacing={4} width='50%' >

@@ -1,5 +1,6 @@
 const { reviewModel } = require("../models/index");
 const { handleHttpError } = require("../utils/handleError");
+const { updascore} = require("../utils/handlescore");
 
 const getReviews = async (req, res) => {
   try {
@@ -23,10 +24,11 @@ const getReview = async (req, res) => {
 
 const newReview = async (req, res) => {
   try {
-    const data = req.body;
-    reviewModel.create(data, (err, docs) => {
-      res.send({ data: docs });
-    });
+    const {body} = req.body    
+    const data = await reviewModel.create(body);
+    await updascore(body.productid);    
+    res.status(201);
+    res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_CREATE_REVIEW");
     console.log(e);

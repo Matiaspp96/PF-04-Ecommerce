@@ -1,4 +1,4 @@
-import { Box, Button, LightMode, Stack, Text, Select } from '@chakra-ui/react'
+import { Box, Button, LightMode, Stack, Text, Select, Badge } from '@chakra-ui/react'
 import Link from 'next/link'
 import {React, useState} from 'react'
 import { IoCartOutline } from 'react-icons/io5'
@@ -18,10 +18,6 @@ const MenuLinks = ({isOpen}) => {
     setCategories(e.target.value);
   }
   const numberItems = useSelector(state => state.shoppingCartReducer.itemsCart)
-  const getTotalItems = () => {
-    return numberItems?.reduce((acc,item) => acc + item.quantity, 0) 
-  }
-
     return (
         <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -54,7 +50,9 @@ const MenuLinks = ({isOpen}) => {
 
                 </Select>
                 {/* <Link href="/orders"><Button w='fit-content' borderRadius='15px'><GoClippy size='1.5em' />Orders</Button></Link> */}
-                <Link href="/cart"><Button color='blackAlpha.800' borderRadius='15px' p='0'><span>{getTotalItems()}</span><IoCartOutline size='2em'/></Button></Link>
+                <Link href="/cart"><Button pos='relative' color='blackAlpha.800' borderRadius='50%' p='0'><IoCartOutline size='2em'/>
+                <Badge pos='absolute' w='1.5em' h='1.5em' display='flex' alignItems='center' justifyContent='center' top='-5px' bgColor='#72B9E5' borderRadius='50%' right='-5px' >{numberItems}</Badge>
+                </Button></Link>
                 <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='0.5em'>Log in</Button></Link>
             </Stack>
         </Box>
