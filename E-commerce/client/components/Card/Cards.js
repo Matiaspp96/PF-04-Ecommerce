@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
 import { Select, Text, SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button, } from '@chakra-ui/react'
-=======
-import { Select, Text, SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button } from '@chakra-ui/react'
->>>>>>> fa3310e8c63e5c29af68d002cdfae8a5a944d02d
 import Card from './Card';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -11,10 +7,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { orderProducts } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products';
-<<<<<<< HEAD
 import {filterByCategory} from "../../redux/actions/categories"
-=======
->>>>>>> fa3310e8c63e5c29af68d002cdfae8a5a944d02d
 
 
 export default function Cards() {
@@ -23,22 +16,15 @@ export default function Cards() {
   const dispatch = useDispatch()
   const [sort,setSort] = useState('');
   let productos = useSelector((state)=> state.productReducer.products)
-<<<<<<< HEAD
 
   const [, setCategories] = useState('')
   const totalCategories = useSelector((state) => state.productReducer.products);
   
-=======
->>>>>>> fa3310e8c63e5c29af68d002cdfae8a5a944d02d
   
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch]);
-<<<<<<< HEAD
   
-=======
-
->>>>>>> fa3310e8c63e5c29af68d002cdfae8a5a944d02d
   
   const pages = Math.ceil(productos.length/elements);
   
@@ -46,13 +32,6 @@ export default function Cards() {
     for(let i=1; i<=pages; i++){
         buttons.push(i)
     }
-    
-  const handleSort= (e) => {
-    e.preventDefault()
-    console.log(e.target.value)
-    setSort(e.target.value)
-    dispatch(orderProducts(e.target.value))
-  };
   
   const handleFilterByCategories = (e) => {
     e.preventDefault();
@@ -104,18 +83,13 @@ export default function Cards() {
         <Flex justifyContent={{base:'center', lg:'flex-start'}} ml={{base:0, lg:'1rem'}}>
           <Flex alignItems={'center'} mb={'1.2rem'}  > 
               <Text fontWeight={'bold'} me={'1rem'} >Sort by:</Text>
-<<<<<<< HEAD
               <Flex>
-=======
-              <Stack>
->>>>>>> fa3310e8c63e5c29af68d002cdfae8a5a944d02d
                   <Select variant='flushed' placeholder='' onChange={handleSort}>
                       <option value='MIN'>Lower price</option>
                       <option value='MAX'>Higher price</option>
                       <option value='A-Z'>A-Z</option>
                       <option value='Z-A'>Z-A</option>
                   </Select>
-<<<<<<< HEAD
                   {/* <Tag> Categories</Tag> */}
                   <Text fontWeight={'bold'} me={'1rem'} >Categories:</Text>
                   <Select
@@ -128,9 +102,6 @@ export default function Cards() {
 
                 </Select>
               </Flex>
-=======
-              </Stack>
->>>>>>> fa3310e8c63e5c29af68d002cdfae8a5a944d02d
           </Flex>
         </Flex>
         
