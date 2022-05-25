@@ -10,7 +10,8 @@ export const BASEURL = 'http://localhost:3000/api';
 
 export const getAllProducts = () => async (dispatch) => {
   try {
-    const response = await axios.get(`${BASEURL}/products`);
+    const response = await axios.get(`http://localhost:3000/api/products`);
+    console.log(response.data)
     return dispatch({
       type: GET_PRODUCTS,
       payload: response.data,
@@ -42,7 +43,6 @@ export const getProductsByName = (name) => async (dispatch) => {
 
 export const getDetail = (id) => async (dispatch) => {
   try {
-    // const responseProduct = await axios.get(`${BASEURL}/products/${id}`);
     const response = await axios.get(`${BASEURL}/products/${id}`);
     return dispatch({
       type: GET_DETAIL,
