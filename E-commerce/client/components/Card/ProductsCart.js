@@ -1,4 +1,4 @@
-import { SimpleGrid, Center, Box, Heading, Text, Button, Flex } from '@chakra-ui/react'
+import { SimpleGrid, Center, Box, Heading, Text, Button, Flex, Stack } from '@chakra-ui/react'
 import Card from './Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -21,7 +21,7 @@ export default function ProductCart() {
   const [cart, setCart] = useState(productsCart)
 
   return (
-    <Box margin={{base: '.5em', md:'1em', lg:'2em'}}>
+    <Stack margin={{base: '.5em', md:'1em', lg:'2em'}} height='80vh'>
       <Flex flexDir='column' justifyContent='center' alignItems='center'>
           <Text>Your Cart: {numberItems} Items</Text>
           <Text>SubTotal: ${getTotalPrice()}</Text>        
@@ -34,15 +34,15 @@ export default function ProductCart() {
               <Link href="/"><Button pos='relative' color='blackAlpha.800' borderRadius='15px' p='1em' mt='1em'>Continue Shopping</Button></Link>
             </Flex> :
               <SimpleGrid
-              columns={{ base: 2, sm: 3, md: 4, lg:5 }}
+              columns={{ base: 2, sm: 3, md: 4, lg:4 }}
               gap={'5'} 
-              marginTop='2rem'>{
+              margin='2rem'>{
                 productsCart?.map(ps=>{ return (
-                  <Card key={ps.id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>
+                  <Card key={ps._id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>
                   )})
               }
               </SimpleGrid>}
       </Box>
-    </Box>
+    </Stack>
     )
   }

@@ -1,6 +1,7 @@
 import axios from "axios"; 
 import alert from 'sweetalert2';
 import { ADD_ITEM,
+    ADD_ITEM_INPUT,
     DELETE_ITEM,
     REMOVE_ITEM,
     GET_ALL_CART,
@@ -14,6 +15,17 @@ export const addItemToCart = (item) => {
   try {
     return {
       type: ADD_ITEM,
+      payload: item,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+export const addItemToCartInput = (item) => {
+  try {
+    return {
+      type: ADD_ITEM_INPUT,
       payload: item,
     }
   } catch (err) {
