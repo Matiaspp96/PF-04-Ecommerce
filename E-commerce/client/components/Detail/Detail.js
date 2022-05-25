@@ -6,7 +6,6 @@ import { Divider, NumberInputField, NumberInput, NumberInputStepper, NumberIncre
 import { IoHeartSharp, IoStarSharp } from 'react-icons/io5'
 import { addItemToCart } from '../../redux/actions/cart.js';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites.js';
-import { handleAddToCartOrFav } from '../../utils/handles.js'
 import Review from '../Review/Review.js';
 import CardMinimal from '../Card/CardMinimal.js';
 
@@ -47,7 +46,7 @@ import CardMinimal from '../Card/CardMinimal.js';
     return (
       <Container maxW={'7xl'} 
       >
-        {product.title
+        {product.name
         ?
         <> 
           <SimpleGrid 
@@ -62,7 +61,7 @@ import CardMinimal from '../Card/CardMinimal.js';
             <Flex alignItems={'center'}>
                 <Image
                   rounded={'md'}
-                  alt={product.title}
+                  alt={product.name}
                   src={product.image}
                   fit={'fill'}
                   align={'center'}
@@ -83,7 +82,7 @@ import CardMinimal from '../Card/CardMinimal.js';
                 lineHeight={1.1}
                 fontWeight={550}
                 fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}>
-                  {product.title}
+                  {product.name}
               </Heading>
               <Flex >
                 <Text
@@ -97,7 +96,7 @@ import CardMinimal from '../Card/CardMinimal.js';
                     fontWeight={300}
                     fontSize={'2xl'}
                     me={'.5em'}>
-                      {product.rating.rate}
+                      {/* {product.rating.rate} */}
                   </Text>
                   <IoStarSharp size='1.5em' />
                 </Flex>
@@ -179,7 +178,7 @@ import CardMinimal from '../Card/CardMinimal.js';
               overflow={{base:'visible', lg:'auto' }}>
                 <Center fontSize='3xl' fontWeight={'bold'}>You may also like</Center>
                 {sugestions.map(ps=>{ return (
-                          <CardMinimal key={ps.id} producto={ps} />
+                          <CardMinimal key={ps._id} producto={ps} />
                         )})}
               </Container>
           </SimpleGrid>

@@ -8,10 +8,10 @@ const reviewRouter = require("./review");
 const router = Router();
 
 router.use("/auth", authRouter);
-router.use("/category", categoryRouter);
-router.use("/order", orderRouter);
-router.use("/product", productRouter);
-router.use("/user", userRouter);
-router.use("/review", reviewRouter);
+router.use("/categories", categoryRouter);
+router.use("/orders", orderRouter);
+router.use("/products", productRouter);
+router.use("/users", userRouter);
+router.use("/reviews", reviewRouter);
 
 module.exports = router;

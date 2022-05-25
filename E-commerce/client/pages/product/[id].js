@@ -9,7 +9,6 @@ export default function DetailPage() {
       <div>
           <Navbar />
           <Detail />
-          <Review />
       </div>
     )
   }

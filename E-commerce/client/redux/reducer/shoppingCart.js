@@ -3,12 +3,14 @@ import {
   ADD_ITEM,
   DELETE_ITEM,
   GET_ALL_CART,
-  GET_TOTAL_PRICE
+  GET_TOTAL_PRICE,
+  GET_TOTAL_ITEMS
 } from '../actions/actionstype.js' 
 
 const initialState = {
   backUp: [],
   itemsCart: [],
+  totalItems: 0,
   totalPrice: 0,
 }
 
@@ -16,6 +18,7 @@ export default function shoppingCartReducer(state = initialState, action) {
   let itemsCart = state.itemsCart
   // let totalPrice = state.totalPrice
   let cart = state.itemsCart
+  let totalItems = state.totalItems
   switch(action.type) {
     case ADD_ITEM :
       let itemCart = state.itemsCart?.find(e => e.product.id === action.payload.id)
@@ -58,6 +61,12 @@ export default function shoppingCartReducer(state = initialState, action) {
       return {
         ...state,
         totalPrice: itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
+      }
+    case GET_TOTAL_ITEMS:
+      console.log(totalItems)
+      return {
+        ...state,
+        totalItems: itemsCart?.reduce((acc,item) => acc + item.quantity, 0)
       }
     default:
       return state;
