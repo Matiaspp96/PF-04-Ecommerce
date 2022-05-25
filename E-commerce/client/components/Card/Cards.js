@@ -1,14 +1,25 @@
 
-import { SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button } from '@chakra-ui/react'
+import { Select, Text, SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button } from '@chakra-ui/react'
 import Card from './Card';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { orderProducts } from '../../redux/actions/products';
+import { useDispatch } from 'react-redux';
+import { getAllProducts } from '../../redux/actions/products';
+
 
 export default function Cards() {
   const elements = 10;
   const [currentPage,setCurrentPage] = useState(1)
-  const productos = useSelector((state)=> state.productReducer.products);
+  const dispatch = useDispatch()
+  const [sort,setSort] = useState('');
+  let productos = useSelector((state)=> state.productReducer.products)
+  
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch]);
+
   
   const pages = Math.ceil(productos.length/elements);
   
@@ -16,6 +27,13 @@ export default function Cards() {
     for(let i=1; i<=pages; i++){
         buttons.push(i)
     }
+    
+  const handleSort= (e) => {
+    e.preventDefault()
+    console.log(e.target.value)
+    setSort(e.target.value)
+    dispatch(orderProducts(e.target.value))
+  };
   
   const getPaginatedProducts = () => {
     const idxEnd = currentPage * elements;
@@ -51,6 +69,20 @@ export default function Cards() {
     <Box margin={{base: '.5em', md:'1em', lg:'3em'}}>
       {productos.length ? 
       <Box>
+        <Flex justifyContent={{base:'center', lg:'flex-start'}} ml={{base:0, lg:'1rem'}}>
+          <Flex alignItems={'center'} mb={'1.2rem'}  > 
+              <Text fontWeight={'bold'} me={'1rem'} >Sort by:</Text>
+              <Stack>
+                  <Select variant='flushed' placeholder='' onChange={handleSort}>
+                      <option value='MIN'>Lower price</option>
+                      <option value='MAX'>Higher price</option>
+                      <option value='A-Z'>A-Z</option>
+                      <option value='Z-A'>Z-A</option>
+                  </Select>
+              </Stack>
+          </Flex>
+        </Flex>
+        
         <Flex justifyContent={'center'}>
           <Button
             me={'1em'} 
@@ -61,7 +93,7 @@ export default function Cards() {
             isDisabled={currentPage === 1 ? true : false}>
           </Button>
           
-          {buttons.map(btn=> <Button me={'1em'} onClick={handleClick}>{btn}</Button>)}
+          {buttons.map((btn,id) => <Button key={id} me={'1em'} onClick={handleClick}>{btn}</Button>)}
           
           <Button 
             // me={{base:'0', xl:'1em'}}
@@ -78,7 +110,7 @@ export default function Cards() {
           gap={'5'} 
           marginTop='2rem'>
             {getPaginatedProducts().map(ps=>{ return (
-              <Card key={ps.id} producto={ps}></Card>
+              <Card key={ps._id} producto={ps}></Card>
             )})}
         </SimpleGrid>
       </Box> :
