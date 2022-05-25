@@ -2,6 +2,7 @@ import axios from "axios";
 import alert from 'sweetalert2';
 import { ADD_ITEM,
     DELETE_ITEM,
+    REMOVE_ITEM,
     GET_ALL_CART,
     GET_TOTAL_PRICE,
     GET_TOTAL_ITEMS
@@ -20,10 +21,22 @@ export const addItemToCart = (item) => {
   }
 };
 
-export const deleteItemOfCart = (id) => {
+export const deleteItemOfCart = (id) => { //Borrar articulo
   try {
     return {
       type: DELETE_ITEM,
+      payload: id,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+
+export const removeItemOfCart = (id) => { //Manejar cantidades
+  try {
+    return {
+      type: REMOVE_ITEM,
       payload: id,
     }
   } catch (err) {

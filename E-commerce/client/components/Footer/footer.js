@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react'
 
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
-import Logo  from './'
 
 
 const Footer = () => {
@@ -26,14 +25,14 @@ const Footer = () => {
       py={{ base: '12', md: '16' }}
     >
       <Stack spacing={{ base: '6', md: '8' }} align="start">
-        <Img src= {Logo} alt = 'Logo Ecommerce'/>
+        <img src='./Logo.png' alt = 'Logo Ecommerce'/>
         <Text color="muted">E-Commerce</Text>
       </Stack>
       <Stack
         direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
         spacing={{ base: '12', md: '8' }}
       >
-        <Stack direction="row" spacing="8">
+        <Stack direction="row" alignItems='center' spacing="8">
           <Stack spacing="4" minW="36" flex="1">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
               Product

@@ -1,23 +1,29 @@
 import { Box, Button, LightMode, Stack, Text, Select, Badge } from '@chakra-ui/react'
 import Link from 'next/link'
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import { IoCartOutline } from 'react-icons/io5'
 import { GoClippy } from "react-icons/go";
 import {filterByCategory} from "../../redux/actions/categories"
 import { useSelector, useDispatch } from "react-redux";
+import { getTotalItems } from '../../redux/actions/cart'
 
 const MenuLinks = ({isOpen}) => {
 
   const [, setCategories] = useState('')
   const dispatch = useDispatch()
   const totalCategories = useSelector((state) => state.categories);
+  const numberItems = useSelector(state => state.shoppingCartReducer.totalItems)
+
+  useEffect(()=>{
+        dispatch(getTotalItems())
+    }, [dispatch])
 
   const handleFilterByCategories = (e) => {
     e.preventDefault();
     dispatch(filterByCategory(e.target.value));
     setCategories(e.target.value);
   }
-  const numberItems = useSelector(state => state.shoppingCartReducer.itemsCart)
+
     return (
         <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
