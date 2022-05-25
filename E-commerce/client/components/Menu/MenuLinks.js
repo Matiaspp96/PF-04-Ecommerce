@@ -15,6 +15,7 @@ const MenuLinks = ({isOpen}) => {
         dispatch(getTotalItems())
     }, [dispatch])
 
+
     return (
         <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -32,7 +33,7 @@ const MenuLinks = ({isOpen}) => {
                 <Link href="/cart"><Button pos='relative' color='blackAlpha.800' borderRadius='50%' p='0'><IoCartOutline size='2em'/>
                 <Badge pos='absolute' w='1.5em' h='1.5em' display='flex' alignItems='center' justifyContent='center' top='-5px' bgColor='#72B9E5' borderRadius='50%' right='-5px' >{numberItems}</Badge>
                 </Button></Link>
-                <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='0.5em'>Log in</Button></Link>
+                <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log in</Button></Link>
             </Stack>
         </Box>
     )

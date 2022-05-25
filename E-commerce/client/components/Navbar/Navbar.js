@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Container, Flex, Heading, Spacer, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Container, Flex, Heading, Img, Spacer, Stack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import MenuToggle from '../Menu/MenuToggle'
@@ -19,9 +19,9 @@ const Navbar = (props) => {
         zIndex='2'
         >
             <NavBarContainer {...props}>
-                    <Link href='/'> 
-                        E-Commerce
-                    </Link>
+                <Link href='/'>
+                <img src='../Footer/Logo.png' alt='Ecommerce'/>
+                </Link>
                 <Search isOpen={isOpen}/>
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <MenuLinks isOpen={isOpen} />
