@@ -57,3 +57,4 @@ export const getDetail = (id) => async (dispatch) => {
     })
   }
 };
+
