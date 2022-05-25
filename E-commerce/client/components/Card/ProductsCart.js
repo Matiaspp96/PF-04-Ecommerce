@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getItemsCart } from '../../redux/actions/cart';
 import { AiOutlineShopping } from "react-icons/ai";
 import Link from 'next/link'
+import Logo from '../Logo/Logo';
 
 export default function ProductCart() {
   const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
