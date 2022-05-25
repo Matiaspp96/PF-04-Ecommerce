@@ -3,6 +3,7 @@ import {
   GET_DETAIL,
   GET_PRODUCTS_BY_NAME,
   ORDER_BY_NAME,
+  ORDER_PRODUCTS,
 } from '../actions/actionstype.js' 
 
 const initialState = {
@@ -16,7 +17,6 @@ export default function productReducer(state= initialState, action) {
   switch (action.type) {
 
     case GET_PRODUCTS:
-    console.log(action.payload.data)  
     return {
         ...state,
         products: action.payload.data,
@@ -44,26 +44,50 @@ export default function productReducer(state= initialState, action) {
           backUp: false
         }
       }
-      
-    // case ORDER_BY_NAME:
-    //   let productsSort =
-    //     action.payload === 'A - Z'
-    //     ? state.backUp.sort((a, b) => {
-    //       if(a.name > b.name) return 1;
-    //       else {
-    //         return -1;
-    //       }
-    //     })
-    //     : state.backUp.sort((a, b) => {
-    //       if(b.name > a.name) return -1;
-    //       else {
-    //         return 1;
-    //       }
-    //     })
-    //   return {
-    //     ...state,
-    //     backUp: productsSort,
-    //   }
+
+      case ORDER_PRODUCTS:
+        if(action.payload === 'MIN'){
+            let psOrdered = state.products.sort((a,b)=>{
+                if(a.price < b.price) return -1;
+                if(a.price > b.price) return 1;
+                else return 0;
+            });
+            return {
+                ...state,
+                products: psOrdered,
+            }
+        }else if(action.payload === 'MAX') {
+          let psOrdered = state.products.sort((a,b)=>{
+              if(a.price < b.price) return 1;
+              if(a.price > b.price) return -1;
+              else return 0;
+          });
+          return {
+              ...state,
+              products: psOrdered,
+          }
+        }else if(action.payload === 'A-Z') {
+          let psOrdered = state.products.sort((a,b)=>{
+            if(a.name < b.name) return -1;
+            if(a.name > b.name) return 1;
+            else return 0;
+          });
+          return {
+            ...state,
+            products: psOrdered,
+        }
+        }else if(action.payload === 'Z-A') {
+          let psOrdered = state.products.sort((a,b)=>{
+            if(a.name < b.name) return 1;
+            if(a.name > b.name) return -1;
+            else return 0;
+          });
+          return {
+              ...state,
+              products: psOrdered,
+          }
+      }
+
     default:
       return state;
   }

@@ -4,28 +4,28 @@ import Cards from '../components/Card/Cards.js'
 import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer.js'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getAllProducts } from '../redux/actions/products.js'
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid } from '@chakra-ui/react'
+import { Stack,Flex,Text,Select  } from '@chakra-ui/react'
 import { addItemToCart } from '../redux/actions/cart.js'
 
 
 
 export default function Home() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllProducts())
-  },[dispatch]);
+  // const dispatch = useDispatch();
+  
+  // useEffect(() => {
+  //   dispatch(getAllProducts())
+  // },[dispatch]);
 
   /*----- Cart -----*/
 
   return (   
-    <Grid row={2}>
+    <Stack>
       <Navbar />
       <Cards />
       <Footer />
-    </Grid>
+    </Stack>
   )
 }

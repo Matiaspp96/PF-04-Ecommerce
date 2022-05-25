@@ -96,7 +96,7 @@ import CardMinimal from '../Card/CardMinimal.js';
                     fontWeight={300}
                     fontSize={'2xl'}
                     me={'.5em'}>
-                      {/* {product.rating.rate} */}
+                      {product.rating}
                   </Text>
                   <IoStarSharp size='1.5em' />
                 </Flex>
@@ -110,7 +110,7 @@ import CardMinimal from '../Card/CardMinimal.js';
               </Flex>
               <Flex>
                 <Text fontWeight={'bold'} me={'.3rem'}>Availability:</Text>
-                <Text>In Stock</Text>
+                <Text>{product.stock} In Stock</Text>
               </Flex>          
               <Flex alignItems={'end'} justifyContent={'space-around'}>
                 <Stack>
