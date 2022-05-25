@@ -11,7 +11,6 @@ export const BASEURL = 'http://localhost:3000/api';
 export const getAllProducts = () => async (dispatch) => {
   try {
     const response = await axios.get(`http://localhost:3000/api/products`);
-    console.log(response.data)
     return dispatch({
       type: GET_PRODUCTS,
       payload: response.data,
@@ -23,7 +22,6 @@ export const getAllProducts = () => async (dispatch) => {
 
 export const getProductsByName = (name) => async (dispatch) => {
   try {
-    console.log(name)
     // const responseProduct = await axios.get(`${BASEURL}/products?title=${title}`);
     const response = await axios.get(`${BASEURL}/products/:${name}`);
     return dispatch({
