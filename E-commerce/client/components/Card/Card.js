@@ -1,7 +1,7 @@
 import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box } from '@chakra-ui/react'
 import { IoCartOutline, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, deleteItemOfCart, getItemsCart, getTotalItems } from '../../redux/actions/cart';
+import { addItemToCart, deleteItemOfCart, getItemsCart, getTotalItems, getTotalPrice, removeItemOfCart } from '../../redux/actions/cart';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
 import { handleAddToCartOrFav, handleRemoveFromCart } from '../../utils/handles';
 import Link from 'next/link';
@@ -10,9 +10,13 @@ import { useEffect } from 'react';
 
 export default function Card({ producto, quantity, cart, setCart }) {
   const dispatch = useDispatch()
+  const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
   const [addFavorite, setAddFavorite] = useBoolean()
   const [addCart, setAddCart] = useBoolean()
   const [removeCart, setRemoveCart] = useBoolean()
+  const getTotalPrice = () => {
+    return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
+  }
 
   useEffect(()=>{
     dispatch(getItemsCart())
@@ -37,6 +41,17 @@ export default function Card({ producto, quantity, cart, setCart }) {
     dispatch(addItemToCart(handleAddToCartOrFav(e, producto)))
     dispatch(getTotalItems())
     setAddCart.on()
+  }
+
+  function handleRemoveCartOnClick(e, producto){
+    e.preventDefault();
+    const product = {
+      id: producto._id,
+      price: producto.price,
+    };
+    dispatch(removeItemOfCart(product))
+    dispatch(getTotalItems())
+    getTotalPrice()
   }
 
   function handleAddFavOnClick(e, producto){
@@ -91,9 +106,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
             <Text color={'#1884BE'}>${price}</Text>
             {cart ?
             <Flex alignItems='center' >
-              <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech'>+</Button>
+              <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleAddCartOnClick(e,producto)}>+</Button>
               <Input size='1.2em' w='1.5em' h='1.5em' borderRadius='5px' type='text' display='flex' textAlign='center' placeholder={quantity}></Input> 
-              <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech'>-</Button>
+              <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleRemoveCartOnClick(e,producto)}>-</Button>
             </Flex>
             : null}
             <Flex alignItems={'center'}>
