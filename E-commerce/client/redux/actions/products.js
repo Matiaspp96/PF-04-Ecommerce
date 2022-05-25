@@ -3,6 +3,7 @@ import alert from 'sweetalert2';
 import { GET_PRODUCTS,
     GET_PRODUCTS_BY_NAME,
     GET_DETAIL,
+    ORDER_PRODUCTS
 } from "./actionstype";
 
 export const BASEURL = 'http://localhost:3000/api';
@@ -42,9 +43,7 @@ export const getProductsByName = (name) => async (dispatch) => {
 export const getDetail = (id) => async (dispatch) => {
   try {
     // const responseProduct = await axios.get(`${BASEURL}/products/${id}`);
-    console.log(id)
     const response = await axios.get(`${BASEURL}/products/${id}`);
-    console.log(response)
     return dispatch({
       type: GET_DETAIL,
       payload: response.data.data,
@@ -59,4 +58,11 @@ export const getDetail = (id) => async (dispatch) => {
     })
   }
 };
+
+export const orderProducts = (way)=>{
+  return {
+    type: ORDER_PRODUCTS,
+    payload: way
+}
+}
 

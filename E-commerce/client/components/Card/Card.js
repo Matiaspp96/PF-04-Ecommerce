@@ -53,7 +53,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
 
   return (
       <Stack
-        h={{base:'240', md:'260', lg:'310'}} 
+        h={{base:'270', md:'290', lg:'330'}} 
         overflow='auto'
         boxShadow='lg'
         >
@@ -101,7 +101,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 fontWeight={300}
                 fontSize={'smaller'}
                 me={'.4em'}>
-                  {rating ? rating.rate : null}
+                  {rating ? rating : null}
               </Text>
               <IoStarSharp size='1em' />
             </Flex>
