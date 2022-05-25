@@ -3,6 +3,7 @@ import alert from 'sweetalert2';
 import { GET_PRODUCTS,
     GET_PRODUCTS_BY_NAME,
     GET_DETAIL,
+    ORDER_PRODUCTS
 } from "./actionstype";
 
 export const BASEURL = 'http://localhost:3000/api';
@@ -57,4 +58,11 @@ export const getDetail = (id) => async (dispatch) => {
     })
   }
 };
+
+export const orderProducts = (way)=>{
+  return {
+    type: ORDER_PRODUCTS,
+    payload: way
+}
+}
 
