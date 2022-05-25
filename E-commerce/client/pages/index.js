@@ -22,7 +22,7 @@ export default function Home() {
   /*----- Cart -----*/
 
   return (   
-    <Stack>
+    <Stack alignItems='center'>
       <Navbar />
       <Cards />
       <Footer />
