@@ -5,6 +5,8 @@ import {
 
 const initialState = {
   categories: [],
+  filter: [],
+  backUp: [],
 }
 
 export default function categoriesReducer(state = initialState, action) {
@@ -14,16 +16,22 @@ export default function categoriesReducer(state = initialState, action) {
         ...state,
         categories: action.payload,
       }
-    case FILTER_BY_CATEGORIES:
-      const allCategories = state.filter
-        let categoriesProducts = 
-        action.payload === 'All'
-          ? allCategories
-          : allCategories.filter(e => e.category === action.payload) // ajustar el categoria.nombre
-      return {
-        ...state,
-        backUp: categoriesProducts,
-      }
+      // case CREATE_CATEGORY:
+      //     return {
+      //         ...state
+      //     }
+      // case UPDATE_CATEGORY: {
+      //     return {
+            
+      //         ...state
+      //     }
+      // }
+      // case DELETE_CATEGORY: {
+      //     return {
+      //         ...state
+      //     }
+      // }
+
     default:
       return state;
   }

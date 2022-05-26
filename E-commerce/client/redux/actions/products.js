@@ -3,13 +3,14 @@ import alert from 'sweetalert2';
 import { GET_PRODUCTS,
     GET_PRODUCTS_BY_NAME,
     GET_DETAIL,
+    ORDER_PRODUCTS
 } from "./actionstype";
 
-export const BASEURL = 'https://fakestoreapi.com';
+export const BASEURL = 'http://localhost:3000/api';
 
 export const getAllProducts = () => async (dispatch) => {
   try {
-    const response = await axios.get(`${BASEURL}/products`);
+    const response = await axios.get(`http://localhost:3000/api/products`);
     return dispatch({
       type: GET_PRODUCTS,
       payload: response.data,
@@ -40,11 +41,10 @@ export const getProductsByName = (name) => async (dispatch) => {
 
 export const getDetail = (id) => async (dispatch) => {
   try {
-    // const responseProduct = await axios.get(`${BASEURL}/products/${id}`);
-    const response = await axios.get(`${BASEURL}/products/:${id}`);
+    const response = await axios.get(`${BASEURL}/products/${id}`);
     return dispatch({
       type: GET_DETAIL,
-      payload: response.data,
+      payload: response.data.data,
     });
   } catch (err) {
     console.log(err)
@@ -56,3 +56,11 @@ export const getDetail = (id) => async (dispatch) => {
     })
   }
 };
+
+export const orderProducts = (way)=>{
+  return {
+    type: ORDER_PRODUCTS,
+    payload: way
+}
+}
+

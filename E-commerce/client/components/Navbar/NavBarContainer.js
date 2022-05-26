@@ -11,7 +11,7 @@ const NavBarContainer = ({ children, ...props }) => {
         alignItems='center'
         justifyItems='center'
         mr='10px'
-        ml='10px'
+        ml='12px'
       >
         {children}
       </Flex>
