@@ -1,11 +1,26 @@
-const { reviewModel } = require("../models/index");
+const { reviewModel, productModel } = require("../models/index");
 const { handleHttpError } = require("../utils/handleError");
-const { updascore} = require("../utils/handlescore");
+const { updascore } = require("../utils/handlescore");
 
 const getReviews = async (req, res) => {
   try {
     const data = await reviewModel.find();
     res.send({ data });
+  } catch (e) {
+    console.log(e);
+    handleHttpError(res, "ERROR_GET_ITEMS");
+  }
+};
+
+const getReviewUsers = async (req, res) => {
+  try {
+    const reviews = await reviewModel
+      .find()
+      .populate("products")
+      .populate("users");
+    if (reviews.length) {
+      return res.status(200).send(reviews);
+    }
   } catch (e) {
     console.log(e);
     handleHttpError(res, "ERROR_GET_ITEMS");
@@ -24,9 +39,9 @@ const getReview = async (req, res) => {
 
 const newReview = async (req, res) => {
   try {
-    const {body} = req.body    
+    const { body } = req;
     const data = await reviewModel.create(body);
-    await updascore(body.productid);    
+    await updascore(body.productid);
     res.status(201);
     res.send({ data });
   } catch (e) {
@@ -34,4 +49,4 @@ const newReview = async (req, res) => {
     console.log(e);
   }
 };
-module.exports = { getReview, getReviews, newReview };
+module.exports = { getReview, getReviews, getReviewUsers, newReview };
