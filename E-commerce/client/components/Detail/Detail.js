@@ -2,12 +2,14 @@ import { useRouter } from 'next/router'
 import { useSelector, useDispatch} from 'react-redux';
 import { useEffect } from 'react'
 import { getDetail, getAllProducts } from '../../redux/actions/products.js'
-import { Divider, NumberInputField, NumberInput, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Tag, IconButton, Container, Stack, Flex, Text, Image, Button, Heading, SimpleGrid, Progress, Center, useBoolean, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Box, Divider, NumberInputField, NumberInput, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Tag, IconButton, Container, Stack, Flex, Text, Image, Button, Heading, SimpleGrid, Progress, Center, useBoolean, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { IoHeartSharp, IoStarSharp } from 'react-icons/io5'
-import { addItemToCart } from '../../redux/actions/cart.js';
+import { addItemToCart, getTotalItems } from '../../redux/actions/cart.js';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites.js';
 import Review from '../Review/Review.js';
 import CardMinimal from '../Card/CardMinimal.js';
+import { handleAddToCartOrFav } from '../../utils/handles';
+
 
   export default function Detail() {
     const router = useRouter();
@@ -28,8 +30,10 @@ import CardMinimal from '../Card/CardMinimal.js';
       }
     },[dispatch]);
 
-    function buyItem(){
-      dispatch(addItemToCart(product))
+    function buyItem(e){
+      dispatch(addItemToCart(handleAddToCartOrFav(e,product)))
+      dispatch(getTotalItems())
+      router.push('/cart')
     }
     
     const handleClickFav = ()=>{
@@ -113,16 +117,16 @@ import CardMinimal from '../Card/CardMinimal.js';
                 <Text>{product.stock} In Stock</Text>
               </Flex>          
               <Flex alignItems={'end'} justifyContent={'space-around'}>
-                <Stack>
+                {/* <Stack>
                   <Text>Quantity:</Text>
-                  <NumberInput size='lg' maxW={20} defaultValue={1} min={1}>
+                  <NumberInput size='lg' maxW={20} defaultValue={1} min={1} max={product.stock}>
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
                       <NumberDecrementStepper />
                     </NumberInputStepper>
                   </NumberInput>
-                </Stack>
+                </Stack> */}
                 <Button
                   fontSize={{base: '.8rem', lg:'1rem'}}
                   onClick={buyItem}
@@ -145,13 +149,14 @@ import CardMinimal from '../Card/CardMinimal.js';
           <Divider />
           
           <SimpleGrid
+          h={{base:'auto', lg:'25rem'}}
             me={{base:'1rem', md:'3rem', lg:'5rem'}}
             ml={{base:'1rem', md:'3rem', lg:'5rem'}}
             columns={{ base: 1, lg: 2 }}
             spacing={{ base: 8, md: 10 }}
             p={{base:3, md:5, lg:7}}
             
-            height={'100px'}>
+          >
 
               <Container>
               <Tabs variant='enclosed'>
@@ -159,13 +164,15 @@ import CardMinimal from '../Card/CardMinimal.js';
                   <Tab>Description</Tab>
                   <Tab>Reviews</Tab>
                 </TabList>
-                <TabPanels>
+                <TabPanels >
                   <TabPanel >
                     <Flex  h={{base: 'fit-content'}} alignItems={'center'} overflow={'auto'}>
-                    <Text
-                      padding='2' fontSize={'larger'}>
-                      {product.description}
-                    </Text>
+                    <Box >
+                      <Text
+                        padding='2' fontSize={'larger'} >
+                        {product.description}
+                      </Text>
+                    </Box>
                     </Flex>
                   </TabPanel>
                   <TabPanel>
