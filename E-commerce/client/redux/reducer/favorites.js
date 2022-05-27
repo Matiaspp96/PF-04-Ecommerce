@@ -14,7 +14,7 @@ import {
     let itemsFav = state.itemsFav
     switch(action.type) {
       case ADD_ITEM_FAVORITES:
-        console.log(action.payload)
+        // console.log(action.payload)
         return{
           ...state,
           itemsFav: [...state.itemsFav, action.payload],

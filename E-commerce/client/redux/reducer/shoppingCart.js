@@ -21,6 +21,7 @@ export default function shoppingCartReducer(state = initialState, action) {
   // let totalPrice = state.totalPrice
   let cart = state.itemsCart
   let totalItems = state.totalItems
+  // console.log(itemsCart)
   switch(action.type) {
     case ADD_ITEM :
       let itemCart = itemsCart?.find(e => e.product._id === action.payload._id)

@@ -2,8 +2,8 @@ import {
   GET_PRODUCTS,
   GET_DETAIL,
   GET_PRODUCTS_BY_NAME,
-  ORDER_BY_NAME,
   ORDER_PRODUCTS,
+  FILTER_BY_CATEGORIES,
 } from '../actions/actionstype.js' 
 
 const initialState = {
@@ -29,6 +29,17 @@ export default function productReducer(state= initialState, action) {
         details: action.payload
       }
 
+    case FILTER_BY_CATEGORIES:
+    const todo = state.filter.data
+    const categoriesProducts = 
+      action.payload === 'All'
+        ? todo
+        : todo.filter((e) => e.category === action.payload) 
+        return {
+          ...state,
+          products: categoriesProducts,
+        }
+        
     case GET_PRODUCTS_BY_NAME:
       const nameSearch = state.products.filter((e) => {
         return e.name === action.payload;

@@ -1,5 +1,5 @@
 
-import { Select, Text, SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button } from '@chakra-ui/react'
+import { Select, Text, SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button, } from '@chakra-ui/react'
 import Card from './Card';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -7,6 +7,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { orderProducts } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products';
+import {filterByCategory} from "../../redux/actions/categories"
 
 
 export default function Cards() {
@@ -15,11 +16,15 @@ export default function Cards() {
   const dispatch = useDispatch()
   const [sort,setSort] = useState('');
   let productos = useSelector((state)=> state.productReducer.products)
+
+  const [, setCategories] = useState('')
+  const totalCategories = useSelector((state) => state.productReducer.products);
+  
   
   useEffect(() => {
     dispatch(getAllProducts())
   }, [dispatch]);
-
+  
   
   const pages = Math.ceil(productos.length/elements);
   
@@ -27,6 +32,12 @@ export default function Cards() {
     for(let i=1; i<=pages; i++){
         buttons.push(i)
     }
+  
+  const handleFilterByCategories = (e) => {
+    e.preventDefault();
+    dispatch(filterByCategory(e.target.value));
+    setCategories(e.target.value);
+  }
     
   const handleSort= (e) => {
     e.preventDefault()
@@ -72,14 +83,25 @@ export default function Cards() {
         <Flex justifyContent={{base:'center', lg:'flex-start'}} ml={{base:0, lg:'1rem'}}>
           <Flex alignItems={'center'} mb={'1.2rem'}  > 
               <Text fontWeight={'bold'} me={'1rem'} >Sort by:</Text>
-              <Stack>
+              <Flex>
                   <Select variant='flushed' placeholder='' onChange={handleSort}>
                       <option value='MIN'>Lower price</option>
                       <option value='MAX'>Higher price</option>
                       <option value='A-Z'>A-Z</option>
                       <option value='Z-A'>Z-A</option>
                   </Select>
-              </Stack>
+                  {/* <Tag> Categories</Tag> */}
+                  <Text fontWeight={'bold'} me={'1rem'} >Categories:</Text>
+                  <Select
+                    placeholder=""
+                    onChange={handleFilterByCategories}
+                    >
+                        <option value='All'>All</option>
+                        <option value='Doglovers'>Doglovers</option>
+                        <option value='catlovers'>catlovers</option>
+
+                </Select>
+              </Flex>
           </Flex>
         </Flex>
         

@@ -1,7 +1,6 @@
 import Navbar from '../../components/Navbar/Navbar'
 import Detail from '../../components/Detail/Detail'
-import Review from '../../components/Review/Review'
-
+import Footer from '../../components/Footer/Footer'
 
 export default function DetailPage() {
     
@@ -9,6 +8,7 @@ export default function DetailPage() {
       <div>
           <Navbar />
           <Detail />
+          <Footer />
       </div>
     )
   }
