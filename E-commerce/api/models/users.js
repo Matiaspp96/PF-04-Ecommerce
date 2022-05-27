@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt-nodejs');
+
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -11,8 +13,7 @@ const UserSchema = new mongoose.Schema(
       unique: true,
     },
     password: {
-      type: String,
-      required: true,
+      type: String
     },
     role: {
       type: ["user", "admin"],
@@ -24,4 +25,13 @@ const UserSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
+
+UserSchema.methods.encryptPassword =  (password)=>{
+  return   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
+UserSchema.methods.comparePassword =function(password){
+ return bcrypt.compareSync(password, this.password);
+
+};
+
 module.exports = mongoose.model("users", UserSchema);

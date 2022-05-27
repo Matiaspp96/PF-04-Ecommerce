@@ -4,6 +4,7 @@ const { matchedData } = require("express-validator");
 const { handleHttpError } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
+ 
   try {
     const data = await productModel.find();
     res.send({ data });
@@ -38,11 +39,14 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
-    const {id, ...body} = matchedData(req);
+  //onst {id, ...body} = matchedData(req);
+    const {id} = req.params;
+     
     const data = await productModel.findByIdAndUpdate(
-      id, body
+      id, req.body
     );
-    res.send({ data });
+    const response = await productModel.findById(id)
+    res.send({ response });
   } catch (e) {
     handleHttpError(res, "ERROR_UPDATE_ITEMS");
   }

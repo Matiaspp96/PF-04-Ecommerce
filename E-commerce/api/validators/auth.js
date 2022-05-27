@@ -16,5 +16,11 @@ const validateRegister = [
     validateResult(req, res, next);
   },
 ];
-
-module.exports = { validateLogin, validateRegister };
+//midleware 
+const isAuthenticated= (req,res,next)=>{
+  if(req.isAuthenticated()){
+      return next();
+  }
+  res.redirect('http://localhost:3000/api/auth/login/googleerror')
+}
+module.exports = { validateLogin, validateRegister,isAuthenticated };

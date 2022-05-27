@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
+const password = 'wercox-qEqqy8-gamdis';
+const uri = `mongodb+srv://admin:${password}@cluster0.0ykiz.mongodb.net/DatabaseEcommerce`;
 
 const dbConnect = () => {
     mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log(process.env.MONGO_URL))
+  .connect(uri)
+  .then(() => console.log('connected'))
   .catch((err) => {
     console.log(err);
   });
