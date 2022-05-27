@@ -5,6 +5,6 @@ const validatorReview = require("../validators/review");
 
 router.get("/", getReviews);
 router.get("/:id", getReview);
-router.post("/", validatorReview, newReview);
+router.post("/:idProduct/", validatorReview, newReview);
 
 module.exports = router;

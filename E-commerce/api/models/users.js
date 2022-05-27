@@ -16,9 +16,15 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-        enum : ['user','admin'],
-        default: 'user'
-  },
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    reviews: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "review",
+      },
+    ],
   },
   {
     timestamps: true,
