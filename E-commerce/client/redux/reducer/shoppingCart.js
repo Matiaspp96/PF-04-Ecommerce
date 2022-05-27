@@ -86,7 +86,6 @@ export default function shoppingCartReducer(state = initialState, action) {
       }
     case REMOVE_ITEM: //Remover cantidades del articulo
       index = itemsCart.findIndex(e => e.product._id === action.payload.id)
-      // console.log(action.payload)
       if(index >= 0 && itemsCart[index].quantity > 1){
         cart = itemsCart.map(e => e.product._id === action.payload.id 
           ? {...e, quantity: e.quantity - 1, totalPrice: state.totalPrice + (e.quantity - 1) * e.product.price}
