@@ -1,17 +1,20 @@
 import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box } from '@chakra-ui/react'
-import { IoCartOutline, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
+import { IoCart, IoCartOutline, IoHeart, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addItemToCartInput, deleteItemOfCart, getItemsCart, getTotalItems, getTotalPrice, removeItemOfCart } from '../../redux/actions/cart';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
-import { handleAddToCartOrFav, handleRemoveFromCart } from '../../utils/handles';
+import { handleAddToCartOrFav, handleRemoveFromCart, handleRemoveFromFav } from '../../utils/handles';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import router from 'next/router'
 
 
 export default function Card({ producto, quantity, cart, setCart }) {
   const dispatch = useDispatch()
   const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
+  // const favs = useSelector((state)=> state.favoritesReducer.itemsFav);
   const [addFavorite, setAddFavorite] = useBoolean()
+  const [removeFavorite, setRemoveFavorite] = useBoolean()
   const [addCart, setAddCart] = useBoolean()
   const [removeCart, setRemoveCart] = useBoolean()
   const { name, price, category, image, _id, rating } = producto;
@@ -80,6 +83,11 @@ export default function Card({ producto, quantity, cart, setCart }) {
     setRemoveCart.toggle()
   }
 
+  function handleRemoveToFavOnClick(e, producto){
+    dispatch(deleteItemOfFav(handleRemoveFromFav(e, producto)))
+    setRemoveFavorite.toggle()
+  }
+
   return (
       <Stack
         h={{base:'270', md:'290', lg:'365'}} 
@@ -106,7 +114,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
               alignItems='center'/>
           </Center>
 
-          <Stack pl={'1rem'} pe={'1rem'}>
+          <Stack pl={'1rem'} pe={'1rem'} w='100%'>
             <Link 
               href={{
                 pathname: 'product/[id]',
@@ -150,7 +158,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <IconButton 
                   onClick={e=>handleAddCartOnClick(e,product)}
                   backgroundColor='transparent'
-                  icon={<IoCartOutline size='2em'/>}
+                  icon={<IoCart size='2em'/>}
                   color={addCart ? '#1884BE' : 'grey'}
                 />
                 <Text color={'#1884BE'}>{quantity}</Text> 
@@ -164,17 +172,25 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 :
               <Flex justifyContent={'space-evenly'} width='100%'>
                 <IconButton 
-                  onClick={e=>handleAddCartOnClick(e,product)}
+                  onClick={e=>{handleAddCartOnClick(e,product)}}
                   backgroundColor='transparent'
-                  icon={<IoCartOutline size='2em'/>}
+                  icon={addCart ? <IoCart size='2em'/> : <IoCartOutline size='2em'/>}
                   color={addCart ? '#1884BE' : 'grey'}
                 />
-                <IconButton 
-                onClick={e=>handleAddFavOnClick(e,product)}
-                backgroundColor='transparent'
-                icon={<IoHeartOutline size='2em'/>}
-                color={addFavorite ? '#1884BE' : 'grey'}
-                />
+                { router.pathname === '/favorites' ?
+                  <IconButton 
+                  onClick={e=>handleRemoveToFavOnClick(e,product)}
+                  backgroundColor='transparent'
+                  icon={<IoTrashOutline size='2em'/>}
+                  color={removeFavorite ? '#1884BE' : 'grey'}
+                  /> 
+                  : <IconButton 
+                  onClick={e=>handleAddFavOnClick(e,product)}
+                  backgroundColor='transparent'
+                  icon={addFavorite ? <IoHeart size='2em'/> : <IoHeartOutline size='2em'/>}
+                  color={addFavorite ? '#1884BE' : 'grey'}
+                  />
+                }
               </Flex>}
           </Stack>      
         </Flex>
