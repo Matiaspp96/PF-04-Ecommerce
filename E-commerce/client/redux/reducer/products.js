@@ -41,7 +41,7 @@ export default function productReducer(state= initialState, action) {
         }
         
     case GET_PRODUCTS_BY_NAME:
-      const nameSearch = state.products.filter((e) => {
+      const nameSearch = state.filter.data.filter((e) => {
         return e.name === action.payload;
       });
       if (nameSearch.length !== 0) {

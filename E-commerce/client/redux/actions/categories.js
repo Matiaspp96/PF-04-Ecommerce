@@ -17,9 +17,23 @@ export const getAllCategories = () => async (dispatch) => {
     }
   };
 
+  export function deleteCategory(id) {
+    try {
+      const response = await axios.get(`${BASEURL}/categories/${id}`)
+      return dispatch({
+        type: DELETE_CATEGORIES,
+        payload: response.data
+      })
+    } catch (err) {
+      console.log(error)
+    }
+
+}
+
 export function filterByCategory(payload) {
     return {
        type: FILTER_BY_CATEGORIES,
        payload
     }
 }
+
