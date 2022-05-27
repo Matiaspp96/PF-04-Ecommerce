@@ -2,10 +2,16 @@ const mongoose = require("mongoose");
 
 const ReviewSchema = new mongoose.Schema(
   {
-    user: {
+    product: {
+      ref: "products",
       type: mongoose.Types.ObjectId,
-      ref: "users",
     },
+    user: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "users",
+      },
+    ],
 
     punctuation: { type: Number, required: true },
     opinion: {
@@ -16,6 +22,7 @@ const ReviewSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
+    strictPopulate: false,
   }
 );
 module.exports = mongoose.model("review", ReviewSchema);
