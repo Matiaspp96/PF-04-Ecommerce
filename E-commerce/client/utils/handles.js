@@ -16,11 +16,18 @@ export const handleAddToCartOrFav = (e, item) => {
 
 export const handleRemoveFromCart = (e, item) => {
     e.preventDefault();
-    console.log(item)
     const product = {
         _id: item._id,
         name: item.name,
         price: item.price,
+    };
+    return product
+}
+
+export const handleRemoveFromFav = (e, item) => {
+    e.preventDefault();
+    const product = {
+        _id: item._id,
     };
     return product
 }
