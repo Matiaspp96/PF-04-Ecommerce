@@ -10,7 +10,7 @@ export const getAllCategories = () => async (dispatch) => {
       const response = await axios.get(`${BASEURL}/categories`); 
       return dispatch({
         type: GET_CATEGORIES,
-        payload: response.data,
+        payload: response.data.data,
       });
     } catch (err) {
       console.log(err)

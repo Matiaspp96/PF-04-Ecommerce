@@ -19,7 +19,7 @@ export default function productReducer(state= initialState, action) {
     case GET_PRODUCTS:
     return {
         ...state,
-        products: action.payload.data,
+        products: action.payload,
         filter: action.payload,
       }
       

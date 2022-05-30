@@ -26,7 +26,7 @@ export default function Footer (){
     >
       <Stack spacing={{ base: '6', md: '8' }} align="start">
         {/* <Image src='./Logo.png' alt = 'Logo Ecommerce'/> */}
-        <Text color="muted">Pet Elegant - Logo</Text>
+        <Text color="muted">Pet Elegant - Log</Text>
       </Stack>
       <Stack
         direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
