@@ -8,6 +8,7 @@ const {
   validateObjectDataUpdate,
 } = require("../validators/product");
 const {
+  getItembyName,
   getItems,
   getItem,
   createItem,
@@ -15,6 +16,7 @@ const {
   deleteItem,
 } = require("../controllers/product");
 
+router.get("/", getItembyName);
 router.get("/:id", validateId, getItem);
 router.get("/", getItems);
 router.post(

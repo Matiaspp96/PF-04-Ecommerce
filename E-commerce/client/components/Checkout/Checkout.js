@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Icon, LightMode, Stack, Text } from '@chakra-ui/react'
+import { Badge, Box, Button, Flex, Icon, LightMode, Stack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { IoCartOutline } from 'react-icons/io5'
@@ -6,24 +6,22 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Checkout = ({isOpen}) => {
     const totalPrice = useSelector(state => state.shoppingCartReducer.totalPrice)
+    const numberItems = useSelector(state => state.shoppingCartReducer.totalItems);
+    const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
     const dispatch = useDispatch();
+
+    const getTotalPrice = () => {
+        return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
+    }
 
     useEffect(()=>{
     }, [dispatch])
 
     return (
-        <Box
-        display={{ base: isOpen ? "block" : "none", md: "block" }}
-        flexBasis={{ base: "100%", md: "auto" }} >
-            <Stack
-            spacing={4}
-            align="center"
-            justify={["center", "space-between", "flex-end", "flex-end"]}
-            direction={["column", "row", "row", "row"]}
-            pt={[4, 4, 0, 0]}>
-                <Text></Text>
-            </Stack>
-        </Box>
+    <Flex flexDir='column' justifyContent='center' alignItems='center'>
+        <Text>Your Cart: {numberItems} Items</Text>
+        <Text>SubTotal: ${getTotalPrice()}</Text>        
+    </Flex>
     )
   }
 

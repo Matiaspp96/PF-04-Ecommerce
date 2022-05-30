@@ -20,14 +20,24 @@ import {
           itemsFav: [...state.itemsFav, action.payload],
         } 
       case DELETE_ITEM_FAVORITES:
-        const index = itemsFav.findIndex(
-          (favItem) => favItem.id === action.payload.id
-        );
+        let index = itemsFav.findIndex(e => e.product._id === action.payload._id)
         let newFav = [...itemsFav];
         if(index >= 0){
           newFav.splice(index,1)
+          Swal.fire({
+            title: 'Product remove',
+            text: 'Your pet will be left without this product 😿',
+            icon: 'error',
+            confirmButtonText: 'Accept'
+          })
         } else{
-          console.warn('Cant remove product')
+          newFav.pop()
+          Swal.fire({
+            title: 'Product remove',
+            text: 'Product remove',
+            icon:'success',
+            confirmButtonText: 'Cool'
+          })
         }
         return {
           ...state,
@@ -36,7 +46,7 @@ import {
       case GET_ALL_FAV:
         return {
           ...state,
-          itemsCart
+          itemsFav
         }
       default:
         return state;

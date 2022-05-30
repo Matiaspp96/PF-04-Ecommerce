@@ -6,11 +6,11 @@ import { GET_PRODUCTS,
     ORDER_PRODUCTS
 } from "./actionstype";
 
-export const BASEURL = 'http://localhost:3000/api';
+export const BASEURL = 'http://localhost:3001/api';
 
 export const getAllProducts = () => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/products`);
+    const response = await axios.get(`${BASEURL}/products`);
     return dispatch({
       type: GET_PRODUCTS,
       payload: response.data,

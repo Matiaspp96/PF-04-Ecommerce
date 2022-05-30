@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GET_CATEGORIES,
     FILTER_BY_CATEGORIES,
 } from './actionstype.js';
-const BASEURL = 'http://localhost:3000/api';
+const BASEURL = 'http://localhost:3001/api';
 
 
 export const getAllCategories = () => async (dispatch) => {
