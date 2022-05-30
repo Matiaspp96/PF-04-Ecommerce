@@ -14,7 +14,7 @@ import Image from 'next/image'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
 
-const Footer = () => {
+export default function Footer (){
   return (
     
     <Container as="footer" role="contentinfo" maxW='60%'>
@@ -95,4 +95,3 @@ const Footer = () => {
   )
 }
 
-export default Footer
