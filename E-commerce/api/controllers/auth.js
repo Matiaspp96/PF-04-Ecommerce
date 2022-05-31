@@ -64,7 +64,7 @@ const logOut = (req,res) => {
   req.logout(function(err) {  //version nueva requiere pasar un callback
     if (err) { return next(err); }
     req.session.destroy();
-    res.redirect('/api/auth/login/error');
+    res.redirect(process.env.frontUrl);
   });
 
 }

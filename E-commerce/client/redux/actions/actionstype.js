@@ -30,5 +30,6 @@ export const GET_ALL_CART = "GET_ALL_CART"
 export const GET_TOTAL_PRICE = "GET_TOTAL_PRICE"
 export const GET_TOTAL_ITEMS = "GET_TOTAL_ITEMS"
 
-
+//User
+export const GET_USER_DATA = "GET_USER_DATA"
 
