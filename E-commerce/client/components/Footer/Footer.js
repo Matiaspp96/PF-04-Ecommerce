@@ -10,11 +10,11 @@ import {
   Text,
   Img,
 } from '@chakra-ui/react'
-
+import Image from 'next/image'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
 
-const Footer = () => {
+export default function Footer (){
   return (
     
     <Container as="footer" role="contentinfo" maxW='60%'>
@@ -25,7 +25,7 @@ const Footer = () => {
       py={{ base: '12', md: '16' }}
     >
       <Stack spacing={{ base: '6', md: '8' }} align="start">
-        <img src='./Logo.png' alt = 'Logo Ecommerce'/>
+        <Image src='./Logo.png' alt = 'Logo Ecommerce'/>
         <Text color="muted">E-Commerce</Text>
       </Stack>
       <Stack
@@ -95,4 +95,3 @@ const Footer = () => {
   )
 }
 
-export default Footer

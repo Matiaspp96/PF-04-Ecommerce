@@ -1,8 +1,37 @@
+const { productModel, catergoryModel, userModel } = require("../models");
+const {
+  handleHttpError,
+  handleErrorResponse,
+} = require("../utils/handleError");
 
+//byname
+const getItembyName = async (req, res) => {
+  const { name } = req.query;
+  try {
+    if (name) {
+      let products = await productModel.find({
+        name: { $regex: name, $options: "i" },
+      });
 
-const { productModel} = require("../models");
-const { handleHttpError,
-  handleErrorResponse } = require("../utils/handleError");
+      if (products.length) {
+        res.json(products);
+      } else {
+        res.status(404).send("Product not found");
+      }
+    } else {
+      let products = await productModel.find({}).populate("reviews");
+
+      if (products.length) {
+        res.json(products);
+      } else {
+        res.status(404).send("Product not found.");
+      }
+    }
+  } catch (err) {
+    next(err);
+    console.log(err);
+  }
+};
 
 const getItems = async (req, res) => {
  
@@ -27,7 +56,7 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const {body} = req.body
+    const { body } = req.body;
     const checkIsExist = await catergoryModel.findOne({ name: body.name });
     if (checkIsExist) {
       handleErrorResponse(res, "PRODUCT_EXISTS", 401);
@@ -44,24 +73,19 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
-  //onst {id, ...body} = matchedData(req);
-    const {id} = req.params;
-     
-    const data = await productModel.findByIdAndUpdate(
-      id, req.body
-    );
-    const response = await productModel.findById(id)
-    res.send({ response });
+    const { id } = req.params;
+    const { body } = req.body;
+    const data = await productModel.findByIdAndUpdate(id, body);
+    res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_UPDATE_ITEMS");
   }
 };
 
-
 const deleteItem = async (req, res) => {
-  try{
-    const {id} = req.params;
-    const deleteResponse = await productModel.findByIdAndRemove({_id:id});
+  try {
+    const { id } = req.params;
+    const deleteResponse = await productModel.findByIdAndRemove({ _id: id });
     const data = {
       deleted: deleteResponse.matchedCount,
     };
@@ -73,4 +97,11 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem };
+module.exports = {
+  getItems,
+  getItem,
+  getItembyName,
+  createItem,
+  updateItem,
+  deleteItem,
+};
