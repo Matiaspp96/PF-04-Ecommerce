@@ -10,6 +10,7 @@ export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhos
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
+  console.log(process.env.NODE_ENV)
   try {
     const response = await axios.get(`${BASEURL}/products`);
     return dispatch({
