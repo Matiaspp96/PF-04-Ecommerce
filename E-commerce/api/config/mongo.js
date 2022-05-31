@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const password = 'wercox-qEqqy8-gamdis'
-const uri = `mongodb+srv://admin:${password}@cluster0.0ykiz.mongodb.net/DatabaseEcommerce`;1
+const uri = `mongodb+srv://admin:${password}@cluster0.0ykiz.mongodb.net/DatabaseEcommerce`
 
 const dbConnect = () => {
     mongoose
