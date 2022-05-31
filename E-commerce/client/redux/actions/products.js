@@ -6,7 +6,9 @@ import { GET_PRODUCTS,
     ORDER_PRODUCTS
 } from "./actionstype";
 
-export const BASEURL = `${process.env.API_URL}/api`;
+// export const BASEURL = `${process.env.API_URL}/api`;
+export const BASEURL = 'http://localhost:3001/api';
+
 
 export const getAllProducts = () => async (dispatch) => {
   try {
