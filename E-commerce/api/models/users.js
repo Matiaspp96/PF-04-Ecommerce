@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      
     },
     email: {
       type: String,
@@ -16,9 +16,10 @@ const UserSchema = new mongoose.Schema(
       type: String
     },
     role: {
-      type: ["user", "admin"],
-      default: "user",
-    },
+      type: String,
+        enum : ['user','admin'],
+        default: 'user'
+  },
   },
   {
     timestamps: true,

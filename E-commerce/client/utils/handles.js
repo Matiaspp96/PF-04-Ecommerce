@@ -2,12 +2,25 @@
 export const handleAddToCartOrFav = (e, item) => {
     e.preventDefault();
     const product = {
-        id: item.id,
-        title: item.title,
+        _id: item._id,
+        name: item.name,
         price: item.price,
         description: item.description ,
+        image: item.image,
+        quantity: item.quantity,
         category: item.category,
-        image: item.image
+        rating: item.rating
+    };
+    return product
+}
+
+export const handleRemoveFromCart = (e, item) => {
+    e.preventDefault();
+    console.log(item)
+    const product = {
+        _id: item._id,
+        name: item.name,
+        price: item.price,
     };
     return product
 }

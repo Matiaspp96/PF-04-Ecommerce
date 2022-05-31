@@ -1,21 +1,21 @@
 import Navbar from '../components/Navbar/Navbar'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Center, Grid, Text } from '@chakra-ui/react'
+import { Box, Center, Grid, Stack, Text } from '@chakra-ui/react'
 import { getItemsCart } from '../redux/actions/cart';
 import ProductCart from '../components/Card/ProductsCart';
+import Footer from '../components/Footer/Footer';
 
 
 
 export default function Cart() {
-  const totalPrice = useSelector(state => state.shoppingCartReducer.totalPrice)
+  const itemsCart = useSelector(state => state.shoppingCartReducer.itemsCart)
+
   return (   
-    <Grid row={2}>
+    <Stack alignItems='center'>
       <Navbar />
       <ProductCart />
-      <Box>
-        <Center>${!totalPrice ? 0 : totalPrice}</Center>
-      </Box>
-    </Grid>
+      <Footer />
+    </Stack>
   )
 }

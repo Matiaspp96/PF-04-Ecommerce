@@ -54,7 +54,7 @@ const registerCtrl = async (req, res) => {
     // console.log(obj )
     
     const data = await userModel.create(bodyInsert);
-    res.send({ data });
+    res.send({ data })
   } catch (e) {
     handleHttpError(res, e);
   }
@@ -63,12 +63,13 @@ const registerCtrl = async (req, res) => {
 const logOut = (req,res) => {
   req.logout(function(err) {  //version nueva requiere pasar un callback
     if (err) { return next(err); }
-    res.redirect('/api/auth/login/googleerror');
+    req.session.destroy();
+    res.redirect('/api/auth/login/error');
   });
 
 }
 
 const logError = (req,res) => {
-  return res.send('ohhh no ohhhh no')
+  return res.send('Error en log')
 }
 module.exports = { loginCtrl, registerCtrl, logOut, logError };

@@ -9,7 +9,7 @@ const validateLogin = [
 ];
 
 const validateRegister = [
-  check("name").exists().notEmpty(),
+  //check("name").exists().notEmpty(),
   check("email").exists().notEmpty().isEmail(),
   check("password").exists().notEmpty().isLength({min:8, max:15}),
   (req, res, next) => {
@@ -18,9 +18,10 @@ const validateRegister = [
 ];
 //midleware 
 const isAuthenticated= (req,res,next)=>{
+
   if(req.isAuthenticated()){
       return next();
   }
-  res.redirect('http://localhost:3000/api/auth/login/googleerror')
+  return res.json({message : 'unauthenticated user'})
 }
 module.exports = { validateLogin, validateRegister,isAuthenticated };
