@@ -9,12 +9,19 @@ const validateLogin = [
 ];
 
 const validateRegister = [
-  check("name").exists().notEmpty(),
+  //check("name").exists().notEmpty(),
   check("email").exists().notEmpty().isEmail(),
   check("password").exists().notEmpty().isLength({min:8, max:15}),
   (req, res, next) => {
     validateResult(req, res, next);
   },
 ];
+//midleware 
+const isAuthenticated= (req,res,next)=>{
 
-module.exports = { validateLogin, validateRegister };
+  if(req.isAuthenticated()){
+      return next();
+  }
+  return res.json({message : 'unauthenticated user'})
+}
+module.exports = { validateLogin, validateRegister,isAuthenticated };

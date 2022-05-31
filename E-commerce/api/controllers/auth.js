@@ -39,7 +39,8 @@ const loginCtrl = async (req, res) => {
 
 const registerCtrl = async (req, res) => {
   try {
-    const body = req.body
+    const body = req.body;
+    
     const checkIsExist = await userModel.findOne({ email: body.email });
     if (checkIsExist) {
       handleErrorResponse(res, "USER_EXISTS", 401);
@@ -47,11 +48,28 @@ const registerCtrl = async (req, res) => {
     }
     const password = await encrypt(body.password);
     const bodyInsert = { ...body, password };
+    console.log(bodyInsert)
+    //const {name, email, role } = req.body;
+    // let obj = { name,email,role,password }
+    // console.log(obj )
+    
     const data = await userModel.create(bodyInsert);
-    res.send({ data });
+    res.send({ data })
   } catch (e) {
     handleHttpError(res, e);
   }
 };
 
-module.exports = { loginCtrl, registerCtrl };
+const logOut = (req,res) => {
+  req.logout(function(err) {  //version nueva requiere pasar un callback
+    if (err) { return next(err); }
+    req.session.destroy();
+    res.redirect('/api/auth/login/error');
+  });
+
+}
+
+const logError = (req,res) => {
+  return res.send('Error en log')
+}
+module.exports = { loginCtrl, registerCtrl, logOut, logError };
