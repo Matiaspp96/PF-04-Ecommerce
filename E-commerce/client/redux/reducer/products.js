@@ -31,7 +31,6 @@ export default function productReducer(state= initialState, action) {
 
     case FILTER_BY_CATEGORIES:
     const todo = state.filter
-    // console.log(todo)
     const categoriesProducts = 
       action.payload === 'All'
         ? todo
