@@ -15,7 +15,7 @@ const Search = () => {
     setName(e.target.value)
   }
   const handleSubmit = (e) => {
-    console.log(e)
+    // console.log(e)
     e.preventDefault()
     dispatch(getProductsByName(name))
     setName("")

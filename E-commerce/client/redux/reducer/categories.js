@@ -1,6 +1,8 @@
 import {
   GET_CATEGORIES,
-  FILTER_BY_CATEGORIES
+  CREATE_CATEGORY,
+  DELETE_CATEGORIES,
+  UPDATE_CATEGORY
 } from '../actions/actionstype.js' 
 
 const initialState = {
@@ -16,22 +18,21 @@ export default function categoriesReducer(state = initialState, action) {
         ...state,
         categories: action.payload,
       }
-      // case CREATE_CATEGORY:
-      //     return {
-      //         ...state
-      //     }
-      // case UPDATE_CATEGORY: {
-      //     return {
+      case CREATE_CATEGORY:
+          return {
+              ...state
+          }
+      case UPDATE_CATEGORY: {
+          return {
             
-      //         ...state
-      //     }
-      // }
-      // case DELETE_CATEGORY: {
-      //     return {
-      //         ...state
-      //     }
-      // }
-
+              ...state
+          }
+      }
+      case DELETE_CATEGORIES: {
+          return {
+              ...state
+          }
+      }
     default:
       return state;
   }
