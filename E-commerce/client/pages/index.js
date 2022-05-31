@@ -22,7 +22,7 @@ export default function Home() {
     (async()=>{
      
     
-        const userResponse = await axios.get('http://localhost:3000/api/auth/data', { withCredentials: true });
+        const userResponse = await axios.get('http://localhost:3001/api/auth/data', { withCredentials: true });
         
         setUser(userResponse.data)
     

@@ -2,8 +2,7 @@ import { Button, Center, FormControl, FormLabel, Input, Stack } from '@chakra-ui
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import axios from 'axios'
-const URL = 'https://localhost:3000/api/auth/login/local/signin'
-const Url2= 'http://localhost:3000/api/auth/login/local/signup'
+
 
 
 const Login = () => {
@@ -48,12 +47,12 @@ const router = useRouter()
     }
 
     function handleGoogleLog(){
-        router.push('https://localhost:3000/api/auth/login/google')
+        router.push('http://localhost:3001/api/auth/login/google')
     }
 
     function handleChange(e){
         setUser({...user, [e.target.name]: e.target.value})
-        console.log(e.target.value)
+        
     }
 
   return (

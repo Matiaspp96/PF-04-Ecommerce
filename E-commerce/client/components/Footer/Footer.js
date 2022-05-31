@@ -25,7 +25,7 @@ export default function Footer (){
       py={{ base: '12', md: '16' }}
     >
       <Stack spacing={{ base: '6', md: '8' }} align="start">
-        <Image src='./Logo.png' alt = 'Logo Ecommerce'/>
+        {/* <Image src='./Logo.png' alt = 'Logo Ecommerce'/> */}
         <Text color="muted">E-Commerce</Text>
       </Stack>
       <Stack

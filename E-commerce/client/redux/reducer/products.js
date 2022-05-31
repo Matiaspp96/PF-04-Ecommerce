@@ -19,7 +19,7 @@ export default function productReducer(state= initialState, action) {
     case GET_PRODUCTS:
     return {
         ...state,
-        products: action.payload.data,
+        products: action.payload,
         filter: action.payload,
       }
       
@@ -30,7 +30,7 @@ export default function productReducer(state= initialState, action) {
       }
 
     case FILTER_BY_CATEGORIES:
-    const todo = state.filter.data
+    const todo = state.filter;
     const categoriesProducts = 
       action.payload === 'All'
         ? todo
