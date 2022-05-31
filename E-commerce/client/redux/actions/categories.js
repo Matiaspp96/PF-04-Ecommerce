@@ -6,15 +6,15 @@ import {
   DELETE_CATEGORIES,
   UPDATE_CATEGORY,
 } from './actionstype.js';
-const BASEURL = 'http://localhost:3001/api';
 
+export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : `${process.env.API_URL}/api`;
 
 export const getAllCategories = () => async (dispatch) => {
     try {
       const response = await axios.get(`${BASEURL}/categories`); 
       return dispatch({
         type: GET_CATEGORIES,
-        payload: response.data,
+        payload: response.data.data,
       });
     } catch (err) {
       console.log(err)
