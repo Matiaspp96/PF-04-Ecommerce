@@ -28,7 +28,6 @@ export default function Footer (){
       <Flex spacing={{ base: '6', md: '8' }} align="start">
         <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
       </Flex>
-
       <Stack
         direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
         spacing={{ base: '12', md: '8' }}

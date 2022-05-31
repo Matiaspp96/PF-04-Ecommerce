@@ -1,18 +1,14 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
+    "name": "api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
     "start": "nodemon app.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "engines": {
-    "node": ">=12.18.3",
-    "npm": ">=6.14.6"
-  },
-  "dependencies": {
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
     "axios": "^0.27.2",
     "bcrypt-nodejs": "^0.0.3",
     "bcryptjs": "^2.4.3",
@@ -33,5 +29,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
-  }
-}
+    }
+}  

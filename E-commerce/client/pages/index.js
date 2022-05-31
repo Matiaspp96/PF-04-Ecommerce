@@ -34,7 +34,6 @@ export default function Home() {
 console.log(ReducerUser)
   return (   
     <Stack alignItems='center'>
-      {/* <Text>Probando Vercel</Text> */}
       <Navbar />
       <Cards />
       <Footer />

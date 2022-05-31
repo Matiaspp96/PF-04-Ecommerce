@@ -6,8 +6,8 @@ import {
   DELETE_CATEGORIES,
   UPDATE_CATEGORY,
 } from './actionstype.js';
-const BASEURL = `${process.env.API_URL}/api`;
 
+export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : `${process.env.API_URL}/api`;
 
 export const getAllCategories = () => async (dispatch) => {
     try {
