@@ -63,7 +63,7 @@ export async function updateCategory(name) {
   }
 }
 
-export async function filterByCategory(payload) {
+export function filterByCategory(payload) {
     return {
        type: FILTER_BY_CATEGORIES,
        payload
