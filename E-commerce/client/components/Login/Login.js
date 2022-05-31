@@ -3,8 +3,6 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import axios from 'axios'
 
-
-
 const Login = () => {
 const [result, setResult] = useState('')
     const [user,setUser] = useState({
@@ -59,21 +57,20 @@ const router = useRouter()
     
         <Center>
             <Stack>
-            <FormControl >
-                <Stack>
-                    <FormLabel htmlFor="username">Username</FormLabel>
-                    <Input id="username"  onChange={handleChange} name="username" type="text" autoComplete="username" required autoFocus />
-                </Stack>
-                <Stack>
-                    <FormLabel htmlFor="current-password">Password</FormLabel>
-                    <Input onChange={handleChange} id="current-password" name="password" type="password" autoComplete="current-password" required />
-                </Stack>
-                <Button onClick={e=>{handleSubmit(e)}}>Sign in</Button>
-                <Button onClick={e=>{handleSubmitLogin(e)}}>Log in</Button>
-            </FormControl>
-            <Button onClick={handleGoogleLog}>Log in with google</Button>
-        
-    </Stack>
+            {/* <FormControl >
+                    <Stack>
+                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <Input id="username"  onChange={handleChange} name="username" type="text" autoComplete="username" required autoFocus />
+                    </Stack>
+                    <Stack>
+                        <FormLabel htmlFor="current-password">Password</FormLabel>
+                        <Input onChange={handleChange} id="current-password" name="password" type="password" autoComplete="current-password" required />
+                    </Stack>
+                    <Button onClick={e=>{handleSubmit(e)}}>Sign in</Button>
+                    <Button onClick={e=>{handleSubmitLogin(e)}}>Log in</Button>
+                </FormControl> */}
+                <Button onClick={handleGoogleLog}>Log in with google</Button>  
+            </Stack>
     </Center>
     
   )
