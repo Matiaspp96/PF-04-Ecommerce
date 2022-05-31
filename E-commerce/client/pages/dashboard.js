@@ -1,6 +1,6 @@
 import { Center, Text } from "@chakra-ui/react";
 
-function dashboard(){
+export default function Dashboard(){
     return (
         <Center>
             <Text>
