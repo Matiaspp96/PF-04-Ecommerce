@@ -23,9 +23,10 @@ export default function Home() {
 
   return (   
     <Stack alignItems='center'>
-      <Navbar />
+      <Text>Probando Vercel</Text>
+      {/* <Navbar />
       <Cards />
-      <Footer />
+      <Footer /> */}
     </Stack>
   )
 }
