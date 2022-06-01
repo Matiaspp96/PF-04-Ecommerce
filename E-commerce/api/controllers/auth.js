@@ -1,4 +1,5 @@
 const { encrypt, compare } = require("../utils/handleJwt");
+
 const {
   handleHttpError,
   handleErrorResponse,
@@ -60,16 +61,19 @@ const registerCtrl = async (req, res) => {
   }
 };
 
-const logOut = (req,res) => {
+const logOut = (req,res, next) => {
   req.logout(function(err) {  //version nueva requiere pasar un callback
     if (err) { return next(err); }
     req.session.destroy();
-    res.redirect('/api/auth/login/error');
+    
+    res.redirect(process.env.HOST_CLIENT);
   });
-
-}
+   
+};
 
 const logError = (req,res) => {
-  return res.send('Error en log')
-}
+
+   res.send({message : 'error autentacion' });
+
+};
 module.exports = { loginCtrl, registerCtrl, logOut, logError };
