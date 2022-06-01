@@ -74,13 +74,12 @@ const Review = ({reviews, id, postReview}) => {
       }
     
 
-      const addReview = ()=> {
+      const addReview = async()=> {
         try {
-          dispatch(postReview(newReview,id))
-          // const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
-          // setResponse(response)
+          const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
+          setResponse(response)
         } catch (error) {
-          console.log(error)
+          setResponse(error)
         }
         
         setNewReview({
