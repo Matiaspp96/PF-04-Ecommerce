@@ -160,7 +160,7 @@ const Review = ({reviews, id, postReview}) => {
 : 
 <Stack alignItems={'center'}>
   <Box my={'2rem'}>
-    <Text fontStyle={'italic'}>Sorry, theres's no review for this product yet.</Text>
+    <Text fontStyle={'italic'}>Sorry, there are no review for this product yet.</Text>
   </Box>
   <Button
     onClick={onOpen}
