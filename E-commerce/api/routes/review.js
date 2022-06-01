@@ -6,6 +6,6 @@ const validatorReview = require("../validators/review");
 router.get("/", getReviews);
 router.get("/:id", getReview);
 router.post("/:idProduct/", validatorReview, newReview);
-router.delete("/:id", deleteReview ;
+router.delete("/:id", deleteReview);
 
 module.exports = router;

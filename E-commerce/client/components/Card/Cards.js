@@ -76,14 +76,14 @@ export default function Cards() {
 
 
   return (
-    <Box margin={{base: '.5em', md:'1em', lg:'3em'}}>
+    <Box minW='95vw' margin={{base: '.5em', md:'1em', lg:'3em'}}>
       {productos.length ? 
       <Box>
-        <Flex justifyContent={{base:'center', lg:'flex-start'}} ml={{base:0, lg:'1rem'}}>
+        <Flex justifyContent={{base:'center'}} >
           <Flex alignItems={'center'} mb={'1.2rem'}  > 
               <Text fontWeight={'bold'} me={'1rem'} >Sort by:</Text>
-              <Flex>
-                  <Select variant='flushed' placeholder='' onChange={handleSort}>
+              <Flex alignItems={'center'}>
+                  <Select placeholder='' onChange={handleSort}>
                       <option value='MIN'>Lower price</option>
                       <option value='MAX'>Higher price</option>
                       <option value='A-Z'>A-Z</option>
@@ -129,6 +129,8 @@ export default function Cards() {
         </Flex>
         
         <SimpleGrid
+          maxW='95vw'
+          minW='95vw'
           columns={{ base: 2, sm: 3, md: 4, lg:5 }}
           gap={'5'} 
           marginTop='2rem'>
