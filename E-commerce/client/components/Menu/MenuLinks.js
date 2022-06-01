@@ -4,17 +4,20 @@ import {React, useEffect, useState} from 'react'
 import { IoCartOutline } from 'react-icons/io5'
 import { GoClippy } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
-import { getTotalItems } from '../../redux/actions/cart'
+import { getTotalItems } from '../../redux/actions/cart';
+import { useRouter } from 'next/router'
 
 const MenuLinks = ({isOpen}) => {
 
   const dispatch = useDispatch()
   const numberItems = useSelector(state => state.shoppingCartReducer.totalItems)
+  const user = useSelector(state => state.userReducer.user)
 
   useEffect(()=>{
         dispatch(getTotalItems())
     }, [dispatch])
 
+    const router = useRouter()
 
     return (
         <Box
@@ -34,7 +37,13 @@ const MenuLinks = ({isOpen}) => {
                 <Badge pos='absolute' w='1.5em' h='1.5em' display='flex' alignItems='center' justifyContent='center' top='-5px' bgColor='#72B9E5' borderRadius='50%' right='-5px' >{numberItems}</Badge>
                 </Button></Link>
                 {/* <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log in</Button></Link> */}
-                <Link href="/login"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log in</Button></Link>
+                {user._id ? 
+                    <Link href="http://localhost:3001/api/auth/logout" ><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log out</Button></Link>
+                    :
+                    <Link href="/login"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log in</Button></Link> }
+                {user.role === 'admin' && <Link href="/dashboard"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Control Panel</Button></Link> }
+                
+                
             </Stack>
         </Box>
     )

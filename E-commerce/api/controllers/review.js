@@ -51,4 +51,18 @@ const newReview = async (req, res) => {
     handleHttpError(res, "ERROR_CREATE_REVIEW");
   }
 };
-module.exports = { getReview, getReviews, newReview };
+const deleteReview = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const deleteResponse = await reviewModel.findByIdAndRemove({_id:id});
+    const data = {
+      deleted: deleteResponse.matchedCount
+    }
+    
+    res.send({data});
+  }catch(e){
+    console.log(e)
+    handleHttpError(res,"ERROR_DELETE_REVIEW")
+  }
+};
+module.exports = { getReview, getReviews, newReview, deleteReview };

@@ -30,7 +30,7 @@ export default function CardMinimal({ producto }) {
                 fontWeight={300}
                 fontSize={'smaller'}
                 me={'.4em'}>
-                  {rating.rate}
+                  {rating}
               </Text>
               <IoStarSharp size='1em' />
             </Flex>

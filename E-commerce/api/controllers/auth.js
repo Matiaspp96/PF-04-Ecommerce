@@ -65,8 +65,10 @@ const logOut = (req,res, next) => {
   req.logout(function(err) {  //version nueva requiere pasar un callback
     if (err) { return next(err); }
     req.session.destroy();
+
     
     res.redirect(process.env.HOST_CLIENT);
+
   });
    
 };

@@ -4,12 +4,14 @@ import {
   GET_PRODUCTS_BY_NAME,
   ORDER_PRODUCTS,
   FILTER_BY_CATEGORIES,
+  GET_PRODUCT_REVIEWS
 } from '../actions/actionstype.js' 
 
 const initialState = {
   products: [],
   filter: [],
   details: {},
+  reviews: {},
   backUp: [],
 }
 
@@ -43,52 +45,59 @@ export default function productReducer(state= initialState, action) {
     case GET_PRODUCTS_BY_NAME:
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.filter(e => e.stock > 0),
       }
 
-      case ORDER_PRODUCTS:
-        if(action.payload === 'MIN'){
-            let psOrdered = state.products.sort((a,b)=>{
-                if(a.price < b.price) return -1;
-                if(a.price > b.price) return 1;
-                else return 0;
-            });
-            return {
-                ...state,
-                products: psOrdered,
-            }
-        }else if(action.payload === 'MAX') {
+
+    case ORDER_PRODUCTS:
+      if(action.payload === 'MIN'){
           let psOrdered = state.products.sort((a,b)=>{
-              if(a.price < b.price) return 1;
-              if(a.price > b.price) return -1;
+              if(a.price < b.price) return -1;
+              if(a.price > b.price) return 1;
               else return 0;
           });
           return {
               ...state,
               products: psOrdered,
           }
-        }else if(action.payload === 'A-Z') {
-          let psOrdered = state.products.sort((a,b)=>{
-            if(a.name < b.name) return -1;
-            if(a.name > b.name) return 1;
+      }else if(action.payload === 'MAX') {
+        let psOrdered = state.products.sort((a,b)=>{
+            if(a.price < b.price) return 1;
+            if(a.price > b.price) return -1;
             else return 0;
-          });
-          return {
+        });
+        return {
             ...state,
             products: psOrdered,
         }
-        }else if(action.payload === 'Z-A') {
-          let psOrdered = state.products.sort((a,b)=>{
-            if(a.name < b.name) return 1;
-            if(a.name > b.name) return -1;
-            else return 0;
-          });
-          return {
-              ...state,
-              products: psOrdered,
-          }
+      }else if(action.payload === 'A-Z') {
+        let psOrdered = state.products.sort((a,b)=>{
+          if(a.name < b.name) return -1;
+          if(a.name > b.name) return 1;
+          else return 0;
+        });
+        return {
+          ...state,
+          products: psOrdered,
       }
+      }else if(action.payload === 'Z-A') {
+        let psOrdered = state.products.sort((a,b)=>{
+          if(a.name < b.name) return 1;
+          if(a.name > b.name) return -1;
+          else return 0;
+        });
+        return {
+            ...state,
+            products: psOrdered,
+        }
+    }
 
+    case GET_PRODUCT_REVIEWS: 
+    return {
+      ...state,
+      reviews: action.payload
+    }
+    
     default:
       return state;
   }
