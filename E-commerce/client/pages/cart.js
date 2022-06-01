@@ -5,11 +5,15 @@ import { Box, Center, Grid, Stack, Text } from '@chakra-ui/react'
 import { getItemsCart } from '../redux/actions/cart';
 import ProductCart from '../components/Card/ProductsCart';
 import Footer from '../components/Footer/Footer';
-
-
+import cookie from 'js-cookie'
 
 export default function Cart() {
-  const itemsCart = useSelector(state => state.shoppingCartReducer.itemsCart)
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    (async () => {
+      dispatch(getItemsCart())
+    })()
+  })
 
   return (   
     <Stack alignItems='center'>

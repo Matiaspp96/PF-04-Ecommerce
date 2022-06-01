@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch} from 'react-redux';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getDetail, getAllProducts } from '../../redux/actions/products.js'
 import { Box, Divider, NumberInputField, NumberInput, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Tag, IconButton, Container, Stack, Flex, Text, Image, Button, Heading, SimpleGrid, Progress, Center, useBoolean, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { IoHeartSharp, IoStarSharp } from 'react-icons/io5'
@@ -16,10 +16,12 @@ import { handleAddToCartOrFav } from '../../utils/handles';
     const { id } = router.query;
     const dispatch = useDispatch();
     const [flag, setFlag] = useBoolean();
+    const[newReviewAdded,setNewReviewAdded] = useState(false)
 
     useEffect(() => {
       dispatch(getDetail(id))
-    },[dispatch,id]);
+      setNewReviewAdded(false)
+    },[dispatch,id,newReviewAdded]);
 
     const product = useSelector((state)=> state.productReducer.details);
     const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{return ps.category === product.category}).slice(0,5)
@@ -28,7 +30,7 @@ import { handleAddToCartOrFav } from '../../utils/handles';
       if (!sugestions.length){
         dispatch(getAllProducts())
       }
-    },[dispatch, sugestions.length]);
+    },[dispatch,sugestions.length]);
 
     function buyItem(e){
       dispatch(addItemToCart(handleAddToCartOrFav(e,product)))
@@ -52,7 +54,7 @@ import { handleAddToCartOrFav } from '../../utils/handles';
       >
         {product.name
         ?
-        <> 
+        <>
           <SimpleGrid 
             
             me={{base:'1rem', md:'3rem', lg:'5rem'}}
@@ -176,7 +178,7 @@ import { handleAddToCartOrFav } from '../../utils/handles';
                     </Flex>
                   </TabPanel>
                   <TabPanel>
-                    <Review />
+                    <Review reviews={product.reviews} id={id} postReview={setNewReviewAdded}/>
                   </TabPanel>
                 </TabPanels>
               </Tabs>
