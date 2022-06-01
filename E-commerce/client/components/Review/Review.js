@@ -24,15 +24,22 @@ const Review = ({reviews, id, postReview}) => {
     })
 
     useEffect(() => {
-      const newUser = {_id: reducerUser._id, email: reducerUser.email}
-      setNewReview({...newReview, users: newUser })
+      setIndex(0)
+    }, [reviews]);
+
+    useEffect(() => {
+      if(reducerUser._id){
+        const newUser = {_id: reducerUser._id, email: reducerUser.email}
+        setNewReview(oldReview => ({...oldReview, users: newUser}))
+      }
     }, [reducerUser]);
 
     const [charactersUse,setCharactersUse] = useState(0);
     
     useEffect(() => {
-      if(reviews.length){
+      if(reviews.length && reviews[index]){
         dispatch(getProductReviews(reviews[index]))
+        console.log(index, reviews[index])
       }
       },[dispatch,reviews,index]);
 
@@ -75,12 +82,14 @@ const Review = ({reviews, id, postReview}) => {
     
 
       const addReview = async()=> {
-        try {
-          const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
-          setResponse(response)
-        } catch (error) {
-          setResponse(error)
-        }
+        // try {
+        //   const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
+        //   setResponse(response)
+        // } catch (error) {
+        //   setResponse(error)
+        // }
+
+        console.log(newReview)
         
         setNewReview({
           punctuation: 1,
@@ -160,7 +169,7 @@ const Review = ({reviews, id, postReview}) => {
 : 
 <Stack alignItems={'center'}>
   <Box my={'2rem'}>
-    <Text fontStyle={'italic'}>Sorry, theres's no review for this product yet.</Text>
+    <Text fontStyle={'italic'}>Sorry, there are no reviews for this product yet.</Text>
   </Box>
   <Button
     onClick={onOpen}
