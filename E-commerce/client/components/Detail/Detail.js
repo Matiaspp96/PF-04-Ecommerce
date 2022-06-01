@@ -30,7 +30,7 @@ import { handleAddToCartOrFav } from '../../utils/handles';
       if (!sugestions.length){
         dispatch(getAllProducts())
       }
-    },[dispatch]);
+    },[dispatch,sugestions.length]);
 
     function buyItem(e){
       dispatch(addItemToCart(handleAddToCartOrFav(e,product)))
