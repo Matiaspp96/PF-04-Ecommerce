@@ -39,7 +39,6 @@ const Review = ({reviews, id, postReview}) => {
     useEffect(() => {
       if(reviews.length && reviews[index]){
         dispatch(getProductReviews(reviews[index]))
-        console.log(index, reviews[index])
       }
       },[dispatch,reviews,index]);
 
@@ -82,14 +81,12 @@ const Review = ({reviews, id, postReview}) => {
     
 
       const addReview = async()=> {
-        // try {
-        //   const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
-        //   setResponse(response)
-        // } catch (error) {
-        //   setResponse(error)
-        // }
-
-        console.log(newReview)
+        try {
+          const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
+          setResponse(response)
+        } catch (error) {
+          setResponse(error)
+        }
         
         setNewReview({
           punctuation: 1,
