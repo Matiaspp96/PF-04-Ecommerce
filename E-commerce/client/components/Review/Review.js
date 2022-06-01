@@ -2,16 +2,17 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import { IoStarSharp } from 'react-icons/io5'
-import { getProductReviews } from '../../redux/actions/products';
+import { getProductReviews,postReview } from '../../redux/actions/products';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Box, FormHelperText, Radio, RadioGroup, Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, SimpleGrid, Grid, GridItem } from '@chakra-ui/react'
+import { BASEURL } from '../../redux/actions/products';
 
 const Review = ({reviews, id, postReview}) => {
     const [index,setIndex] = useState(0);
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const reducerUser = useSelector((state)=> state.userReducer.user);
-    const [response,setResponse] = useState('')
+    // const [response,setResponse] = useState('')
 
     const [newReview,setNewReview] = useState({
       punctuation: 1,
@@ -73,12 +74,13 @@ const Review = ({reviews, id, postReview}) => {
       }
     
 
-      const addReview = async()=> {
+      const addReview = ()=> {
         try {
-          const response = await axios.post(`http://localhost:3001/api/reviews/${id}/`, newReview)
-          setResponse(response)
+          dispatch(postReview(newReview,id))
+          // const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
+          // setResponse(response)
         } catch (error) {
-          setResponse(error)
+          console.log(error)
         }
         
         setNewReview({
@@ -90,7 +92,7 @@ const Review = ({reviews, id, postReview}) => {
           }
         })
         postReview(true)
-        console.log(response)
+        // console.log(response)
         onClose()
       }
     
