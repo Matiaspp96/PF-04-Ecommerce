@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import { IoStarSharp } from 'react-icons/io5'
-import { getProductReviews,postReview } from '../../redux/actions/products';
+import { getProductReviews } from '../../redux/actions/products';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Box, FormHelperText, Radio, RadioGroup, Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, SimpleGrid, Grid, GridItem } from '@chakra-ui/react'
 import { BASEURL } from '../../redux/actions/products';
@@ -12,7 +12,7 @@ const Review = ({reviews, id, postReview}) => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const reducerUser = useSelector((state)=> state.userReducer.user);
-    // const [response,setResponse] = useState('')
+    const [response,setResponse] = useState('')
 
     const [newReview,setNewReview] = useState({
       punctuation: 1,
@@ -92,7 +92,7 @@ const Review = ({reviews, id, postReview}) => {
           }
         })
         postReview(true)
-        // console.log(response)
+        console.log(response)
         onClose()
       }
     
