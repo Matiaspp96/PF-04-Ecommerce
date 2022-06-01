@@ -31,7 +31,7 @@ export default function Home() {
   }, [dispatch, user]);
 
   /*----- Cart -----*/
-console.log(ReducerUser)
+// console.log(ReducerUser)
   return (   
     <Stack alignItems='center'>
       <Navbar />
