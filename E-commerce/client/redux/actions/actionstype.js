@@ -1,7 +1,9 @@
 // Products
 export const GET_PRODUCTS = 'GET_PRODUCTS'
-export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const ORDER_PRODUCTS = 'ORDER_PRODUCTS'
+export const ADD_PRODUCT = 'ADD_PRODUCT'
+export const CREATE_PRODUCT = 'CREATE_PRODUCT'
+export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 
 //SearchBar
 export const GET_PRODUCTS_BY_NAME = 'GET_PRODUCTS_BY_NAME'

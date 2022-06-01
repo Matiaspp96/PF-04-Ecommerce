@@ -18,7 +18,6 @@ export default function Cards() {
   let productos = useSelector((state)=> state.productReducer.products)
 
   const [, setCategories] = useState('')
-  const totalCategories = useSelector((state) => state.productReducer.products);
   
   
   useEffect(() => {
@@ -97,9 +96,11 @@ export default function Cards() {
                     onChange={handleFilterByCategories}
                     >
                         <option value='All'>All</option>
-                        <option value='Doglovers'>Doglovers</option>
+                        <option value='doglovers'>doglovers</option>
                         <option value='catlovers'>catlovers</option>
-
+                        <option value='coat'>coat</option>
+                        <option value='T-SHIRT'>T-SHIRT</option>
+                        <option value='Harness'>Harness</option>
                 </Select>
               </Flex>
           </Flex>
