@@ -46,7 +46,7 @@ const router = useRouter()
     }
 
     function handleGoogleLog(){
-        router.push(`${BASEURL}auth/login/google`)
+        router.push(`${BASEURL}/auth/login/google`)
     }
 
     function handleChange(e){
