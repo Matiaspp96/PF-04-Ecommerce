@@ -19,10 +19,6 @@ const passport = require('passport');
 const sessionSecret = process.env.SESSION_SECRET;
 const port = process.env.PORT || 3000;
 
-app.use('/', (req, res) =>{
-  res.status(200).send("<h2>Deploy Listo</h2>")
-})
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', process.env.HOST_CLIENT); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -56,6 +52,10 @@ app.use(passport.initialize()); //iniciamos passport
 app.use(passport.session());  //se ejecuta sesion para guardar los datos del user
 
 app.use("/api", require("./routes"));
+
+app.use('/', (req, res) =>{
+  res.status(200).send("<h2>Deploy Listo</h2>")
+})
 
 app.listen(port, () =>
   console.log(`linsten port ${port}`)
