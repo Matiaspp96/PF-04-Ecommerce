@@ -45,8 +45,7 @@ const Search = () => {
         />
         <Button 
           borderRadius='15px' 
-          onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>
-          
+          onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>      
         </Button>
       </InputGroup>
     </Stack>
