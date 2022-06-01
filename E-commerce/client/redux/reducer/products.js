@@ -30,7 +30,7 @@ export default function productReducer(state= initialState, action) {
       }
 
     case FILTER_BY_CATEGORIES:
-    const todo = state.filter;
+    const todo = state.filter
     const categoriesProducts = 
       action.payload === 'All'
         ? todo
@@ -41,19 +41,9 @@ export default function productReducer(state= initialState, action) {
         }
         
     case GET_PRODUCTS_BY_NAME:
-      const nameSearch = state.products.filter((e) => {
-        return e.name === action.payload;
-      });
-      if (nameSearch.length !== 0) {
-        return {
-          ...state,
-          backUp: nameSearch,
-        };
-      } else {
-        return {
-          ...state,
-          backUp: false
-        }
+      return {
+        ...state,
+        products: action.payload,
       }
 
       case ORDER_PRODUCTS:
