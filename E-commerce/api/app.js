@@ -5,7 +5,10 @@ const app = express();
 const dbConnectNoSql = require("./config/mongo");
 const cookieParser = require('cookie-parser');
 const morgan= require('morgan');
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000", // <-- location of the react app were connecting to
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 dbConnectNoSql();
@@ -25,6 +28,7 @@ app.use((req, res, next) => {
 });
 //strategy passport Google-Auth
 require('./auth-passport/strategis/google-auth');
+require('./auth-passport/strategis/local-auth');
 
 const store = new MongoDBStore({
   uri: process.env.uri,

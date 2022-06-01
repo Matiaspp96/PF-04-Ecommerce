@@ -23,21 +23,24 @@ router.get("/:id", validateId, getItem);
 router.get("/",getItems);
 router.post(
   "/",
-  authMiddleware,
+  //authMiddleware,
+  isAuthenticated,
   authRolMiddleware(["admin"]),
   validateObjectDataCreate,
   createItem
 );
 router.put(
   "/:id",
-  authMiddleware,
+  //authMiddleware,
+  isAuthenticated,
   authRolMiddleware(["admin"]),
   validateObjectDataUpdate,
   updateItem
 );
 router.delete(
   "/:id",
-  authMiddleware,
+  //authMiddleware,
+  isAuthenticated,
   authRolMiddleware(["admin"]),
   validateId,
   deleteItem
