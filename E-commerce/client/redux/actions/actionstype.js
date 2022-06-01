@@ -35,3 +35,6 @@ export const GET_TOTAL_ITEMS = "GET_TOTAL_ITEMS"
 //User
 export const GET_USER_DATA = "GET_USER_DATA"
 
+//Reviews
+export const GET_PRODUCT_REVIEWS = 'GET_PRODUCT_REVIEW'
+
