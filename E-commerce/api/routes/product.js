@@ -1,6 +1,6 @@
 const { Router } = require("express");
 //midleware para validad auth de google
-const {isAuthenticated} = require('../validators/auth');
+const { isAuthenticated } = require("../validators/auth");
 const router = Router();
 const authMiddleware = require("../middleware/auth");
 const authRolMiddleware = require("../middleware/rol");
@@ -20,7 +20,7 @@ const {
 
 router.get("/", getItembyName);
 router.get("/:id", validateId, getItem);
-router.get("/",getItems);
+router.get("/", getItems);
 router.post(
   "/",
   //authMiddleware,

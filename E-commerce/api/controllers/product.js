@@ -5,6 +5,7 @@ const {
 } = require("../utils/handleError");
 
 //byname
+
 const getItembyName = async (req, res) => {
   const { name } = req.query;
   try {
@@ -28,18 +29,15 @@ const getItembyName = async (req, res) => {
       }
     }
   } catch (err) {
-    next(err);
-    console.log(err);
+    handleHttpError(res, "ERROR_GET_ITEM_BY_NAME");
   }
 };
 
 const getItems = async (req, res) => {
- 
   try {
     const data = await productModel.find();
-    res.send({ data,  });
+    res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_GET_ITEMS");
   }
 };
@@ -67,7 +65,6 @@ const createItem = async (req, res) => {
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_CREATE_ITEMS");
-    console.log(e);
   }
 };
 
@@ -92,7 +89,6 @@ const deleteItem = async (req, res) => {
 
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_DELETE_ITEM");
   }
 };
