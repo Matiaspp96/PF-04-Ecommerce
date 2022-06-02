@@ -2,22 +2,25 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
+
 const dbConnectNoSql = require("./config/mongo");
 const cookieParser = require('cookie-parser');
 const morgan= require('morgan');
-app.use(cors());
+app.use(cors({
+  origin: process.env.HOST_CLIENT, // <-- location of the react app were connecting to
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 dbConnectNoSql();
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
-const sessionSecret = process.env.SESSION_SECRET
-const uriFrontHome = process.env.frontUrl;
+const sessionSecret = process.env.SESSION_SECRET;
 const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', uriFrontHome); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Origin', process.env.HOST_CLIENT); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -25,6 +28,7 @@ app.use((req, res, next) => {
 });
 //strategy passport Google-Auth
 require('./auth-passport/strategis/google-auth');
+//require('./auth-passport/strategis/local-auth');
 
 const store = new MongoDBStore({
   uri: process.env.uri,

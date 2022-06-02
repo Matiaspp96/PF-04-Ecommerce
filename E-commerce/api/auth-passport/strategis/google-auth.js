@@ -4,6 +4,7 @@ const GOOGLE_CLIENT_ID= process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const passport = require('passport');
 
+
 passport.serializeUser((user,cb)=>{
    return cb(null,user._id);
 });
@@ -19,7 +20,7 @@ passport.deserializeUser( async(req,id,cb)=>{
 passport.use('google',new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL:"http://localhost:3001/api/auth/login/google/callback",
+    callbackURL:`${process.env.API_URL}/auth/login/google/callback`,
     scope: [ 'openid', 'email', 'profile' ],
     passReqToCallback: true
     

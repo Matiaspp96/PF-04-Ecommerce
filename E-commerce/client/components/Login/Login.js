@@ -2,8 +2,7 @@ import { Button, Center, FormControl, FormLabel, Input, Stack } from '@chakra-ui
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import axios from 'axios'
-
-
+import { BASEURL } from '../../redux/actions/products'
 
 const Login = () => {
 const [result, setResult] = useState('')
@@ -47,7 +46,7 @@ const router = useRouter()
     }
 
     function handleGoogleLog(){
-        router.push('http://localhost:3001/api/auth/login/google')
+        router.push(`${BASEURL}/auth/login/google`)
     }
 
     function handleChange(e){
@@ -59,21 +58,20 @@ const router = useRouter()
     
         <Center>
             <Stack>
-            <FormControl >
-                <Stack>
-                    <FormLabel htmlFor="username">Username</FormLabel>
-                    <Input id="username"  onChange={handleChange} name="username" type="text" autoComplete="username" required autoFocus />
-                </Stack>
-                <Stack>
-                    <FormLabel htmlFor="current-password">Password</FormLabel>
-                    <Input onChange={handleChange} id="current-password" name="password" type="password" autoComplete="current-password" required />
-                </Stack>
-                <Button onClick={e=>{handleSubmit(e)}}>Sign in</Button>
-                <Button onClick={e=>{handleSubmitLogin(e)}}>Log in</Button>
-            </FormControl>
-            <Button onClick={handleGoogleLog}>Log in with google</Button>
-        
-    </Stack>
+            {/* <FormControl >
+                    <Stack>
+                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <Input id="username"  onChange={handleChange} name="username" type="text" autoComplete="username" required autoFocus />
+                    </Stack>
+                    <Stack>
+                        <FormLabel htmlFor="current-password">Password</FormLabel>
+                        <Input onChange={handleChange} id="current-password" name="password" type="password" autoComplete="current-password" required />
+                    </Stack>
+                    <Button onClick={e=>{handleSubmit(e)}}>Sign in</Button>
+                    <Button onClick={e=>{handleSubmitLogin(e)}}>Log in</Button>
+                </FormControl> */}
+                <Button pos='relative' top='10rem' onClick={handleGoogleLog}>Log in with google</Button>  
+            </Stack>
     </Center>
     
   )

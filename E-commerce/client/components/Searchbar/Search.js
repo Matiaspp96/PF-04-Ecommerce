@@ -31,7 +31,7 @@ const Search = () => {
   }
 
   return (
-    <Stack spacing={4} width='50%' >
+    <Stack spacing={4} width='50%'  ali={{base:'center'}}>
       <InputGroup>
         <Input 
         onKeyDown = {(e) => handleKeyDown(e)}
@@ -43,7 +43,10 @@ const Search = () => {
         onChange = {(e) => handleInputProducts(e)}
         value = {name}
         />
-        <Button onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/></Button>
+        <Button 
+          borderRadius='15px' 
+          onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>      
+        </Button>
       </InputGroup>
     </Stack>
   )
