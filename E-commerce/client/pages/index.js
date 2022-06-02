@@ -21,7 +21,7 @@ export default function Home() {
   
   useEffect( () => {
     (async()=>{
-        const userResponse = await axios.get(`${BASEURL}api/auth/data`, { withCredentials: true });
+        const userResponse = await axios.get(`${BASEURL}/api/auth/data`, { withCredentials: true });
         setUser(userResponse.data)
     })();
   },[]);
