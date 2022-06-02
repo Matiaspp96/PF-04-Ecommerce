@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Image from 'next/image'
 import {
   Button,
   ButtonGroup,
@@ -8,10 +9,10 @@ import {
   Input,
   Stack,
   Text,
-  Img,
+  Flex,
 } from '@chakra-ui/react'
-import Image from 'next/image'
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+
+import { FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
 
 
 export default function Footer (){
@@ -24,10 +25,9 @@ export default function Footer (){
       justify="space-between"
       py={{ base: '12', md: '16' }}
     >
-      <Stack spacing={{ base: '6', md: '8' }} align="start">
-        {/* <Image src='./Logo.png' alt = 'Logo Ecommerce'/> */}
-        <Text color="muted">Pet Elegant - Logo</Text>
-      </Stack>
+      <Flex spacing={{ base: '6', md: '8' }} align="start">
+        <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
+      </Flex>
       <Stack
         direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
         spacing={{ base: '12', md: '8' }}
@@ -87,11 +87,10 @@ export default function Footer (){
           aria-label="LinkedIn"
           icon={<FaLinkedin fontSize="1.25rem" />}
         />
-        <IconButton as="a" href="#" aria-label="GitHub" icon={<FaGithub fontSize="1.25rem" />} />
+        <IconButton as="a" href="#" aria-label="GitHub" icon={<FaInstagram fontSize="1.25rem" />} />
         <IconButton as="a" href="#" aria-label="Twitter" icon={<FaTwitter fontSize="1.25rem" />} />
       </ButtonGroup>
     </Stack>
   </Container>
   )
 }
-
