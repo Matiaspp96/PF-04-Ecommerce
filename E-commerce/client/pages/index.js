@@ -19,16 +19,16 @@ export default function Home() {
   const dispatch = useDispatch();
   const ReducerUser = useSelector((state)=> state.userReducer.user);
   
-  useEffect( () => {
-    (async()=>{
-        const userResponse = await axios.get(`${BASEURL}/auth/data`, { withCredentials: true });
-        setUser(userResponse.data)
-    })();
-  },[]);
+  // useEffect( () => {
+  //   (async()=>{
+  //       const userResponse = await axios.get(`${BASEURL}/auth/data`, { withCredentials: true });
+  //       setUser(userResponse.data)
+  //   })();
+  // },[]);
   
-  useEffect(() => {
-    dispatch(getUserData(user))
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   dispatch(getUserData(user))
+  // }, [dispatch, user]);
 
   /*----- Cart -----*/
 // console.log(ReducerUser)
