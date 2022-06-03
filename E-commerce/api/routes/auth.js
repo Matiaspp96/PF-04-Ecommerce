@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerCtrl, loginCtrl, logOut, logError } = require("../controllers/auth");
+const { registerCtrl, loginCtrl, logOut, logError,forgotPassword,newPassword } = require("../controllers/auth");
 const { validateRegister, validateLogin, isAuthenticated } = require("../validators/auth");
 const {loginGoogle, loginCallBackGoogle} = require('../controllers/google-auth');
 const { localAuthSignin, localAuthSignup } = require('../controllers/local-auth')
@@ -24,5 +24,9 @@ router.get('/data',isAuthenticated,(req,res)=>{
 //logout 
 router.get("/logout", logOut);
 router.get("/login/error", logError );
+
+
+router.post("/olvide-password", forgotPassword);
+router.put("/olvide-password/:token",newPassword);
 
 module.exports = router;
