@@ -3,7 +3,7 @@ const router = express.Router();
 const { registerCtrl, loginCtrl, logOut, logError,forgotPassword,newPassword } = require("../controllers/auth");
 const { validateRegister, validateLogin, isAuthenticated } = require("../validators/auth");
 const {loginGoogle, loginCallBackGoogle} = require('../controllers/google-auth');
-const { localAuthSignin, localAuthSignup } = require('../controllers/local-auth')
+const { localAuthSignin, localAuthSignup } = require('../controllers/local-auth');
 
 router.post("/register", validateRegister, registerCtrl);
 router.post("/login", validateLogin, loginCtrl);
@@ -23,7 +23,7 @@ router.get('/data',isAuthenticated,(req,res)=>{
 
 //logout 
 router.get("/logout", logOut);
-router.get("/login/error", logError );
+router.get("/login/error", logError);
 
 
 router.post("/olvide-password", forgotPassword);

@@ -7,7 +7,8 @@ import {
     ORDER_PRODUCTS,
     CREATE_PRODUCT,
     UPDATE_PRODUCT,
-    DELETE_PRODUCT
+    DELETE_PRODUCT,
+    GET_PRODUCT_REVIEWS
 } from "./actionstype";
 
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
@@ -122,6 +123,24 @@ export const deleteProduct = (id) => async (dispatch) => {
       text: 'We cant find these products',
       icon: 'error',
       confirmButtonText: 'Cool'
+    })
+  }
+};
+
+export const getProductReviews = (id)=> async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASEURL}/reviews/${id}`);
+    return dispatch ({
+      type: GET_PRODUCT_REVIEWS,
+      payload: response.data.data
+    })
+  } catch (error) {
+    console.log(error)
+    alert.fire({
+      title: 'Error!',
+      text: 'We could not find any reviews for this product',
+      icon: 'error',
+      confirmButtonText: 'Close'
     })
   }
 }

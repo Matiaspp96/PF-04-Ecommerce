@@ -4,12 +4,14 @@ import {
   GET_PRODUCTS_BY_NAME,
   ORDER_PRODUCTS,
   FILTER_BY_CATEGORIES,
+  GET_PRODUCT_REVIEWS
 } from '../actions/actionstype.js' 
 
 const initialState = {
   products: [],
   filter: [],
   details: {},
+  reviews: {},
   backUp: [],
 }
 
@@ -90,6 +92,12 @@ export default function productReducer(state= initialState, action) {
         }
     }
 
+    case GET_PRODUCT_REVIEWS: 
+    return {
+      ...state,
+      reviews: action.payload
+    }
+    
     default:
       return state;
   }
