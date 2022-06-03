@@ -35,7 +35,8 @@ const Search = () => {
       <InputGroup>
         <Input 
         onKeyDown = {(e) => handleKeyDown(e)}
-        borderRadius='15px' 
+        borderStartRadius='15px' 
+        borderEndRadius='0' 
         bgColor='#FAFAFC'
         border maxWidth='40em' 
         type='text' 
@@ -44,7 +45,9 @@ const Search = () => {
         value = {name}
         />
         <Button 
-          borderRadius='15px' 
+          borderStartRadius='0' 
+          borderEndRadius='15px' 
+          textColor='blackAlpha.800'
           onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>      
         </Button>
       </InputGroup>
