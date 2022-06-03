@@ -11,6 +11,7 @@ import { Stack,Flex,Text,Select  } from '@chakra-ui/react'
 import { addItemToCart } from '../redux/actions/cart.js'
 import { getSession } from 'next-auth/react';
 import { getUserData } from '../redux/actions/user.js'
+import Banner from '../components/Banner/Banner.js'
 
 
 export default function Home() {
@@ -35,6 +36,7 @@ export default function Home() {
   return (   
     <Stack alignItems='center'>
       <Navbar />
+      <Banner/>
       <Cards />
       <Footer />
     </Stack>

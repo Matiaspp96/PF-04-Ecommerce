@@ -8,6 +8,7 @@ import { orderProducts } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products';
 import {filterByCategory} from "../../redux/actions/categories"
+import MenuToggle from '../Menu/MenuToggle'
 
 
 export default function Cards() {
@@ -16,6 +17,8 @@ export default function Cards() {
   const dispatch = useDispatch()
   const [sort,setSort] = useState('');
   let productos = useSelector((state)=> state.productReducer.products)
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
   const [, setCategories] = useState('')
   
@@ -78,45 +81,47 @@ export default function Cards() {
   return (
     <Box minW='95vw' margin={{base: '.5em', md:'1em', lg:'3em'}}>
       {productos.length ? 
-      <Box>
-        <Flex justifyContent={{base:'center'}} >
-          <Flex alignItems={'center'} mb={'1.2rem'}  > 
-              <Text fontWeight={'bold'} me={'1rem'} >Sort by:</Text>
-              <Flex alignItems={'center'}>
-                  <Select placeholder='' onChange={handleSort}>
-                      <option value='MIN'>Lower price</option>
-                      <option value='MAX'>Higher price</option>
-                      <option value='A-Z'>A-Z</option>
-                      <option value='Z-A'>Z-A</option>
-                  </Select>
-                  {/* <Tag> Categories</Tag> */}
-                  <Text fontWeight={'bold'} me={'1rem'} >Categories:</Text>
-                  <Select
-                    placeholder=""
-                    onChange={handleFilterByCategories}
-                    >
-                        <option value='All'>All</option>
-                        <option value='doglovers'>doglovers</option>
-                        <option value='catlovers'>catlovers</option>
-                        <option value='coat'>coat</option>
-                        <option value='T-SHIRT'>T-SHIRT</option>
-                        <option value='Harness'>Harness</option>
-                </Select>
-              </Flex>
-          </Flex>
+      <Stack alignItems='center'>
+        <Flex justifyContent={{base:'center'}} alignItems={'center'} mb={'1.2rem'} 
+        h='3em'
+        gap='1.5em'
+        flexDir={{base:'column', lg:'row'}} 
+        whiteSpace='nowrap' >
+            <Text fontWeight={'bold'}>Sort by:</Text>
+            <Select placeholder='' onChange={handleSort}>
+                <option value='MIN'>Lower price</option>
+                <option value='MAX'>Higher price</option>
+                <option value='A-Z'>A-Z</option>
+                <option value='Z-A'>Z-A</option>
+            </Select>
+            {/* <Tag> Categories</Tag> */}
+            <Text fontWeight={'bold'}>Categories:</Text>
+            <Select
+              placeholder=""
+              onChange={handleFilterByCategories}
+              >
+                  <option value='All'>All</option>
+                  <option value='doglovers'>doglovers</option>
+                  <option value='catlovers'>catlovers</option>
+                  <option value='coat'>coat</option>
+                  <option value='T-SHIRT'>T-SHIRT</option>
+                  <option value='Harness'>Harness</option>
+          </Select>
+        {/* <MenuToggle toggle={toggle} isOpen={isOpen} /> */}
         </Flex>
         
-        <Flex justifyContent={'center'}>
+        <Flex justifyContent={'center'} flexDir='row' flexWrap='wrap'>
           <Button
             me={'1em'} 
             onClick={prevClick} 
             leftIcon={<FaChevronLeft/>} 
             colorScheme='blue' 
             variant='solid'
+            size='sm'
             isDisabled={currentPage === 1 ? true : false}>
           </Button>
           
-          {buttons.map((btn,id) => <Button key={id} me={'1em'} onClick={handleClick}>{btn}</Button>)}
+          {buttons.map((btn,id) => <Button key={id} me={'1em'} size='sm' onClick={handleClick}>{btn}</Button>)}
           
           <Button 
             // me={{base:'0', xl:'1em'}}
@@ -124,6 +129,7 @@ export default function Cards() {
             rightIcon={<FaChevronRight />}
             colorScheme='blue'
             variant={'solid'}
+            size='sm'
             isDisabled={currentPage === pages ? true : false}>  
           </Button>
         </Flex>
@@ -131,14 +137,14 @@ export default function Cards() {
         <SimpleGrid
           maxW='95vw'
           minW='95vw'
-          columns={{ base: 2, sm: 3, md: 4, lg:5 }}
+          columns={{ base: 2, sm: 3, md: 4, lg:5, xl:5 }}
           gap={'5'} 
           marginTop='2rem'>
             {getPaginatedProducts().map(ps=>{ return (
               <Card key={ps._id} producto={ps}></Card>
             )})}
         </SimpleGrid>
-      </Box> :
+      </Stack> :
       <Center h={'100vh'}>
         <Stack>
           <Heading>Just a moment</Heading>

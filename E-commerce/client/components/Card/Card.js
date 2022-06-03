@@ -109,8 +109,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
           <Center>
             <Image 
               src={image} 
-              alt={name}  
-              boxSize={{base:'80px', md:'100px', lg:'150px'}}
+              alt={name} 
+              backgroundSize='cover'
+              boxSize={{base:'80px', md:'100px', lg:'190px'}}
               alignItems='center'/>
           </Center>
 
@@ -123,7 +124,8 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <a>
                   <Text 
                     fontSize='xl' 
-                    fontWeight='bold'>
+                    fontWeight='bold'
+                    noOfLines={2}>
                       {name}
                   </Text>
                 </a>
