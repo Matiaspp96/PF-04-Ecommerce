@@ -11,7 +11,11 @@ import {
     GET_PRODUCT_REVIEWS
 } from "./actionstype";
 
+<<<<<<< HEAD
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}api`;
+=======
+export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
+>>>>>>> 56eecf2d20b2c2bd0df7dbf2f7e105c4a9213391
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {

@@ -20,7 +20,7 @@ const {
 
 router.get("/", getItembyName);
 router.get("/:id", validateId, getItem);
-router.get("/", getItems);
+router.get("/",getItems);
 router.post(
   "/",
   //authMiddleware,
