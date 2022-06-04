@@ -32,7 +32,7 @@ export default function ProductCart() {
         gap={5} >
         {
           productsCart?.map(ps=>{ return (
-            <Card key={ps._id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>
+            <Card key={ps.product._id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>
             )})
           }
         </Grid>
