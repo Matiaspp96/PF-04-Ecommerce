@@ -13,7 +13,7 @@ export default function BannerPets (){
     const carousel = useRef()
     const scroll = keyframes`
     0% { transform: translateX(-${posX}); }
-    100% { transform: translateX(calc(-250px * 10)) }
+    100% { transform: translateX(calc(-250px * 5)) }
     `;
     const mixin = `
     white-gradient { background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);}
@@ -30,8 +30,8 @@ export default function BannerPets (){
 
     function handleInactive(e, x){
         e.preventDefault();
+        setPosX(x)
         setTimeout(()=>{
-            setPosX(x)
             setIsActive(false)
         }, 5000)
     }

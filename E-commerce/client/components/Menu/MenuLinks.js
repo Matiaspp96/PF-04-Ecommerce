@@ -28,7 +28,8 @@ const MenuLinks = ({isOpen}) => {
             flexDir='row'
             spacing={4}
             align="center"
-            justify={["space-between", "space-between", "flex-end", "flex-end"]}
+            gap={{lg:'1em'}}
+            justify={["space-between", "space-between", "flex-end", 'center']}
             direction={["column", "row", "row", "row"]}
             pt={[4, 4, 0, 0]}>
                 <Text><Link href="/">Home</Link></Text>
