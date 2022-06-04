@@ -79,14 +79,15 @@ export default function Cards() {
 
 
   return (
-    <Box minW='95vw' margin={{base: '.5em', md:'1em', lg:'3em'}}>
+    <Box minW='95vw' margin={{base: '.5em', md:'1em', lg:'0 1em'}}>
       {productos.length ? 
       <Stack alignItems='center'>
-        <Flex justifyContent={{base:'center'}} alignItems={'center'} mb={'1.2rem'} 
-        h='3em'
+        <Flex justifyContent={{base:'center'}} mb={'1.2rem'} 
+        h={{base:'8em', lg:'3em'}}
         gap='1.5em'
         flexDir={{base:'column', lg:'row'}} 
         whiteSpace='nowrap' >
+          <Flex alignItems={'center'} gap='1.5em'>
             <Text fontWeight={'bold'}>Sort by:</Text>
             <Select placeholder='' onChange={handleSort}>
                 <option value='MIN'>Lower price</option>
@@ -94,7 +95,9 @@ export default function Cards() {
                 <option value='A-Z'>A-Z</option>
                 <option value='Z-A'>Z-A</option>
             </Select>
+          </Flex>
             {/* <Tag> Categories</Tag> */}
+          <Flex alignItems={'center'} gap='1.5em' >
             <Text fontWeight={'bold'}>Categories:</Text>
             <Select
               placeholder=""
@@ -106,7 +109,8 @@ export default function Cards() {
                   <option value='coat'>coat</option>
                   <option value='T-SHIRT'>T-SHIRT</option>
                   <option value='Harness'>Harness</option>
-          </Select>
+            </Select>
+          </Flex>
         {/* <MenuToggle toggle={toggle} isOpen={isOpen} /> */}
         </Flex>
         

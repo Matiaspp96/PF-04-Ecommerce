@@ -1,4 +1,4 @@
-import { Box, Button, LightMode, Stack, Text, Select, Badge } from '@chakra-ui/react'
+import { Box, Button, LightMode, Stack, Text, Select, Badge, Flex } from '@chakra-ui/react'
 import Link from 'next/link'
 import {React, useEffect, useState} from 'react'
 import { IoCartOutline } from 'react-icons/io5'
@@ -6,6 +6,7 @@ import { GoClippy } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalItems } from '../../redux/actions/cart';
 import { useRouter } from 'next/router'
+import ColorModeSwitch from '../ColorMode/ColorSwitch';
 
 const MenuLinks = ({isOpen}) => {
 
@@ -23,15 +24,17 @@ const MenuLinks = ({isOpen}) => {
         <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
         flexBasis={{ base: "100%", md: "auto" }} >
-        <Stack
+        <Flex
+            flexDir='row'
             spacing={4}
             align="center"
-            justify={["center", "space-between", "flex-end", "flex-end"]}
+            justify={["space-between", "space-between", "flex-end", "flex-end"]}
             direction={["column", "row", "row", "row"]}
             pt={[4, 4, 0, 0]}>
                 <Text><Link href="/">Home</Link></Text>
                 {/* <Text><Link href="/product/categories">Categories</Link></Text> */}
                 <Text><Link href="/favorites">Favorites</Link></Text>
+                <ColorModeSwitch/>
                 {/* <Link href="/orders"><Button w='fit-content' borderRadius='15px'><GoClippy size='1.5em' />Orders</Button></Link> */}
                 <Link href="/cart"><Button pos='relative' color='blackAlpha.800' borderRadius='50%' p='0'><IoCartOutline size='2em'/>
                 <Badge pos='absolute' w='1.5em' h='1.5em' display='flex' alignItems='center' justifyContent='center' top='-5px' bgColor='#72B9E5' borderRadius='50%' right='-5px' >{numberItems}</Badge>
@@ -44,7 +47,7 @@ const MenuLinks = ({isOpen}) => {
                 {user.role === 'admin' && <Link href="/dashboard"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Control Panel</Button></Link> }
                 
                 
-            </Stack>
+            </Flex>
         </Box>
     )
   }

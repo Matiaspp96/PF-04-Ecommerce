@@ -34,11 +34,11 @@ export default function Home() {
   /*----- Cart -----*/
 // console.log(ReducerUser)
   return (   
-    <Stack alignItems='center'>
+    <Flex flexDir='column' alignItems='center'>
       <Navbar />
       <Banner/>
       <Cards />
       <Footer />
-    </Stack>
+    </Flex>
   )
 }

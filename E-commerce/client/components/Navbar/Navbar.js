@@ -23,7 +23,7 @@ const Navbar = (props) => {
                 <Link href='/'>
                 Pet Elegant
                 </Link>
-                <Search isOpen={isOpen}/>
+                <Search toggle={toggle} isOpen={isOpen}/>
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <MenuLinks isOpen={isOpen} />
             </NavBarContainer>
