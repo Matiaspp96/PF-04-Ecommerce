@@ -2,13 +2,14 @@ import { Text, Stack, Button, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/Navbar/Sidebar";
+import cookie from 'js-cookie'
 
 const Dashboard = () => {
   const router = useRouter();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
+    const role = cookie.get("role");
     setUser(role);
   });
 
