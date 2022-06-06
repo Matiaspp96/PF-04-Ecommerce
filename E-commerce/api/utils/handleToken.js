@@ -6,16 +6,16 @@ const tokenSign = async (user) => {
       _id: user._id,
       role: user.role,
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "8940h",//1 year
+      expiresIn: "48h",//1 year
     }
   );
 };
 
 const verifyToken = async (token) => {
   try {
-    return await jwt.verify(token, process.env.JWT_SECRET);
+    return await jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET);
   } catch (e) {
     return null;
   }
