@@ -112,10 +112,9 @@ const addCategoryProduct = async (req, res) => {
       { _id: idProduct },
       { $push: { category: idCategory } }
     );
-    console.log(`Esto es product ${JSON.stringify(data)}`);
+
     res.send("The category has been successfully added to the product." + data);
   } catch (err) {
-    console.log(err);
     handleHttpError(res, "ERROR_ADD_ITEM_CATEGORY");
   }
 };

@@ -44,11 +44,6 @@ const createItem = async (req, res) => {
   } = req.body;
   console.log("products", products);
   try {
-    /* const { body } = req.body;
-    const data = await orderModel.create(body);
-    res.status(201);
-    res.send({ data }); */
-
     const newOrder = new orderModel({
       phone,
       shipping,
