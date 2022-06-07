@@ -119,6 +119,7 @@ const newPassword = async (req, res) => {
   }
 };
 const logDataUserOauth = async (req,res) => {
+ if(req.user){
   let token = await tokenSign(req.user);
   const data = {
    token: token,
@@ -126,6 +127,7 @@ const logDataUserOauth = async (req,res) => {
  };
    return res.json(data)
    
+}
 };
 
 module.exports = { loginCtrl, registerCtrl, logOut, logError, logDataUserOauth, forgotPassword, newPassword };
