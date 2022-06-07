@@ -1,9 +1,8 @@
 const { Router } = require("express");
-//midleware para validad auth de google
-const {isAuthenticated} = require('../validators/auth');
+const {protectRoute, isAdmin} = require('../middleware/newAuth');
 const router = Router();
 const authMiddleware = require("../middleware/auth");
-const authRolMiddleware = require("../middleware/rol");
+//const authRolMiddleware = require("../middleware/rol");
 const {
   validateId,
   validateObjectDataCreate,
@@ -17,31 +16,28 @@ const {
   updateItem,
   deleteItem,
 } = require("../controllers/product");
-
+router.get("/",getItems);
 router.get("/", getItembyName);
 router.get("/:id", validateId, getItem);
-router.get("/",getItems);
+
 router.post(
   "/",
-  //authMiddleware,
-  isAuthenticated,
-  authRolMiddleware(["admin"]),
+  authMiddleware,
+  isAdmin,
   validateObjectDataCreate,
   createItem
 );
 router.put(
   "/:id",
-  //authMiddleware,
-  isAuthenticated,
-  authRolMiddleware(["admin"]),
+  authMiddleware,
+  isAdmin,
   validateObjectDataUpdate,
   updateItem
 );
 router.delete(
   "/:id",
-  //authMiddleware,
-  isAuthenticated,
-  authRolMiddleware(["admin"]),
+  authMiddleware,
+  isAdmin,
   validateId,
   deleteItem
 );

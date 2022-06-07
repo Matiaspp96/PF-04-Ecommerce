@@ -13,8 +13,8 @@ import { React, useEffect, useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import { GoClippy } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
-import { getTotalItems } from "../../redux/actions/cart";
-import { useRouter } from "next/router";
+import { getTotalItems } from '../../redux/actions/cart';
+import { useRouter } from 'next/router';
 import ColorModeSwitch from "../ColorMode/ColorSwitch";
 import cookie from 'js-cookie'
 
@@ -23,18 +23,35 @@ const MenuLinks = ({ isOpen }) => {
   const numberItems = useSelector(
     (state) => state.shoppingCartReducer.totalItems
   );
+
   const [user, setUser] = useState(null);
 
+    const router = useRouter()
+        const handleLogOut = ()=>{
+        localStorage.removeItem('userInfo');
+        router.push(`${process.env.API_URL}/auth/logout`)
+        };
+
+
   useEffect(() => {
-    const role = cookie.get("role");
-    setUser(role);
+   
+    let localUser = {};
+      if(localStorage.getItem('userInfo')){
+         localUser = JSON.parse(localStorage.getItem('userInfo'));
+      }
+         console.log(localUser)
+      if(Object.keys(localUser).length !== 0){
+         setUser(localUser.role)
+         
+       }
+ 
   });
 
   useEffect(() => {
     dispatch(getTotalItems());
   }, [dispatch]);
 
-  const router = useRouter();
+
 
   return (
     <Box
@@ -84,12 +101,12 @@ const MenuLinks = ({ isOpen }) => {
           </Button>
         </Link>
         {/* <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log in</Button></Link> */}
-        {user !== "guest" ? (
-          <Link href="http://localhost:3001/api/auth/logout">
-            <Button color="blackAlpha.800" borderRadius="15px" p="1em">
+        {user ? (
+          
+            <Button onClick ={handleLogOut}color="blackAlpha.800" borderRadius="15px" p="1em">
               Log out
             </Button>
-          </Link>
+         
         ) : (
           <Link href="/login">
             <Button color="blackAlpha.800" borderRadius="15px" p="1em">
