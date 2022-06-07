@@ -1,4 +1,4 @@
-import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Divider, Center, cookieStorageManager } from '@chakra-ui/react'
+import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Divider, Container } from '@chakra-ui/react'
 import Card from './Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -20,17 +20,18 @@ export default function ProductCart() {
   }, [cart,dispatch])
 
   return (
-    <Box>
-      <Text>Home / Cart</Text>
+    <Box w='95vw'>
+      <Text><Link href='/'>Home </Link>/ Cart</Text>
       {cart.length < 1  ? 
-      <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center'>
+      <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center' h={['90vh']}>
         <AiOutlineShopping size='150'/>
         <Text fontSize='2em'>Your shopping bag is empty</Text>
         <Link href="/"><Button pos='relative' color='blackAlpha.800' borderRadius='15px' p='1em' mt='1em'>Continue Shopping</Button></Link>
       </Flex> :
       <Grid 
         templateColumns={{ base: '1fr', sm: '1fr', md:'1fr 1em 20rem', lg:'1fr 1em 20rem' }}
-        margin={{base: '.5em', md:'1em', lg:'1em'}} height='auto'>
+        margin={{base: '.5em', md:'1em 0em', lg:'2em 0em'}} height='auto'
+        >
         <Grid templateColumns={{ base: '1fr', sm: '1fr', md:'repeat(3, 1fr)', lg:'repeat(3, 1fr)' }}
         gap={5} >
         {
