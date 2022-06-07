@@ -16,17 +16,20 @@ const {
   createItem,
   updateItem,
   deleteItem,
+  addCategoryProduct,
 } = require("../controllers/product");
 
-router.get("/", getItembyName);
+router.get("/name/", getItembyName);
+//para catergorías
+router.post("/addcategory", addCategoryProduct);
 router.get("/:id", validateId, getItem);
-router.get("/",getItems);
+router.get("/", getItems);
 router.post(
   "/",
   //authMiddleware,
-  isAuthenticated,
+  /* isAuthenticated,
   authRolMiddleware(["admin"]),
-  validateObjectDataCreate,
+  validateObjectDataCreate, */
   createItem
 );
 router.put(

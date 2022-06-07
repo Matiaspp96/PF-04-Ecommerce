@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const authMiddleware = require("../middleware/auth");
 const authRolMiddleware = require("../middleware/rol");
-const {isAuthenticated} = require('../validators/auth');
+const { isAuthenticated } = require("../validators/auth");
 const {
   validateId,
   validateObjectDataCreate,
@@ -21,9 +21,10 @@ router.get("/", getItems);
 router.post(
   "/",
   //authMiddleware,
-  isAuthenticated,
+  //restablecer middles
+  /* isAuthenticated,
   authRolMiddleware("admin"),
-  validateObjectDataCreate,
+  validateObjectDataCreate, */
   createItem
 );
 router.put(

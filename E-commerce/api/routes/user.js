@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 //midleware para validad auth de google
-const {isAuthenticated} = require('../validators/auth');
+const { isAuthenticated } = require("../validators/auth");
 const authMiddleware = require("../middleware/auth");
 const authRolMiddleware = require("../middleware/rol");
 const {

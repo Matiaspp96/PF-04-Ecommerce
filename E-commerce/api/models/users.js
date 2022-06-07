@@ -1,20 +1,56 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt-nodejs');
-
+const bcrypt = require("bcrypt-nodejs");
 const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      
+    },
+    surname: {
+      type: String,
+    },
+    nickname: {
+      type: String,
+      required: false,
     },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    password: {
-      type: String
+
+    phone: {
+      type: Number,
     },
+    password: {
+      type: String,
+    },
+    cart: [
+      {
+        _id: {
+          ref: "products",
+          type: mongoose.Types.ObjectId,
+        },
+        quantity: Number,
+      },
+    ],
+    orders: [
+      {
+        ref: "orders",
+        type: mongoose.Types.ObjectId,
+      },
+    ],
+    shoppingHistory: [
+      {
+        type: Array,
+      },
+    ],
+    shipping: [{}],
+    favorites: [
+      {
+        ref: "products",
+        type: mongoose.Types.ObjectId,
+      },
+    ],
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -33,12 +69,11 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.methods.encryptPassword =  (password)=>{
-  return   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+UserSchema.methods.encryptPassword = (password) => {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
-UserSchema.methods.comparePassword =function(password){
- return bcrypt.compareSync(password, this.password);
-
+UserSchema.methods.comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
 module.exports = mongoose.model("users", UserSchema);
