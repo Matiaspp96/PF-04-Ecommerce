@@ -72,13 +72,14 @@ const logOut = (req,res, next) => {
    
 };
 const logDataUserOauth = async (req,res) => {
+  if(req.user){
   let token = await tokenSign(req.user)
   const data = {
    token: token,
    user: req.user,
  };
    return res.json(data)
-   
+  }
 };
 
 const logError = (req,res) => {
