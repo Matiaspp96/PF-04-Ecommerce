@@ -17,11 +17,9 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-
     phone: {
       type: Number,
     },
-<<<<<<< HEAD
     password: {
       type: String,
     },
@@ -52,11 +50,6 @@ const UserSchema = new mongoose.Schema(
         type: mongoose.Types.ObjectId,
       },
     ],
-=======
-    token: {
-      type: String,
-    },
->>>>>>> 78e023bd7b59e9aba338fd4fdff583ad046cf60a
     role: {
       type: String,
       enum: ["user", "admin"],

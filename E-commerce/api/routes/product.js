@@ -26,10 +26,10 @@ router.get("/:id", validateId, getItem);
 router.get("/", getItems);
 router.post(
   "/",
-  //authMiddleware,
-  /* isAuthenticated,
+  authMiddleware,
+  isAuthenticated,
   authRolMiddleware(["admin"]),
-  validateObjectDataCreate, */
+  validateObjectDataCreate,
   createItem
 );
 router.put(
