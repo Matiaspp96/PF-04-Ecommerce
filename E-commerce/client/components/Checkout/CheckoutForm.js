@@ -1,27 +1,29 @@
-import { Button, Center, Flex, FormControl, FormHelperText, FormLabel, Grid, Heading, Input, InputGroup, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Stack, TagLabel, Text } from '@chakra-ui/react'
+import { Button, Center, Flex, FormControl, FormHelperText, FormLabel, Grid, Heading, Input, InputGroup, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Stack, TagLabel, Text, useColorMode } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { IoGiftOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 import CardItem from '../Card/CardItem'
 
-const CheckoutForm = () => {
+const CheckoutForm = ({cookies}) => {
     const numberItems = useSelector(state => state.shoppingCartReducer.totalItems);
     const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
     const dispatch = useDispatch();
+    const { colorMode } = useColorMode()
 
     const getTotalPrice = () => {
         return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
     }
 
     useEffect(()=>{
+        console.log(cookies)
     }, [dispatch])
 
     return (
-    <Stack m={['0.5em','0.5em','0.5em','0.5em']}>
-        <Text><Link href='/'>Home </Link><Link href='/cart'> / Cart </Link>/ Checkout</Text>
+    <Stack w='95vw'>
+        <Flex gap='0.3rem'><Link href='/'>Home</Link><Link href='/cart'>/ Cart</Link>/ Checkout</Flex>
         <Flex flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
-            <Flex flexDir='column' minW='40%' gap='2em'>
+            <Flex flexDir='column' minW='40%' gap='2em' p={['1rem','3rem']}>
                 <Heading as='h4' size='md'>Shipping information</Heading>
                 <FormControl isRequired>
                     <FormLabel>First Name</FormLabel>
@@ -69,7 +71,7 @@ const CheckoutForm = () => {
                     <Input id='apartment' type='text' autoComplete='off'/>
                     <FormHelperText></FormHelperText>
                 </FormControl>
-                <FormControl>
+                <FormControl isRequired>
                 <FormLabel htmlFor='postal code'>Postal Code</FormLabel>
                 <NumberInput min={1000}>
                     <NumberInputField id='postal code' />
@@ -84,24 +86,26 @@ const CheckoutForm = () => {
                     <Input id='phone' type='num' autoComplete='off'/>
                     <FormHelperText>In case we need to contact you about your order</FormHelperText>
                 </FormControl>
+                <Button mt={4} colorScheme='teal' type='submit'>
+                    Submit
+                </Button>
             </Flex>
-            <Stack bgColor='gray.100' w={['100%','30%']} mt={{base:'5em'}}>
+            <Stack bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
                 <Center>
-                <Heading as='h4' size='md' >Your Cart: {numberItems} Items</Heading>
+                <Heading as='h4' size='md' >Your Order: {numberItems} Items</Heading>
                 </Center>
-            <Grid templateColumns={{ base:'repeat(3, 1fr)', sm: '1fr', md:'repeat(3, 1fr)', lg:'repeat(3, 1fr)' }}
-            justifyItems='center'>
+            <Grid justifyItems='center' gap='0.5rem'>
             { productsCart?.map(ps=>{ return (
                     <CardItem key={ps.product._id} producto={ps.product} quantity={ps.quantity}></CardItem>
                 
                     )})
             }
             </Grid>
-            <Text>SubTotal: ${getTotalPrice()}</Text>
+            <Text fontWeight='bold'>Total: ${getTotalPrice()}</Text>
             <InputGroup flexDir='column' flexWrap='wrap'>
                 <TagLabel>Gift card or discount code</TagLabel>
                 <Flex flexDir='row'>
-                <Input w={{base:'90%', md:'90%' }} bgColor='whiteAlpha.800' placeholder='Card...'></Input>
+                <Input w={{base:'90%', md:'90%' }} bgColor={colorMode === 'light' ? 'whiteAlpha.800' : 'gray.700'} placeholder='Card...'></Input>
                 <Button border= '1px solid #348099' _hover={{bgColor:'#348099'}}><IoGiftOutline  /></Button>
                 </Flex>
             </InputGroup>        

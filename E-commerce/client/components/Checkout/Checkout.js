@@ -30,7 +30,7 @@ const Checkout = () => {
             >PURCHARSE</Button>
         </Link>
         <Text>Your Cart: {numberItems} Items</Text>
-        <Text>SubTotal: ${getTotalPrice()}</Text>
+        <Text>Total: ${getTotalPrice()}</Text>
         <InputGroup flexDir='column' flexWrap='wrap'>
             <TagLabel>Gift card or discount code</TagLabel>
             <Flex flexDir='row'>
