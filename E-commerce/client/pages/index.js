@@ -18,8 +18,24 @@ export default function Home() {
   const [user, setUser] = useState({});
 
   const dispatch = useDispatch();
+<<<<<<< HEAD
+  const ReducerUser = useSelector((state)=> state.userReducer.user);
+  
+  useEffect( () => {
+    (async()=>{
+<<<<<<< HEAD
+        const userResponse = await axios.get('http://localhost:3001/api/auth/data', { withCredentials: true });
+=======
+        const userResponse = await axios.get(`${BASEURL}/auth/data`, { withCredentials: true });
+>>>>>>> 56eecf2d20b2c2bd0df7dbf2f7e105c4a9213391
+        setUser(userResponse.data)
+    })();
+  },[]);
+  
+=======
   const ReducerUser = useSelector((state) => state.userReducer.user);
 
+>>>>>>> 78e023bd7b59e9aba338fd4fdff583ad046cf60a
   useEffect(() => {
     (async () => {
       const userResponse = await axios.get(`${BASEURL}/auth/data`, {

@@ -1,6 +1,11 @@
 const { Router } = require("express");
 const router = Router();
-const { getReview, getReviews, newReview ,deleteReview } = require("../controllers/review");
+const {
+  getReview,
+  getReviews,
+  newReview,
+  deleteReview,
+} = require("../controllers/review");
 const validatorReview = require("../validators/review");
 
 router.get("/", getReviews);
