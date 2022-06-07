@@ -6,7 +6,7 @@ import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
 import { handleAddToCartOrFav, handleRemoveFromCart, handleRemoveFromFav } from '../../utils/handles';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import router from 'next/router'
+import router, { Router, useRouter } from 'next/router'
 
 
 export default function Card({ producto, quantity, cart, setCart }) {
@@ -18,6 +18,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   const [addCart, setAddCart] = useBoolean()
   const [removeCart, setRemoveCart] = useBoolean()
   const { name, price, category, image, _id, rating } = producto;
+  const router = useRouter();
 
   const [product, setProduct] = useState(producto);
   const [input, setInput] = useState();
@@ -48,7 +49,6 @@ export default function Card({ producto, quantity, cart, setCart }) {
 
   /*-------- Add Product to Cart & Fav ---------*/
   function handleAddCartOnInput(e, product){
-    console.log(product)
     dispatch(addItemToCartInput(handleAddToCartOrFav(e, product)))
     dispatch(getTotalItems())
   }
@@ -91,6 +91,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   return (
       <Stack
         h={{base:'270', md:'290', lg:'365'}} 
+        w={{base: router.route === '/cart' ? '90vw' : 'auto'}}
         overflow='auto'
         boxShadow='lg'
         >
@@ -109,8 +110,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
           <Center>
             <Image 
               src={image} 
-              alt={name}  
-              boxSize={{base:'80px', md:'100px', lg:'150px'}}
+              alt={name} 
+              backgroundSize='cover'
+              boxSize={{base:'80px', md:'100px', lg:'190px'}}
               alignItems='center'/>
           </Center>
 
@@ -123,7 +125,8 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <a>
                   <Text 
                     fontSize='xl' 
-                    fontWeight='bold'>
+                    fontWeight='bold'
+                    noOfLines={2}>
                       {name}
                   </Text>
                 </a>
@@ -133,13 +136,13 @@ export default function Card({ producto, quantity, cart, setCart }) {
               <Text color={'#1884BE'}>${price}</Text>
               {cart ?
               <Flex alignItems='center' >
-                <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleAddCartOnClick(e,product)}>+</Button>
+                <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleRemoveCartOnClick(e,product)}>-</Button>
                 <Input value={input}
                 onKeyDown={e => handleKeyDown(e)} 
                 onChange={e => handleInputProducts(e, product)}
                 size='1.2em' w='1.5em' h='1.5em' borderRadius='5px'
                 type='text' display='flex' textAlign='center' placeholder={quantity}></Input> 
-                <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleRemoveCartOnClick(e,product)}>-</Button>
+                <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleAddCartOnClick(e,product)}>+</Button>
               </Flex>
               : null}
               <Flex alignItems={'center'}>

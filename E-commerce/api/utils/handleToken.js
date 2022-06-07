@@ -13,6 +13,21 @@ const tokenSign = async (user) => {
   );
 };
 
+const tokenEmail = async ( ) => {
+  const random = Math.random().toString(32).substring(2);
+  const fecha = Date.now().toString(32)
+  const rv= random+fecha
+  return jwt.sign(
+    {
+      rv
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "0.25h",//1 year
+    }
+  );
+};
+
 const verifyToken = async (token) => {
   try {
     return await jwt.verify(token, process.env.JWT_SECRET);
@@ -25,4 +40,4 @@ const decodeSign = (token) => {
   return jwt.decode(token, null);
 };
 
-module.exports = { tokenSign, decodeSign, verifyToken };
+module.exports = { tokenSign, decodeSign, verifyToken,tokenEmail };
