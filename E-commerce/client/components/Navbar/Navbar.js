@@ -17,12 +17,13 @@ const Navbar = (props) => {
         w='100%'
         bgColor='#1884BE'
         zIndex='2'
+        textColor='whiteAlpha.800'
         >
             <NavBarContainer {...props}>
                 <Link href='/'>
                 Pet Elegant
                 </Link>
-                <Search isOpen={isOpen}/>
+                <Search toggle={toggle} isOpen={isOpen}/>
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
                 <MenuLinks isOpen={isOpen} />
             </NavBarContainer>

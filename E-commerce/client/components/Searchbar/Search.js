@@ -5,7 +5,7 @@ import { IoSearchSharp } from 'react-icons/io5'
 import {getProductsByName} from '../../redux/actions/products'
 import { useDispatch } from 'react-redux'
 
-const Search = () => {
+const Search = ({ toggle, isOpen }) => {
 
   const dispatch = useDispatch()
   const [name, setName] = useState('')
@@ -32,19 +32,25 @@ const Search = () => {
 
   return (
     <Stack spacing={4} width='50%'  ali={{base:'center'}}>
-      <InputGroup>
+      <InputGroup 
+      display={{ base: isOpen ? 'flex' : "none", md: "flex" }}
+      ali={{base:'center'}}>
         <Input 
         onKeyDown = {(e) => handleKeyDown(e)}
-        borderRadius='15px' 
+        color='blackAlpha.700'
+        borderStartRadius='15px' 
+        borderEndRadius='0' 
         bgColor='#FAFAFC'
-        border maxWidth='40em' 
+        border maxWidth='40em'
         type='text' 
         placeholder='Product...' 
         onChange = {(e) => handleInputProducts(e)}
         value = {name}
         />
         <Button 
-          borderRadius='15px' 
+          borderStartRadius='0' 
+          borderEndRadius='15px' 
+          textColor='blackAlpha.800'
           onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>      
         </Button>
       </InputGroup>

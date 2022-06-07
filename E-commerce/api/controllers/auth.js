@@ -1,19 +1,19 @@
 const { encrypt, compare } = require("../utils/handleJwt");
-
 const {
   handleHttpError,
   handleErrorResponse,
 } = require("../utils/handleError");
-const { tokenSign } = require("../utils/handleToken");
-
+const { tokenSign,tokenEmail } = require("../utils/handleToken");
+const {SendEmailPassword}=require("../utils/handleEmail")
 const { userModel } = require("../models");
 const { matchedData } = require("express-validator");
 
 
-const loginCtrl = async (req, res) => {
+const loginCtrl = async (req, res,next) => {
   try {
     const body = matchedData(req);
     const user = await userModel.findOne({ email: body.email });
+     
     if (!user) {
       handleErrorResponse(res, "USER_NOT_EXISTS", 404);
       return;
@@ -24,15 +24,14 @@ const loginCtrl = async (req, res) => {
       handleErrorResponse(res, "PASSWORD_INVALID", 402);
       return;
     }
-
+    
     const tokenJwt = await tokenSign(user);
 
     const data = {
       token: tokenJwt,
       user: user,
     };
-
-    res.send({ data });
+    return res.json(data);
   } catch (e) {
     handleHttpError(res, e);
   }
@@ -62,6 +61,7 @@ const registerCtrl = async (req, res) => {
 };
 
 const logOut = (req,res, next) => {
+  
   req.logout(function(err) {  //version nueva requiere pasar un callback
     if (err) { return next(err); }
     req.session.destroy();
@@ -72,10 +72,61 @@ const logOut = (req,res, next) => {
   });
    
 };
+const logDataUserOauth = async (req,res) => {
+  if(req.user){
+  let token = await tokenSign(req.user)
+  const data = {
+   token: token,
+   user: req.user,
+ };
+   return res.json(data)
+  }
+};
 
 const logError = (req,res) => {
+  return res.send('Error en log')
+}
 
-   res.send({message : 'error autentacion' });
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const usuario = await userModel.findOne({ email });
+  if (!usuario) {
+    const error = new Error("El Usuario no existe");
+    return res.status(404).json({ msg: error.message });
+  }
 
+  try {
+    usuario.token = tokenEmail();
+    await usuario.save();
+    SendEmailPassword({
+      email: usuario.email,
+      nombre: usuario.nombre,
+      token: usuario.token,
+    });
+
+    res.json({ msg: "Hemos enviado un email con las instrucciones" });
+  }  catch (e) {
+    handleHttpError(res, "ERROR_GET_ITEM");
+  }
 };
-module.exports = { loginCtrl, registerCtrl, logOut, logError };
+const newPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  const usuario = await userModel.findOne({ token });
+  if (usuario) {
+    usuario.password = password;
+    usuario.token = "";
+    try {
+      await usuario.save();
+      res.json({ msg: "Password Modificado Correctamente" });
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    const error = new Error("Token no válido");
+    return res.status(404).json({ msg: error.message });
+  }
+};
+
+module.exports = { loginCtrl, registerCtrl, logOut, logError,forgotPassword,logDataUserOauth, newPassword};
+

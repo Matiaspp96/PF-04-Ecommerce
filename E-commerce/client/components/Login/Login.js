@@ -3,8 +3,14 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import axios from 'axios'
 import { BASEURL } from '../../redux/actions/products'
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData } from '../../redux/actions/user'
+ 
+const urlSignIn = `${process.env.API_URL}/auth/login`;
 
 const Login = () => {
+
+const dispatch = useDispatch();
 const [result, setResult] = useState('')
     const [user,setUser] = useState({
     username: '',
@@ -12,23 +18,35 @@ const [result, setResult] = useState('')
 })
 const router = useRouter()
 
-    function handleSubmit(e){
+   async function handleSubmit(e){
         e.preventDefault();
-        axios.post(URL, user)
-        .then(function(response){
-            setResult(response.data) 
+       
+        const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+       
+        let getUser = await axios.post(urlSignIn,user,config);
+        dispatch(getUserData(getUser.data.user));
+        let localInfo = {
+            token : getUser.data.token,
+            _id :getUser.data.user._id
+        }
+        localStorage.setItem(
+            'userInfo',
+            JSON.stringify(localInfo)
+          );   
+         setUser({
+         username: '',
+         password: ''
         })
-        .catch(function(error){
-            setResult(error)
-      })
-      setUser({
-        username: '',
-        password: ''
-    })
-      console.log(result)
-        
-    }
+        if(getUser.status ===200){
+            return router.push('/');
+        }  
+    };
     function handleSubmitLogin(e){
+        //OJO HAY QUE ACOMODAR
         e.preventDefault();
         axios.post(URL, user)
         .then(function(response){
@@ -36,32 +54,30 @@ const router = useRouter()
         })
         .catch(function(error){
             setResult(error)
-      })
+      });
       setUser({
         username: '',
         password: ''
-    })
-      console.log(result)
-        
-    }
+    });
+    };
 
     function handleGoogleLog(){
-        router.push(`${BASEURL}/auth/login/google`)
-    }
+        router.push(`${process.env.API_URL}/auth/login/google`)
+    };
 
     function handleChange(e){
         setUser({...user, [e.target.name]: e.target.value})
         
-    }
-
+    };
+    
   return (
     
         <Center>
             <Stack>
-            {/* <FormControl >
+            <FormControl >
                     <Stack>
                         <FormLabel htmlFor="username">Username</FormLabel>
-                        <Input id="username"  onChange={handleChange} name="username" type="text" autoComplete="username" required autoFocus />
+                        <Input id="username"  onChange={handleChange} name="email" type="text" autoComplete="username" required autoFocus />
                     </Stack>
                     <Stack>
                         <FormLabel htmlFor="current-password">Password</FormLabel>
@@ -69,7 +85,7 @@ const router = useRouter()
                     </Stack>
                     <Button onClick={e=>{handleSubmit(e)}}>Sign in</Button>
                     <Button onClick={e=>{handleSubmitLogin(e)}}>Log in</Button>
-                </FormControl> */}
+                </FormControl>
                 <Button pos='relative' top='10rem' onClick={handleGoogleLog}>Log in with google</Button>  
             </Stack>
     </Center>
