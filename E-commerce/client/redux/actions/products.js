@@ -11,7 +11,7 @@ import {
     GET_PRODUCT_REVIEWS
 } from "./actionstype";
 
-export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}api`;
+export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
@@ -150,12 +150,6 @@ export const getProductReviews = (id)=> async (dispatch) => {
     })
   } catch (error) {
     console.log(error)
-    alert.fire({
-      title: 'Error!',
-      text: 'We could not find any reviews for this product',
-      icon: 'error',
-      confirmButtonText: 'Close'
-    })
   }
 }
 

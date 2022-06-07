@@ -31,7 +31,8 @@ const Data = () => {
       //store local
       let localInfo = {
         token : getUser.data.token,
-        _id :getUser.data.user._id
+        _id :getUser.data.user._id,
+        role: getUser.data.user.role
     }
       console.log(getUser.data)
       localStorage.setItem("userInfo", JSON.stringify(localInfo));

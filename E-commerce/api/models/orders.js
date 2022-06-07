@@ -7,18 +7,25 @@ const OrderSchema = new mongoose.Schema(
         productId: {
           type: String,
         },
+        name: {
+          type: String,
+        },
         quantity: {
           type: Number,
           default: 1,
         },
+        price:Number,
         paymentmethod: {
           type: String,
         },
+        bill: {
+          type: Number,
+          required: true
+      },
         status: {
-          type: ["created", "inprogress","canceled","complete"],
-       default: "created",
+          type: ["created", "inprogress", "canceled", "complete"],
+          default: "created",
         },
-        
       },
     ],
   },

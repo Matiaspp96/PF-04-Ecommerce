@@ -13,7 +13,7 @@ const Login = () => {
 const dispatch = useDispatch();
 const [result, setResult] = useState('')
     const [user,setUser] = useState({
-    username: '',
+    email: '',
     password: ''
 })
 const router = useRouter()
@@ -31,14 +31,15 @@ const router = useRouter()
         dispatch(getUserData(getUser.data.user));
         let localInfo = {
             token : getUser.data.token,
-            _id :getUser.data.user._id
-        }
+            _id :getUser.data.user._id,
+            role: getUser.data.user.role
+        };
         localStorage.setItem(
             'userInfo',
             JSON.stringify(localInfo)
           );   
          setUser({
-         username: '',
+         email: '',
          password: ''
         })
         if(getUser.status ===200){
@@ -56,7 +57,7 @@ const router = useRouter()
             setResult(error)
       });
       setUser({
-        username: '',
+        email: '',
         password: ''
     });
     };
@@ -69,7 +70,7 @@ const router = useRouter()
         setUser({...user, [e.target.name]: e.target.value})
         
     };
-    
+    console.log(user)
   return (
     
         <Center>
@@ -77,7 +78,7 @@ const router = useRouter()
             <FormControl >
                     <Stack>
                         <FormLabel htmlFor="username">Username</FormLabel>
-                        <Input id="username"  onChange={handleChange} name="email" type="text" autoComplete="username" required autoFocus />
+                        <Input id="email"  onChange={handleChange} name="email" type="text" autoComplete="username" required autoFocus />
                     </Stack>
                     <Stack>
                         <FormLabel htmlFor="current-password">Password</FormLabel>

@@ -37,7 +37,7 @@ const getItems = async (req, res) => {
  
   try {
     const data = await productModel.find();
-    res.send({ data,  });
+    res.send({ data });
   } catch (e) {
     console.log(e);
     handleHttpError(res, "ERROR_GET_ITEMS");
@@ -57,7 +57,7 @@ const getItem = async (req, res) => {
 const createItem = async (req, res) => {
   try {
     const { body } = req.body;
-    const checkIsExist = await catergoryModel.findOne({ name: body.name });
+    const checkIsExist = await productModel.findOne({ name: body.name });
     if (checkIsExist) {
       handleErrorResponse(res, "PRODUCT_EXISTS", 401);
       return;
