@@ -2,6 +2,7 @@ import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Di
 import Card from './Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
 import { getItemsCart } from '../../redux/actions/cart';
 import { AiOutlineShopping } from "react-icons/ai";
 import Link from 'next/link'
@@ -12,13 +13,15 @@ export default function ProductCart() {
   const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
   const dispatch = useDispatch()
   const [cart, setCart] = useState(productsCart)
+  const router = useRouter()
 
   useEffect(()=>{
     dispatch(getItemsCart())
   }, [cart,dispatch])
 
   return (
-    <Box>  
+    <Box>
+      <Text>Home / Cart</Text>
       {cart.length < 1  ? 
       <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center'>
         <AiOutlineShopping size='150'/>
@@ -27,7 +30,7 @@ export default function ProductCart() {
       </Flex> :
       <Grid 
         templateColumns={{ base: '1fr', sm: '1fr', md:'1fr 1em 20rem', lg:'1fr 1em 20rem' }}
-        margin={{base: '.5em', md:'1em', lg:'2em'}} height='auto'>
+        margin={{base: '.5em', md:'1em', lg:'1em'}} height='auto'>
         <Grid templateColumns={{ base: '1fr', sm: '1fr', md:'repeat(3, 1fr)', lg:'repeat(3, 1fr)' }}
         gap={5} >
         {
