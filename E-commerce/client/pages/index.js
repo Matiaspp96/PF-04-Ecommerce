@@ -11,43 +11,32 @@ import { Stack,Flex,Text,Select  } from '@chakra-ui/react'
 import { addItemToCart } from '../redux/actions/cart.js'
 import { getSession } from 'next-auth/react';
 import { getUserData } from '../redux/actions/user.js'
+import Banner from '../components/Banner/Banner'
 
-// LOGICA PARA RECUPERAR DATOS DESDE EL LOCAL STORAGE CUANDO SE VUELVA ABRIR.
-// Y SETEAR NUEVAMENTE EL ESTADO DE REDUX CON LOS DATOS DEL USER
-// const userActive = useSelector(state => state.userReducer.user);
-//   const [userId,setUser] = useState('')
-//     useEffect(()=>{
-//       let localUser = {};
-//       if(localStorage){
-//          localUser = JSON.parse(localStorage.getItem('userInfo'));
-//       }
-//          console.log(localUser)
-//       if(Object.keys(userActive).length === 0 && Object.keys(localUser).length !== 0){
-//          setUser(localUser._id)
-         
-//       }
-      
-//     },[]);
-//     useEffect(()=>{
-//     (async()=>{
-//       if(userId){
-//         const userData = await axios.get(`http://localhost:3001/api/users/${userId}`);
-//         console.log(userData)
-//         useDispatch(getUserData(userData.data.data))
-//       }
-      
-//     })()
-   
-//     },[])
+
 export default function Home() {
  
   /*----- Cart -----*/
  //console.log(localStorage.getItem('userInfo')||'')
-  return (   
-    <Stack alignItems='center'>
+
+  const [user, setUser] = useState({});
+
+  const dispatch = useDispatch();
+  const ReducerUser = useSelector((state) => state.userReducer.user);
+
+
+  // useEffect(() => {
+  //   dispatch(getUserData(user));
+  // }, [dispatch, user]);
+
+  /*----- Cart -----*/
+
+  return (
+    <Flex flexDir="column" alignItems="center">
       <Navbar />
+      <Banner />
       <Cards />
       <Footer />
-    </Stack>
-  )
+    </Flex>
+  );
 }

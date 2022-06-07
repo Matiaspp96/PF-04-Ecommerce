@@ -32,7 +32,7 @@ export default function Footer (){
         direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
         spacing={{ base: '12', md: '8' }}
       >
-        <Stack direction="row" alignItems='center' spacing="8">
+        <Stack direction="row" wrap='wrap' alignItems='center' spacing="8">
           <Stack spacing="4" minW="36" flex="1">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
               Product
@@ -43,7 +43,7 @@ export default function Footer (){
               <Button variant="link">options3</Button>
             </Stack>
           </Stack>
-          <Stack spacing="4" minW="36" flex="1">
+          <Stack spacing="4" minW="36">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
               Legal
             </Text>
