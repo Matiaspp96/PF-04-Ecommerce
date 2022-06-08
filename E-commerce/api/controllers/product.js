@@ -12,7 +12,6 @@ const getItembyName = async (req, res) => {
       let products = await productModel.find({
         name: { $regex: name, $options: "i" },
       });
-
       if (products.length) {
         res.json(products);
       } else {

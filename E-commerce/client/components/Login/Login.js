@@ -32,8 +32,8 @@ const router = useRouter()
         let localInfo = {
             token : getUser.data.token,
             _id :getUser.data.user._id,
-            role: getUser.data.user.role
-        };
+            role : getUser.data.user.role
+        }
         localStorage.setItem(
             'userInfo',
             JSON.stringify(localInfo)

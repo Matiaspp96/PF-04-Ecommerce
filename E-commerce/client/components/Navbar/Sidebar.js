@@ -23,14 +23,24 @@ const Sidebar = ({ size }) => {
   const [user, setUser] = useState({});
 
   const dispatch = useDispatch();
-  const ReducerUser = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
+    const localUser = localStorage.getItem('userInfo');
+       const userActive = JSON.parse(localUser);
+         let configAxios = {};
+       
+       if(userActive){
+        configAxios ={
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${userActive.token}`,
+          },
+        }
+       };
+
     (async () => {
-      const userResponse = await axios.get(`${BASEURL}/auth/data`, {
-        withCredentials: true,
-      });
-      setUser(userResponse.data);
+      const userResponse = await axios.get(`${BASEURL}/users/${userActive._id}`, configAxios);
+      setUser(userResponse.data.data);
     })();
   }, []);
 
@@ -40,7 +50,7 @@ const Sidebar = ({ size }) => {
 
   return (
     <>
-      {ReducerUser && (
+      {user.role && (
         <Flex
           bgColor="#1884BE"
           pos="sticky"
@@ -58,7 +68,7 @@ const Sidebar = ({ size }) => {
             alignItems={navSize == "small" ? "center" : "flex-start"}
           >
             <Flex mt={4} align="center">
-              <Avatar size="sm" src={user.img} alt={user.name}/>
+              <Avatar size="sm" src={user.image} alt={user.name}/>
               <Flex
                 flexDir="column"
                 ml={4}

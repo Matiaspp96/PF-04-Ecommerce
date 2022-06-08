@@ -27,11 +27,105 @@ const MenuLinks = ({ isOpen }) => {
   const [user, setUser] = useState(null);
 
     const router = useRouter()
-      const handleLogOut = ()=>{
+        const handleLogOut = ()=>{
         localStorage.removeItem('userInfo');
         router.push(`${process.env.API_URL}/auth/logout`)
+        };
+
+
+  useEffect(() => {
+   
+    let localUser = {};
+      if(localStorage.getItem('userInfo')){
+         localUser = JSON.parse(localStorage.getItem('userInfo'));
+      }
+      if(Object.keys(localUser).length !== 0){
+         setUser(localUser.role)
+         
+       }
+ 
+  });
+
+  useEffect(() => {
+    dispatch(getTotalItems());
+  }, [dispatch]);
+
+
+
+  return (
+    <Box
+      display={{ base: isOpen ? "block" : "none", md: "block" }}
+      flexBasis={{ base: "100%", md: "auto" }}
+    >
+      <Flex
+        flexDir="row"
+        spacing={4}
+        align="center"
+        gap={{ lg: "1em" }}
+        justify={["space-between", "space-between", "flex-end", "center"]}
+        direction={["column", "row", "row", "row"]}
+        pt={[4, 4, 0, 0]}
+      >
+        <Text>
+          <Link href="/">Home</Link>
+        </Text>
+        {/* <Text><Link href="/product/categories">Categories</Link></Text> */}
+        <Text>
+          <Link href="/favorites">Favorites</Link>
+        </Text>
+        <ColorModeSwitch />
+        {/* <Link href="/orders"><Button w='fit-content' borderRadius='15px'><GoClippy size='1.5em' />Orders</Button></Link> */}
+        <Link href="/cart">
+          <Button
+            pos="relative"
+            color="blackAlpha.800"
+            borderRadius="50%"
+            p="0"
+          >
+            <IoCartOutline size="2em" />
+            <Badge
+              pos="absolute"
+              w="1.5em"
+              h="1.5em"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              top="-5px"
+              bgColor="#72B9E5"
+              borderRadius="50%"
+              right="-5px"
+            >
+              {numberItems}
+            </Badge>
+          </Button>
+        </Link>
+        {/* <Link href="/api/auth/signin"><Button  color='blackAlpha.800' borderRadius='15px' p='1em'>Log in</Button></Link> */}
+        {user ? (
+          
+            <Button onClick ={handleLogOut}color="blackAlpha.800" borderRadius="15px" p="1em">
+              Log out
+            </Button>
+         
+        ) : (
+          <Link href="/login">
+            <Button color="blackAlpha.800" borderRadius="15px" p="1em">
+              Log in
+            </Button>
+          </Link>
+        )}
+        {user === "admin" && (
+          <Link href="/dashboard">
+            <Button color="blackAlpha.800" borderRadius="15px" p="1em">
+              Control Panel
+            </Button>
+          </Link>
+        )}
+      </Flex>
+    </Box>
+  );
 };
 
+<<<<<<< HEAD
 
   useEffect(() => {
    
@@ -126,4 +220,6 @@ const MenuLinks = ({ isOpen }) => {
   );
 };
 
+=======
+>>>>>>> d5bf59171301ee5450b6b2624a44b25d8f693cfd
 export default MenuLinks;

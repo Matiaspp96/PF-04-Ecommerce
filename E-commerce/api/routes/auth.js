@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {  logDataUserOauth } = require("../controllers/auth");
-const { validateRegister, validateLogin, } = require("../validators/auth");
-const { registerCtrl, loginCtrl, logOut, logError,forgotPassword,newPassword } = require("../controllers/auth");
+const { registerCtrl, loginCtrl, logOut, logError,forgotPassword,newPassword,logDataUserOauth } = require("../controllers/auth");
+const { validateRegister, validateLogin } = require("../validators/auth");
 const {loginGoogle, loginCallBackGoogle} = require('../controllers/google-auth');
 
 //auth local

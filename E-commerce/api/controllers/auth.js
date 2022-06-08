@@ -100,6 +100,20 @@ const forgotPassword = async (req, res) => {
     handleHttpError(res, "ERROR_GET_ITEM");
   }
 };
+
+const logDataUserOauth = async (req,res) => {
+  if(req.user){
+  let token = await tokenSign(req.user)
+  const data = {
+   token: token,
+   user: req.user,
+ };
+   return res.json(data)
+  }
+};
+
+
+
 const newPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
@@ -118,17 +132,6 @@ const newPassword = async (req, res) => {
     return res.status(404).json({ msg: error.message });
   }
 };
-const logDataUserOauth = async (req,res) => {
- if(req.user){
-   console.log(req.user)
-  let token = await tokenSign(req.user);
-  const data = {
-   token: token,
-   user: req.user,
- };
-   return res.json(data)
-   
-}
-};
 
-module.exports = { loginCtrl, registerCtrl, logOut, logError, logDataUserOauth, forgotPassword, newPassword };
+module.exports = { loginCtrl, registerCtrl, logOut, logError,forgotPassword,logDataUserOauth, newPassword};
+
