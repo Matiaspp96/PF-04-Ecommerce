@@ -55,7 +55,7 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   try {
-    const { body } = req.body;
+    const  body  = req.body;
     const checkIsExist = await productModel.findOne({ name: body.name });
     if (checkIsExist) {
       handleErrorResponse(res, "PRODUCT_EXISTS", 401);
@@ -73,7 +73,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
+    const  body  = req.body;
     const data = await productModel.findByIdAndUpdate(id, body);
     res.send({ data });
   } catch (e) {
