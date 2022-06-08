@@ -39,7 +39,6 @@ const MenuLinks = ({ isOpen }) => {
       if(localStorage.getItem('userInfo')){
          localUser = JSON.parse(localStorage.getItem('userInfo'));
       }
-         console.log(localUser)
       if(Object.keys(localUser).length !== 0){
          setUser(localUser.role)
          
@@ -58,7 +57,6 @@ const MenuLinks = ({ isOpen }) => {
       display={{ base: isOpen ? "block" : "none", md: "block" }}
       flexBasis={{ base: "100%", md: "auto" }}
     >
-      {console.log(user)}
       <Flex
         flexDir="row"
         spacing={4}
