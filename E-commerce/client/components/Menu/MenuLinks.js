@@ -58,6 +58,7 @@ const MenuLinks = ({ isOpen }) => {
       display={{ base: isOpen ? "block" : "none", md: "block" }}
       flexBasis={{ base: "100%", md: "auto" }}
     >
+      {console.log(user)}
       <Flex
         flexDir="row"
         spacing={4}
