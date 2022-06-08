@@ -1,8 +1,7 @@
-import { Text, Stack, Button, Flex } from "@chakra-ui/react";
+import { Text, Stack, Button, Flex, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/Navbar/Sidebar";
-import cookie from 'js-cookie'
 
 const Dashboard = () => {
   const router = useRouter();
@@ -34,8 +33,9 @@ const Dashboard = () => {
           </Stack>
         </Flex>
       ) : (
-        <Stack>
-          <Text>Access denied. You are not an Admin</Text>
+        <Center h={'100vh'}>
+        <Stack justifyItems={'center'}>
+          <Text textAlign={'center'}>Access denied. You are not an Admin</Text>
           <Text textAlign={"center"}>
             Think this is an error? Contact Support
           </Text>
@@ -47,6 +47,7 @@ const Dashboard = () => {
             Home
           </Button>
         </Stack>
+    </Center>
       )}
     </>
   );
