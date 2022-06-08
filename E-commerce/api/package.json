@@ -42,6 +42,8 @@
 
         "jsonwebtoken": "^8.5.1",
 
+        "mercadopago": "^1.5.13",
+
         "mongoose": "^6.3.3",
 
         "morgan": "^1.10.0",

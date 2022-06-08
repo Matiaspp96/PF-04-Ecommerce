@@ -120,6 +120,7 @@ const newPassword = async (req, res) => {
 };
 const logDataUserOauth = async (req,res) => {
  if(req.user){
+   console.log(req.user)
   let token = await tokenSign(req.user);
   const data = {
    token: token,
