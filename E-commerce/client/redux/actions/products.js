@@ -11,21 +11,17 @@ import {
     GET_PRODUCT_REVIEWS
 } from "./actionstype";
 
-<<<<<<< HEAD
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}api`;
-=======
-export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
->>>>>>> 56eecf2d20b2c2bd0df7dbf2f7e105c4a9213391
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
-  console.log(process.env.API_URL)
+  console.log(BASEURL)
   console.log(process.env.NODE_ENV)
   try {
     const response = await axios.get(`${BASEURL}/products`);
     return dispatch({
       type: GET_PRODUCTS,
-      payload: response.data,
+      payload: response.data.data,
     });
   } catch (err) {
     console.log(err)

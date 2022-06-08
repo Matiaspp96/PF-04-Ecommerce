@@ -12,9 +12,9 @@ const {
 
 router.get("/:id", getItem);
 router.get("/", getItems); /* authMiddleware */
-router.post("/", authMiddleware, createItem);
-router.put("/:id", authRolMiddleware("admin"), authMiddleware, updateItem);
-router.delete("/:id", authRolMiddleware("admin"), authMiddleware, deleteItem);
+router.post("/", createItem);
+router.put("/:id", updateItem); /* authRolMiddleware("admin"), authMiddleware, */
+router.delete("/:id", deleteItem); /* authRolMiddleware("admin"), authMiddleware, */
 
 //rutas de prueba para orders
 

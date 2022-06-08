@@ -12,6 +12,10 @@ router.post("/login", validateLogin, loginCtrl);
 router.get("/login/google", loginGoogle);
 router.get("/login/google/callback", loginCallBackGoogle);
 
+//ruta de auth google carrito
+router.get("/cart/login/google", loginGoogleCart);
+router.get("/cart/login/google/callback", loginCallBackGoogleCart);
+
 //auth local
 router.post("/login/local/signin",localAuthSignin);
 router.post("/login/local/signup",localAuthSignup);

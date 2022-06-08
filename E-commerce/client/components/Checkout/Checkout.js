@@ -1,8 +1,11 @@
 import { Button, Flex, Input, InputGroup, Stack, TagLabel, Text } from '@chakra-ui/react'
 import Link from 'next/link'
+import router from 'next/router'
+import cookie from 'js-cookie'
 import React, { useEffect } from 'react'
 import { IoGiftOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
+import { createOrderUser } from '../../redux/actions/ordersUser'
 
 const Checkout = () => {
     const numberItems = useSelector(state => state.shoppingCartReducer.totalItems);
@@ -16,6 +19,13 @@ const Checkout = () => {
     useEffect(()=>{
     }, [dispatch])
 
+    function handleAddOrder(e){
+        e.preventDefault();
+        if(cookie.get('role') === 'guest'){
+            router.push('/cart/login')
+        } else {router.push('/checkout/order')}
+    }
+
     return (
     <Stack ml={['0.5em','0.5em','2em','2em']} >
         <Link href='/checkout/idOrder'>
@@ -27,6 +37,7 @@ const Checkout = () => {
             bgColor='#348099'
             border= '1px solid #348099'
             font-size= '24px'
+            onClick={e => handleAddOrder(e)}
             >PURCHARSE</Button>
         </Link>
         <Text>Your Cart: {numberItems} Items</Text>

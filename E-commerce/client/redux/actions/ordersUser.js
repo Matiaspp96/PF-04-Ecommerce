@@ -3,10 +3,10 @@ import { CREATE_ORDER_USER, GET_ORDERS_USER, UPDATE_ORDER_USER } from "./actions
 import { BASEURL } from "./products";
 
 
-export const getOrdersUser = () => {
+export const getOrdersUser = (id) => {
   try {
     return async (dispatch) => {
-      const response = await axios.get(`${BASEURL}/orders` );
+      const response = await axios.get(`${BASEURL}/orders/${id}` );
       return dispatch({
         type: GET_ORDERS_USER,
         payload: response.data,
@@ -23,7 +23,7 @@ export const createOrderUser = (productsCart) => {
       const response = await axios.post(`${BASEURL}/orders`, productsCart);
       return dispatch({
         type: CREATE_ORDER_USER,
-        payload: response.data,
+        payload: response.data._id,
       })
     };
   } catch (error) {
@@ -32,10 +32,10 @@ export const createOrderUser = (productsCart) => {
 };
 
 
-export const updateOrderUser = (id, shipping_address) => {
+export const updateOrderUser = (id, shippingAddress) => {
   try {
     return async (dispatch) => {
-        const response = await axios.put(`${BASEURL}/orders/${id}`, shipping_address);
+        const response = await axios.put(`${BASEURL}/orders/${id}`, shippingAddress);
         return dispatch({
             type: UPDATE_ORDER_USER,
             payload: response.data,

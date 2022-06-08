@@ -5,12 +5,15 @@ import {
   } from '../actions/actionstype.js' 
 
 const initialState = {
+    idOrder:"",
+    buyer:{},
     producstCart:[],
-    shipping_address: [],
+    shippingaddress: [],
 }
 
 
 export default function ordersUserReducer(state = initialState, action) {
+    let idOrder = initialState.idOrder
     switch(action.type) {
         case GET_ORDERS_USER:
             return{
@@ -18,7 +21,8 @@ export default function ordersUserReducer(state = initialState, action) {
             };
         case CREATE_ORDER_USER:
             return{
-
+                ...state,
+                idOrder: action.payload
             };
         case UPDATE_ORDER_USER:
             return{

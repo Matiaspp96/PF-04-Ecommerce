@@ -13,4 +13,16 @@ const loginCallBackGoogle = passport.authenticate('google', {
     failureRedirect: '/api/auth/login/error' });
 
 
+const loginGoogleCart = passport.authenticate('google',{scope: ['openid', 'email', 'profile']},{
+        successRedirect : `${process.env.HOST_CLIENT}/checkout/order`,
+        failureRedirect : '/api/auth/login/error',
+        passReqToCallback :true //IMPORTANTE para poder recibir por req
+    });
+
+
+const loginCallBackGoogleCart = passport.authenticate('google', { 
+    successRedirect : `${process.env.HOST_CLIENT}/checkout/order`, 
+    failureRedirect: '/api/auth/login/error' });
+
+
 module.exports = { loginGoogle, loginCallBackGoogle};
