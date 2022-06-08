@@ -1,20 +1,24 @@
-import Head from "next/head";
-import Image from "next/image";
-import Cards from "../components/Card/Cards.js";
-import axios from "axios";
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer.js";
-import { useEffect, useState } from "react";
-import { BASEURL, getAllProducts } from "../redux/actions/products.js";
-import { useDispatch, useSelector } from "react-redux";
-import { Stack, Flex, Text, Select } from "@chakra-ui/react";
-import { addItemToCart } from "../redux/actions/cart.js";
-import { getSession } from "next-auth/react";
-import { getUserData } from "../redux/actions/user.js";
-import Banner from "../components/Banner/Banner.js";
-import cookie from 'js-cookie'
+import React, { useState, useEffect } from "react";
+import Head from 'next/head'
+import Image from 'next/image'
+import Cards from '../components/Card/Cards.js'
+import axios from 'axios'
+import Navbar from '../components/Navbar/Navbar'
+import Footer from '../components/Footer/Footer.js'
+import { getAllProducts } from '../redux/actions/products.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { Stack,Flex,Text,Select  } from '@chakra-ui/react'
+import { addItemToCart } from '../redux/actions/cart.js'
+import { getSession } from 'next-auth/react';
+import { getUserData } from '../redux/actions/user.js'
+import Banner from '../components/Banner/Banner'
+
 
 export default function Home() {
+ 
+  /*----- Cart -----*/
+ //console.log(localStorage.getItem('userInfo')||'')
+
   const [user, setUser] = useState({});
 
   const dispatch = useDispatch();
@@ -35,6 +39,7 @@ export default function Home() {
 =======
   const ReducerUser = useSelector((state) => state.userReducer.user);
 
+<<<<<<< HEAD
 >>>>>>> 78e023bd7b59e9aba338fd4fdff583ad046cf60a
   useEffect(() => {
     (async () => {
@@ -51,10 +56,12 @@ export default function Home() {
       }
     })();
   }, []);
+=======
+>>>>>>> d5bf59171301ee5450b6b2624a44b25d8f693cfd
 
-  useEffect(() => {
-    dispatch(getUserData(user));
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   dispatch(getUserData(user));
+  // }, [dispatch, user]);
 
   /*----- Cart -----*/
 
