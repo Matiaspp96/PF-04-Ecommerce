@@ -31,7 +31,8 @@ const router = useRouter()
         dispatch(getUserData(getUser.data.user));
         let localInfo = {
             token : getUser.data.token,
-            _id :getUser.data.user._id
+            _id :getUser.data.user._id,
+            role : getUser.data.user.role
         }
         localStorage.setItem(
             'userInfo',

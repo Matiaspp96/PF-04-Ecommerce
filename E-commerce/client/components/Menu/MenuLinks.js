@@ -39,7 +39,6 @@ const MenuLinks = ({ isOpen }) => {
       if(localStorage.getItem('userInfo')){
          localUser = JSON.parse(localStorage.getItem('userInfo'));
       }
-         console.log(localUser)
       if(Object.keys(localUser).length !== 0){
          setUser(localUser.role)
          
