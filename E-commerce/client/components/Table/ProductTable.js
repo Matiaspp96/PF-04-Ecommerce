@@ -23,12 +23,15 @@ import { IoTrashOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
 
 import { BASEURL } from "../../redux/actions/products";
+import { configAxios } from "../../utils/axiosConfig";
 
 const ProductTable = ({ products }) => {
   const router = useRouter();
   const [mensaje, setMensaje] = useState("");
 
   const deleteItem = (id) => {
+    let axiosConfig = configAxios();
+
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
@@ -39,9 +42,7 @@ const ProductTable = ({ products }) => {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          const response = axios.delete(`${BASEURL}/products/${id}`, {
-            withCredentials: true,
-          });
+          const response = axios.delete(`${BASEURL}/products/${id}`, axiosConfig);
           setMensaje(response.data);
           console.log(response.data);
         }

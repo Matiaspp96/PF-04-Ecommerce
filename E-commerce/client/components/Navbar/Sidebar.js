@@ -16,7 +16,7 @@ import { getUserData } from "../../redux/actions/user";
 import { BASEURL } from "../../redux/actions/products.js";
 import SidebarItem from "./SidebarItem";
 import { AiOutlineShopping, AiOutlineDashboard, AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
-
+import { configAxios } from "../../utils/axiosConfig";
 
 const Sidebar = ({ size }) => {
   const [navSize, changeNavSize] = useState(size);
@@ -25,21 +25,10 @@ const Sidebar = ({ size }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const localUser = localStorage.getItem('userInfo');
-       const userActive = JSON.parse(localUser);
-         let configAxios = {};
-       
-       if(userActive){
-        configAxios ={
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${userActive.token}`,
-          },
-        }
-       };
+    let axiosConfig = configAxios()
 
     (async () => {
-      const userResponse = await axios.get(`${BASEURL}/users/${userActive._id}`, configAxios);
+      const userResponse = await axios.get(`${BASEURL}/users/${userActive._id}`, axiosConfig);
       setUser(userResponse.data.data);
     })();
   }, []);

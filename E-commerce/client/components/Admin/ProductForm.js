@@ -25,6 +25,7 @@ import { getAllCategories } from "../../redux/actions/categories";
 import axios from "axios";
 import { BASEURL } from "../../redux/actions/products";
 import { formValidations } from "./formValidations";
+import { configAxios } from "../../utils/axiosConfig";
 
 export default function ProductForm({ id }) {
   const [errors,setErrors] = useState({})
@@ -69,7 +70,7 @@ export default function ProductForm({ id }) {
         price: detail.price,
         stock: detail.stock,
         image: detail.image,
-        category: detail.category.toLowerCase(),
+        category: detail.category,
       });
     }
   }, [detail]);
@@ -91,11 +92,11 @@ export default function ProductForm({ id }) {
 
   const handleSubmit = async () => {
     if(Object.keys(errors).length === 0){
+      let axiosConfig = configAxios()
+
       if (id) {
         try {
-          let response = await axios.put(`${BASEURL}/products/${id}`, product, {
-            withCredentials: true,
-          });
+          let response = await axios.put(`${BASEURL}/products/${id}`, product, axiosConfig);
           setMsg(response.data);
           Swal.fire({
             title: 'Product updated',
@@ -107,9 +108,7 @@ export default function ProductForm({ id }) {
         }
       } else {
         try {
-          let response = await axios.post(`${BASEURL}/products`, product, {
-            withCredentials: true,
-          });
+          let response = await axios.post(`${BASEURL}/products`, product, axiosConfig);
           setMsg(response.data);
           Swal.fire({
             title: 'Product added to the store',
