@@ -6,7 +6,7 @@ import {
   Avatar,
   Heading,
   Image,
-  IconButton
+  IconButton,
 } from "@chakra-ui/react";
 import { FiHome, FiUser } from "react-icons/fi";
 import { useState, useEffect } from "react";
@@ -15,33 +15,43 @@ import { IoPawOutline } from "react-icons/io5";
 import { getUserData } from "../../redux/actions/user";
 import { BASEURL } from "../../redux/actions/products.js";
 import SidebarItem from "./SidebarItem";
-import { AiOutlineShopping, AiOutlineDashboard, AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
-
+import {
+  AiOutlineShopping,
+  AiOutlineDashboard,
+  AiOutlineMenuFold,
+  AiOutlineMenuUnfold,
+} from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const Sidebar = ({ size }) => {
   const [navSize, changeNavSize] = useState(size);
   const [user, setUser] = useState({});
+  const router = useRouter();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const localUser = localStorage.getItem('userInfo');
-       const userActive = JSON.parse(localUser);
-         let configAxios = {};
-       
-       if(userActive){
-        configAxios ={
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${userActive.token}`,
-          },
-        }
-       };
+    const localUser = localStorage.getItem("userInfo");
+    const userActive = JSON.parse(localUser);
+    let configAxios = {};
 
-    (async () => {
-      const userResponse = await axios.get(`${BASEURL}/users/${userActive._id}`, configAxios);
-      setUser(userResponse.data.data);
-    })();
+    if (userActive) {
+      configAxios = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${userActive.token}`,
+        },
+      };
+      (async () => {
+        const userResponse = await axios.get(
+          `${BASEURL}/users/${userActive._id}`,
+          configAxios
+        );
+        setUser(userResponse.data.data);
+      })();
+    } else {
+      router.push("/notAllow");
+    }
   }, []);
 
   useEffect(() => {
@@ -59,7 +69,6 @@ const Sidebar = ({ size }) => {
           flexDir="column"
           justifyContent="space-between"
           px={3}
-          
         >
           <Flex
             p="5%"
@@ -68,7 +77,7 @@ const Sidebar = ({ size }) => {
             alignItems={navSize == "small" ? "center" : "flex-start"}
           >
             <Flex mt={4} align="center">
-              <Avatar size="sm" src={user.image} alt={user.name}/>
+              <Avatar size="sm" src={user.image} alt={user.name} />
               <Flex
                 flexDir="column"
                 ml={4}
@@ -92,45 +101,49 @@ const Sidebar = ({ size }) => {
             mb={2}
           >
             <IconButton
-            icon={navSize === 'small' ? <AiOutlineMenuUnfold/> : <AiOutlineMenuFold/>}
-            bgColor={'transparent'}
-            color={'white'}
-            ml={navSize=== 'large'? '.3rem' : 'none'}
-            _hover={{color:'black'}}
-            onClick={() => {
-              if (navSize == "small")
-                  changeNavSize("large")
-              else
-                  changeNavSize("small")
-          }} />
-            <SidebarItem
-              navSize={navSize}
-              icon={<FiHome/>}
-              title="Home"
-              route={"/"}
-              
+              icon={
+                navSize === "small" ? (
+                  <AiOutlineMenuUnfold />
+                ) : (
+                  <AiOutlineMenuFold />
+                )
+              }
+              bgColor={"transparent"}
+              color={"white"}
+              ml={navSize === "large" ? ".3rem" : "none"}
+              _hover={{ color: "black" }}
+              onClick={() => {
+                if (navSize == "small") changeNavSize("large");
+                else changeNavSize("small");
+              }}
             />
             <SidebarItem
               navSize={navSize}
-              icon={<AiOutlineDashboard/>}
+              icon={<FiHome />}
+              title="Home"
+              route={"/"}
+            />
+            <SidebarItem
+              navSize={navSize}
+              icon={<AiOutlineDashboard />}
               title="Dashboard"
               route={"/dashboard"}
             />
             <SidebarItem
               navSize={navSize}
-              icon={<IoPawOutline/>}
+              icon={<IoPawOutline />}
               title="Products"
               route={"/dashboard/products"}
             />
             <SidebarItem
               navSize={navSize}
-              icon={<FiUser/>}
+              icon={<FiUser />}
               title="Ussers"
               route={"/dashboard/ussers"}
             />
             <SidebarItem
               navSize={navSize}
-              icon={<AiOutlineShopping/>}
+              icon={<AiOutlineShopping />}
               title="Orders"
               route={"/dashboard/orders"}
             />
@@ -138,7 +151,6 @@ const Sidebar = ({ size }) => {
 
           <Flex justifyContent={"center"}>
             <Image src={"/Logo.png"} w={"6rem"} mb={5} />
-            
           </Flex>
         </Flex>
       )}

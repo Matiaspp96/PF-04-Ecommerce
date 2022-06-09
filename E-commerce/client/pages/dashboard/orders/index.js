@@ -9,18 +9,22 @@ const Orders = () => {
 
   useEffect(() => {
     let localUser = {};
-      if(localStorage.getItem('userInfo')){
-         localUser = JSON.parse(localStorage.getItem('userInfo'));
-      }
-      if(Object.keys(localUser).length !== 0){
-         setUser(localUser.role)
-         
-       }
+    if (localStorage.getItem("userInfo")) {
+      localUser = JSON.parse(localStorage.getItem("userInfo"));
+    }
+    if (Object.keys(localUser).length !== 0 && localUser.role === 'admin') {
+      setUser(localUser.role);
+    }
+  
+    
+    else{
+      router.push("/notAllow");
+    }
   });
 
   return (
     <>
-      {user === "admin" ? (
+      {user && (
         <Flex justifyContent={"space-between"}>
           <Sidebar size={"large"} />
 
@@ -32,22 +36,6 @@ const Orders = () => {
             <Text textAlign={"center"}>Page under construction</Text>
           </Stack>
         </Flex>
-      ) : (
-        <Center h={'100vh'}>
-        <Stack justifyItems={'center'}>
-          <Text textAlign={'center'}>Access denied. You are not an Admin</Text>
-          <Text textAlign={"center"}>
-            Think this is an error? Contact Support
-          </Text>
-          <Button
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            Home
-          </Button>
-        </Stack>
-    </Center>
       )}
     </>
   );

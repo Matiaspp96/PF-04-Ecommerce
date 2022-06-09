@@ -13,34 +13,21 @@ const NewProduct = () => {
     if (localStorage.getItem("userInfo")) {
       localUser = JSON.parse(localStorage.getItem("userInfo"));
     }
-    if (Object.keys(localUser).length !== 0) {
+    if (Object.keys(localUser).length !== 0 && localUser.role === 'admin') {
       setUser(localUser.role);
     }
-  });
+    else{
+      router.push("/notAllow");
+    }
+  },[]);
 
   return (
     <>
-      {user === "admin" ? (
+      {user && (
         <Flex>
           <Sidebar size={"small"} />
           <ProductForm></ProductForm>
         </Flex>
-      ) : (
-        <Center h={'100vh'}>
-        <Stack justifyItems={'center'}>
-          <Text textAlign={'center'}>Access denied. You are not an Admin</Text>
-          <Text textAlign={"center"}>
-            Think this is an error? Contact Support
-          </Text>
-          <Button
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            Home
-          </Button>
-        </Stack>
-    </Center>
       )}
     </>
   );
