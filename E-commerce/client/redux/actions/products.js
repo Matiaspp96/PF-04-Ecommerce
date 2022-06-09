@@ -11,17 +11,31 @@ import {
     GET_PRODUCT_REVIEWS
 } from "./actionstype";
 
-export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}api`;
+export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
-  console.log(BASEURL)
-  console.log(process.env.NODE_ENV)
+  // config de axios, enviar headers con token tomado desde localstorage. 
+  //  USAR EN RUTAS PROTEGIDAS 
+  //  const localUser = localStorage.getItem(
+  //    'userInfo');
+  //  const userActive = JSON.parse(localUser);
+  //    let configAxios = {};
+   
+  //  if(userActive){
+  //   configAxios ={
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `${userActive.token}`,
+  //     },
+  //   }
+  //  };
   try {
     const response = await axios.get(`${BASEURL}/products`);
-    return dispatch({
+   
+    return dispatch(  {
       type: GET_PRODUCTS,
-      payload: response.data.data,
+      payload:response.data.data
     });
   } catch (err) {
     console.log(err)
@@ -32,10 +46,9 @@ export const getProductsByName = (name) => async (dispatch) => {
   try {
     // const responseProduct = await axios.get(`${BASEURL}/products?title=${title}`);
     const response = await axios.get(`${BASEURL}/products?name=${name}`);
-    console.log(response)
     return dispatch({
       type: GET_PRODUCTS_BY_NAME,
-      payload: response.data,
+      payload: response.data.data,
     });
   } catch (err) {
     console.log(err)

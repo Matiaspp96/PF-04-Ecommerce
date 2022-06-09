@@ -1,5 +1,6 @@
 const { check } = require("express-validator");
 const { validateResult } = require("../utils/handleValidator");
+
 const validateLogin = [
   check("email").exists().notEmpty(),
   check("password").exists().notEmpty(),
@@ -16,12 +17,5 @@ const validateRegister = [
     validateResult(req, res, next);
   },
 ];
-//midleware 
-const isAuthenticated= (req,res,next)=>{
 
-  if(req.isAuthenticated()){
-      return next();
-  }
-  return res.json({message : 'unauthenticated user'})
-}
-module.exports = { validateLogin, validateRegister,isAuthenticated };
+module.exports = { validateLogin, validateRegister };
