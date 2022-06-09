@@ -19,7 +19,7 @@ const Dashboard = () => {
     else{
       router.push("/notAllow");
     }
-  });
+  }, [router]);
 
   return (
     <>

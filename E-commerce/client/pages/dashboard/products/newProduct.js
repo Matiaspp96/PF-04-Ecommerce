@@ -19,7 +19,7 @@ const NewProduct = () => {
     else{
       router.push("/notAllow");
     }
-  },[]);
+  },[router]);
 
   return (
     <>

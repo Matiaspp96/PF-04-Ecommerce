@@ -9,7 +9,7 @@ export function formValidations(product){
     if(!product.description){
       errors.description = 'Description is required'
     }else if(product.description.length < 10){
-        errors.name = 'Descriptions must be at least 10 letters long'
+        errors.descrption = 'Descriptions must be at least 10 letters long'
     }
 
     if(!product.category){

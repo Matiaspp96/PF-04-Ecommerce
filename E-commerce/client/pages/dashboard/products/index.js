@@ -51,7 +51,7 @@ const Products = () => {
     else{
       router.push("/notAllow");
     }
-  });
+  },[router]);
 
   return (
     <>

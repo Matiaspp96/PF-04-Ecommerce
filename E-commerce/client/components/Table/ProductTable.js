@@ -85,7 +85,7 @@ const ProductTable = ({ products }) => {
                 <Tr key={ps.name}>
                   <Td p={1}>
                     <Center>
-                      <Image src={ps.image} boxSize={"50px"} />
+                      <Image src={ps.image} boxSize={"50px"} alt={ps.name} />
                     </Center>
                   </Td>
                   <Td p={1}>

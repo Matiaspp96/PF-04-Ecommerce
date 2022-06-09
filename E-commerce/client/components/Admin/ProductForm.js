@@ -50,7 +50,7 @@ export default function ProductForm({ id }) {
 
   useEffect(() => {
     dispatch(getAllCategories());
-  }, []);
+  }, [dispatch]);
 
   const categories = useSelector((state) => state.categoriesReducer.categories);
 
@@ -73,7 +73,7 @@ export default function ProductForm({ id }) {
         category: detail.category,
       });
     }
-  }, [detail]);
+  }, [detail,id]);
 
   const cloudinaryUpload = async (e) => {
     e.preventDefault();
