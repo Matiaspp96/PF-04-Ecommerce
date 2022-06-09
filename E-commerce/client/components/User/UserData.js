@@ -17,6 +17,7 @@ const Data = () => {
   const router = useRouter();
   useEffect(() => {
     (async () => {
+      console.log('paso por aca')
       const config = {
         withCredentials: true,
         headers: {
