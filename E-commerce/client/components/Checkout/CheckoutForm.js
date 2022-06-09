@@ -7,37 +7,68 @@ import { useDispatch, useSelector } from 'react-redux'
 import CardItem from '../Card/CardItem'
 
 const CheckoutForm = () => {
-    const numberItems = useSelector(state => state.shoppingCartReducer.totalItems);
-    const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
+  const productsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
+  const numberItems = productsCart.length
     const [msg, setMsg] = useState("");
     const dispatch = useDispatch();
     const { colorMode } = useColorMode()
 
     useEffect(()=>{
-        console.log(productsCart)
+      console.log(productsCart)
+      console.log(`esto es buyer use effect ${buyer}`)
     })
+    
+    const getTotalPrice = () => {
+        return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
+    }
 
     const [buyer, setBuyer] = useState({
-        /* user: localstorage, */
+        user: {email: 'matiaas.p@gmail.com'},
         products: productsCart,
         shipping:{
             street:"",
             state:"",
             number:0,
             floor:"",
-            between:""
+            between:"",
+            zip:0,
         },
         phone: 0,
-        cost: 0,
+        cost: getTotalPrice(),
         quantity: numberItems,
         payment: "",
       });
 
-    const getTotalPrice = () => {
-        return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
+
+    function handleChange(event){
+      setBuyer(buyer => {
+          let newBuyer={
+              ...buyer,
+              [event.target.name]: event.target.value
+          };
+          /* setError(
+              validateForm({
+                  ...buyer,
+                  [event.target.name]: event.target.value
+              })
+          ) */
+          console.log(newBuyer)
+          return newBuyer;
+      })
+    };
+
+    function handleState(event){
+      setBuyer({
+        ...buyer,
+        shipping:{
+          ...buyer.shipping,
+          state: event.target.value
+        }
+      })
+      console.log(`esto es buyer handle select ${buyer.shipping}`)
     }
 
-    const handleSubmit = async () => {
+    async function handleSubmit (){
         
         if(Object.keys(errors).length === 0){
           if (id) {
@@ -51,26 +82,34 @@ const CheckoutForm = () => {
             }
           } else {
             try {
-              let response = await axios.post(`${BASEURL}/orders`, buyer, {
+              let response = await axios.post(`${BASEURL}/orders`, buyer,) /* {
                 withCredentials: true,
-              });
+              }) */
+              console.log(response)
               setMsg(response.data);
               Swal.fire({
-                title: 'Product added to the store',
+                title: 'Order added to the DataBase',
                 icon:'success',
-                confirmButtonText: 'Cool'
+                confirmButtonText: 'Accept'
               })
             } catch (error) {
               setMsg(error);
             }
           }
           setBuyer({
-            name: "",
-            description: "",
-            price: '',
-            stock: '',
-            image: imgSrc,
-            category: "",
+            products: productsCart,
+            shipping:{
+                street:"",
+                state:"",
+                number:0,
+                floor:"",
+                between:"",
+                zip:0
+            },
+            phone: 0,
+            cost: 0,
+            quantity: numberItems,
+            payment: ""
           });
         //   router.push("endpoint mercado pago");
         }
@@ -82,17 +121,17 @@ const CheckoutForm = () => {
         <Flex  flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
             <Flex flexDir='column' minW='40%' gap='2em' p={['1rem','3rem']} border='1px solid #348099' borderRadius='20px'>
                 <Heading as='h4' size='md'>Shipping information</Heading>
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                     <FormLabel>First Name</FormLabel>
-                    <Input id='firstname' type='text' autoComplete='off'/>
+                    <Input id='firstname' name='first_name' value={first_name} onChange={e => handleChange(e)} type='text' autoComplete='off'/>
                 </FormControl>
                 <FormControl isRequired>
                     <FormLabel>Last Name</FormLabel>
-                    <Input id='lastname' type='text' autoComplete='off'/>
-                </FormControl>
+                    <Input id='lastname' name='last_name' value={last_name} onChange={e => handleChange(e)} type='text' autoComplete='off'/>
+                </FormControl> */}
                 <FormControl isRequired>
                     <FormLabel htmlFor='state'>State</FormLabel>
-                    <Select id='state' placeholder='Select state'>
+                    <Select id='state' name='state' value={buyer.shipping.state} onChange={e => handleState(e)} placeholder='Select state'>
                         <option>Buenos Aires</option>
                         <option>Catamarca</option>
                         <option>Chaco</option>
@@ -120,17 +159,17 @@ const CheckoutForm = () => {
                 </FormControl>
                 <FormControl isRequired>
                     <FormLabel>Street address</FormLabel>
-                    <Input id='address' type='text'  autoComplete='off'/>
+                    <Input id='address' name='street' value={buyer.shipping.street} onChange={e => handleChange(e)} type='text'  autoComplete='off'/>
                     <FormHelperText>Add a house number if you have one</FormHelperText>
                 </FormControl>
                 <FormControl>
                     <FormLabel>Apartment, suite, etc. (optional)</FormLabel>
-                    <Input id='apartment' type='text' autoComplete='off'/>
+                    <Input id='apartment' name='floor' value={buyer.shipping.floor} onChange={e => handleChange(e)} type='text' autoComplete='off'/>
                     <FormHelperText></FormHelperText>
                 </FormControl>
                 <FormControl isRequired>
                 <FormLabel htmlFor='postal code'>Postal Code</FormLabel>
-                <NumberInput min={1000}>
+                <NumberInput min={1000} name='zip' value={buyer.shipping.zip} onChange={e => handleChange(e)}>
                     <NumberInputField id='postal code' />
                     <NumberInputStepper>
                     <NumberIncrementStepper />
@@ -140,10 +179,10 @@ const CheckoutForm = () => {
                 </FormControl>
                 <FormControl>
                     <FormLabel>Phone (optional)</FormLabel>
-                    <Input id='phone' type='num' autoComplete='off'/>
+                    <Input id='phone' name='phone' value={buyer.phone} onChange={e => handleChange(e)} type='num' autoComplete='off'/>
                     <FormHelperText>In case we need to contact you about your order</FormHelperText>
                 </FormControl>
-                <Button mt={4} colorScheme='teal' type='submit'>
+                <Button onClick={e => handleSubmit(e)} mt={4} colorScheme='teal' type='submit'>
                     Submit
                 </Button>
             </Flex>

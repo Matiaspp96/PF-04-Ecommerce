@@ -25,4 +25,4 @@ const loginCallBackGoogleCart = passport.authenticate('google', {
     failureRedirect: '/api/auth/login/error' });
 
 
-module.exports = { loginGoogle, loginCallBackGoogle};
+module.exports = { loginGoogle, loginCallBackGoogle, loginGoogleCart, loginCallBackGoogleCart};

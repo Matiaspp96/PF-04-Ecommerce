@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { registerCtrl, loginCtrl, logOut, logError,forgotPassword,newPassword } = require("../controllers/auth");
 const { validateRegister, validateLogin, isAuthenticated } = require("../validators/auth");
-const {loginGoogle, loginCallBackGoogle} = require('../controllers/google-auth');
+const {loginGoogle, loginCallBackGoogle, loginGoogleCart, loginCallBackGoogleCart} = require('../controllers/google-auth');
 const { localAuthSignin, localAuthSignup } = require('../controllers/local-auth');
 
 router.post("/register", validateRegister, registerCtrl);
