@@ -2,14 +2,17 @@ const nodemailer = require ("nodemailer");
   
   const SendEmailPassword = async (datos) => {
     const { email, name, token } = datos;
-  
     const transport = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
+      host: process.env.HOST,
+      port: process.env.PORTGMAIL,
+      secure: true, // true for 465, false para otros puertos
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.USER,
+        pass: process.env.PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+    }
     });
   
   
@@ -20,7 +23,7 @@ const nodemailer = require ("nodemailer");
       text: "Reestablece tu Password",
       html: `<p>Hola: ${name} has solicitado reestablecer tu password</p>
       <p>Sigue el siguiente enlace para generar un nuevo password: 
-      <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Reestablecer Password</a>      
+      <a href="${process.env.HOST_CLIENT}/olvide-password/${token}">Reestablecer Password</a>      
       <p>Si tu no solicitaste este email, puedes ignorar el mensaje</p>     
       
       `,
