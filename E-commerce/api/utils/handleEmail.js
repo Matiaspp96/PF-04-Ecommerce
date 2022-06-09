@@ -3,12 +3,12 @@ const nodemailer = require ("nodemailer");
   const SendEmailPassword = async (datos) => {
     const { email, name, token } = datos;
     const transport = nodemailer.createTransport({
-      host: process.env.HOST,
-      port: process.env.PORTGMAIL,
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
       secure: true, // true for 465, false para otros puertos
       auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_USER,
       },
       tls: {
         rejectUnauthorized: false

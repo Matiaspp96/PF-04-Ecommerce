@@ -21,7 +21,7 @@ const loginCtrl = async (req, res,next) => {
     const checkPassword = await compare(body.password, user.password);
 
     if (!checkPassword) {
-      handleErrorResponse(res, "PASSWORD_INVALID", 402);
+      handleErrorResponse(res, "PASSWORD_INVALID", 404);
       return;
     }
     
@@ -96,11 +96,12 @@ const forgotPassword = async (req, res) => {
   }
 
   try {
-    usuario.token = tokenEmail();
+    const token = await tokenEmail();
+    usuario.token = token;
     await usuario.save();
-    SendEmailPassword({
+    await SendEmailPassword({
       email: usuario.email,
-      nombre: usuario.nombre,
+      name: usuario.name,
       token: usuario.token,
     });
 

@@ -21,7 +21,7 @@ const tokenEmail = async ( ) => {
     {
       rv
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_ACCESS_TOKEN_SECRET,
     {
       expiresIn: "0.25h",//1 year
     }
