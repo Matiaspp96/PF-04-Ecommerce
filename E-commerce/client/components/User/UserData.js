@@ -23,7 +23,7 @@ const Data = () => {
           "Content-Type": "application/json",
         },
       };
-
+      console.log('llego aca en el front paso al back')
       let getUser = await axios.get(urlUserData, config);
 
       console.log(getUser);

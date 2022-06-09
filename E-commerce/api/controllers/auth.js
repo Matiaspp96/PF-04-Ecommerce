@@ -73,13 +73,19 @@ const logOut = (req,res, next) => {
    
 };
 const logDataUserOauth = async (req,res) => {
-  if(req.user){
-  let token = await tokenSign(req.user)
-  const data = {
-   token: token,
-   user: req.user,
- };
-   return res.json(data)
+  try{
+    console.log(`entro al try en logDataUserOaut ${req}`)
+    if(req.user){
+    let token = await tokenSign(req.user)
+    const data = {
+     token: token,
+     user: req.user,
+    };
+    console.log(data, token)
+     return res.json(data)
+    }
+  } catch(err){
+    console.log(err)
   }
 };
 
