@@ -1,8 +1,7 @@
 import { Text, Stack, Button, Flex, Center } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 const notAllow = () => {
-    const router = useRouter();
   return (
     <Center h={'100vh'}>
         <Stack justifyItems={'center'}>
@@ -10,13 +9,16 @@ const notAllow = () => {
           <Text textAlign={"center"}>
             Think this is an error? Contact Support
           </Text>
-          <Button
-            onClick={() => {
-              router.push("/");
-            }}
+
+          <Center>
+          <Link href={'/'}
           >
-            Home
-          </Button>
+            <Text color={'blue'} cursor={'pointer'}>Home</Text>
+          </Link>
+          </Center>
+
+          
+
         </Stack>
     </Center>
   )
