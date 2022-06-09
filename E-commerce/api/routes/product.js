@@ -1,10 +1,5 @@
 const { Router } = require("express");
-<<<<<<< HEAD
-//midleware para validad auth de google
-const { isAuthenticated } = require("../validators/auth");
-=======
 const {protectRoute, isAdmin} = require('../middleware/newAuth');
->>>>>>> d5bf59171301ee5450b6b2624a44b25d8f693cfd
 const router = Router();
 const authMiddleware = require("../middleware/auth");
 //const authRolMiddleware = require("../middleware/rol");

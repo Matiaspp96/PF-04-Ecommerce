@@ -7,44 +7,54 @@ import React, { useEffect, useState } from 'react'
 import { IoGiftOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 import CardItem from '../Card/CardItem'
+import Swal from 'sweetalert2';
 
 const CheckoutForm = () => {
-  const productsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
+  const itemsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
   const numberItems = useSelector(state=> state.shoppingCartReducer.totalItems);
-    const dispatch = useDispatch();
-    const { colorMode } = useColorMode()
+  const dispatch = useDispatch();
+  const { colorMode } = useColorMode()
+  const [email, setEmail] = useState('')
+  const [user, setUser] = useState('')
+  // const productsCart = itemsCart?.reduce((acc,item) => acc + item.product, []) 
+  const productsCart = itemsCart?.map((item) => item.product) 
 
-    useEffect(()=>{
-      console.log(productsCart)
-      console.log(`esto es buyer use effect ${buyer}`)
-    })
+  useEffect(()=>{
+    let localUser
+    ( async() => {
+      if(localStorage.getItem('userInfo')){
+        localUser = JSON.parse(localStorage.getItem('userInfo'));
+      }
+      setUser(localUser)
+      setEmail(localUser.email) 
+    })()
+  })
     
-    const getTotalPrice = () => {
-        return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
-    }
+  const getTotalPrice = itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
 
-    const [buyer, setBuyer] = useState({
-        user: {email: 'matiaas.p@gmail.com'},
-        products: productsCart,
-        shipping:{
-            street:"",
-            state:"",
-            number:0,
-            floor:"",
-            between:"",
-            zip:0,
-        },
-        phone: 0,
-        cost: getTotalPrice(),
-        quantity: numberItems,
-        payment: "",
-      });
+  const [buyer, setBuyer] = useState({
+      users: {email: email},
+      products: productsCart,
+      shipping:{
+          street:"",
+          state:"",
+          number:0,
+          floor:"",
+          between:"",
+          zip:0,
+      },
+      phone: 0,
+      cost: getTotalPrice,
+      quantity: numberItems,
+      payment: "",
+    });
 
 
     function handleChange(event){
       setBuyer(buyer => {
           let newBuyer={
               ...buyer,
+              users: {email: email},
               [event.target.name]: event.target.value
           };
           /* setError(
@@ -66,27 +76,30 @@ const CheckoutForm = () => {
           [event.target.name]: event.target.value
         }
       })
-      console.log(`esto es buyer handle select ${buyer.shipping}`)
     }
 
     async function handleSubmit(){
             try {
               console.log(buyer)
-              await axios.post(`${BASEURL}/orders`, buyer) /* {
-                withCredentials: true,
-              }) */
-              /* setMsg(response.data); */
+              let configAxios ={
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `${user.token}`,
+                },
+              }
+              let response = await axios.post(`${BASEURL}/orders`, buyer, configAxios)
+              console.log(response)
               Swal.fire({
-                title: 'Order added to the DataBase',
+                title: 'Order created',
+                text: 'We transfer you to the payment✔️',
                 icon:'success',
                 confirmButtonText: 'Accept'
               })
             } catch (error) {
-              // setMsg(error);
               console.log(error)
             }
-          setBuyer({
-            users: {email: 'matiaas.p@gmail.com'},
+            setBuyer({
+            users: {email: email},
             products: productsCart,
             shipping:{
                 street:"",
@@ -95,13 +108,13 @@ const CheckoutForm = () => {
                 floor:"",
                 between:"",
                 zip:0
-            },
-            phone: 0,
-            cost: getTotalPrice(),
+              },
+              phone: 0,
+              cost: getTotalPrice,
             quantity: numberItems,
             payment: ""
           });
-        //   router.push("endpoint mercado pago");
+          axios.post(/* mercadopago */)
         }
 
     return (
@@ -184,13 +197,13 @@ const CheckoutForm = () => {
                 <Heading as='h4' size='md' >Your Order: {numberItems} Items</Heading>
                 </Center>
             <Grid justifyItems='center' gap='0.5rem'>
-            { productsCart?.map(ps=>{ return (
+            { itemsCart?.map(ps=>{ return (
                     <CardItem key={ps.product._id} producto={ps.product} quantity={ps.quantity}></CardItem>
                 
                     )})
             }
             </Grid>
-            <Text fontWeight='bold'>Total: ${getTotalPrice()}</Text>
+            <Text fontWeight='bold'>Total: ${getTotalPrice}</Text>
             <InputGroup flexDir='column' flexWrap='wrap'>
                 <TagLabel>Gift card or discount code</TagLabel>
                 <Flex flexDir='row'>

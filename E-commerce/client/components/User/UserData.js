@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../redux/actions/user";
+import { BASEURL } from "../../redux/actions/products";
 
-const urlUserData = `${process.env.API_URL}/auth/data`;
+const urlUserData = `${BASEURL}/auth/data`;
 
 const Data = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const Data = () => {
       let localInfo = {
         token : getUser.data.token,
         _id :getUser.data.user._id,
-        role: getUser.data.user.role
+        role: getUser.data.user.role,
+        email:getUser.data.user.email
     }
       console.log(getUser.data)
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
