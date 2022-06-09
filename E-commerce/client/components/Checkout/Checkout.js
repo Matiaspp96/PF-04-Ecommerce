@@ -21,7 +21,7 @@ const Checkout = () => {
 
     function handleAddOrder(e){
         e.preventDefault();
-        if(!localStorage.getItem('userInfo')){
+        if(localStorage.getItem('userInfo') === null){
             router.push('/cart/login')
         } else {router.push('/checkout/order')}
     }
