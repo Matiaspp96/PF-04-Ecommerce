@@ -9,7 +9,7 @@ const loginGoogle = passport.authenticate('google',{scope: ['openid', 'email', '
 
 
 const loginCallBackGoogle = passport.authenticate('google', { 
-    successRedirect : process.env.HOST_CLIENT, 
+    successRedirect: process.env.HOST_CLIENT, 
     failureRedirect: '/api/auth/login/error' });
 
 

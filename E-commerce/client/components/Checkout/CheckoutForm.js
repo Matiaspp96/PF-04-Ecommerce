@@ -1,5 +1,7 @@
-import { Button, Center, Flex, FormControl, FormHelperText, FormLabel, Grid, Heading, Input, InputGroup, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Stack, TagLabel, Text, useColorMode } from '@chakra-ui/react'
+import { Button, Center, Flex, FormControl, FormHelperText, FormLabel, Grid, Heading, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, Stack, TagLabel, Text, useColorMode } from '@chakra-ui/react'
 import Link from 'next/link'
+import { BASEURL } from "../../redux/actions/products";
+import axios from 'axios'
 import router from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { IoGiftOutline } from 'react-icons/io5'
@@ -8,8 +10,7 @@ import CardItem from '../Card/CardItem'
 
 const CheckoutForm = () => {
   const productsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
-  const numberItems = productsCart.length
-    const [msg, setMsg] = useState("");
+  const numberItems = useSelector(state=> state.shoppingCartReducer.totalItems);
     const dispatch = useDispatch();
     const { colorMode } = useColorMode()
 
@@ -57,46 +58,35 @@ const CheckoutForm = () => {
       })
     };
 
-    function handleState(event){
+    function handleShipping(event){
       setBuyer({
         ...buyer,
         shipping:{
           ...buyer.shipping,
-          state: event.target.value
+          [event.target.name]: event.target.value
         }
       })
       console.log(`esto es buyer handle select ${buyer.shipping}`)
     }
 
-    async function handleSubmit (){
-        
-        if(Object.keys(errors).length === 0){
-          if (id) {
+    async function handleSubmit(){
             try {
-              let response = await axios.put(`${BASEURL}/orders/${id}`, buyer) /* {
+              console.log(buyer)
+              await axios.post(`${BASEURL}/orders`, buyer) /* {
                 withCredentials: true,
               }) */
-              setMsg(response.data);
-            } catch (error) {
-              setMsg(error);
-            }
-          } else {
-            try {
-              let response = await axios.post(`${BASEURL}/orders`, buyer,) /* {
-                withCredentials: true,
-              }) */
-              console.log(response)
-              setMsg(response.data);
+              /* setMsg(response.data); */
               Swal.fire({
                 title: 'Order added to the DataBase',
                 icon:'success',
                 confirmButtonText: 'Accept'
               })
             } catch (error) {
-              setMsg(error);
+              // setMsg(error);
+              console.log(error)
             }
-          }
           setBuyer({
+            users: {email: 'matiaas.p@gmail.com'},
             products: productsCart,
             shipping:{
                 street:"",
@@ -107,13 +97,12 @@ const CheckoutForm = () => {
                 zip:0
             },
             phone: 0,
-            cost: 0,
+            cost: getTotalPrice(),
             quantity: numberItems,
             payment: ""
           });
         //   router.push("endpoint mercado pago");
         }
-      };
 
     return (
     <Stack w='95vw'>
@@ -131,7 +120,7 @@ const CheckoutForm = () => {
                 </FormControl> */}
                 <FormControl isRequired>
                     <FormLabel htmlFor='state'>State</FormLabel>
-                    <Select id='state' name='state' value={buyer.shipping.state} onChange={e => handleState(e)} placeholder='Select state'>
+                    <Select id='state' name='state' value={buyer.shipping.state} onChange={e => handleShipping(e)} placeholder='Select state'>
                         <option>Buenos Aires</option>
                         <option>Catamarca</option>
                         <option>Chaco</option>
@@ -159,18 +148,22 @@ const CheckoutForm = () => {
                 </FormControl>
                 <FormControl isRequired>
                     <FormLabel>Street address</FormLabel>
-                    <Input id='address' name='street' value={buyer.shipping.street} onChange={e => handleChange(e)} type='text'  autoComplete='off'/>
+                    <Input id='address' name='street' value={buyer.shipping.street} onChange={e => handleShipping(e)} type='text'  autoComplete='off'/>
                     <FormHelperText>Add a house number if you have one</FormHelperText>
                 </FormControl>
                 <FormControl>
+                    <FormLabel>Between streets (optional)</FormLabel>
+                    <Input id='address' name='between' value={buyer.shipping.between} onChange={e => handleShipping(e)} type='text'  autoComplete='off'/>
+                </FormControl>
+                <FormControl>
                     <FormLabel>Apartment, suite, etc. (optional)</FormLabel>
-                    <Input id='apartment' name='floor' value={buyer.shipping.floor} onChange={e => handleChange(e)} type='text' autoComplete='off'/>
+                    <Input id='apartment' name='floor' value={buyer.shipping.floor} onChange={e => handleShipping(e)} type='text' autoComplete='off'/>
                     <FormHelperText></FormHelperText>
                 </FormControl>
                 <FormControl isRequired>
                 <FormLabel htmlFor='postal code'>Postal Code</FormLabel>
-                <NumberInput min={1000} name='zip' value={buyer.shipping.zip} onChange={e => handleChange(e)}>
-                    <NumberInputField id='postal code' />
+                <NumberInput min={1000} >
+                    <NumberInputField id='postal code' name='zip' value={buyer.shipping.zip} onChange={e => handleShipping(e)} />
                     <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
@@ -182,7 +175,7 @@ const CheckoutForm = () => {
                     <Input id='phone' name='phone' value={buyer.phone} onChange={e => handleChange(e)} type='num' autoComplete='off'/>
                     <FormHelperText>In case we need to contact you about your order</FormHelperText>
                 </FormControl>
-                <Button onClick={e => handleSubmit(e)} mt={4} colorScheme='teal' type='submit'>
+                <Button onClick={handleSubmit} mt={4} colorScheme='teal' type='submit'>
                     Submit
                 </Button>
             </Flex>

@@ -28,18 +28,16 @@ const Checkout = () => {
 
     return (
     <Stack ml={['0.5em','0.5em','2em','2em']} >
-        <Link href='/checkout/idOrder'>
-            <Button
-            w='100%'
-            h='65px'
-            padding='10px 20px'
-            // bgGradient='linear-gradient(to-b, #348099 60%, #51ACAD 100%)'
-            bgColor='#348099'
-            border= '1px solid #348099'
-            font-size= '24px'
-            onClick={e => handleAddOrder(e)}
-            >PURCHARSE</Button>
-        </Link>
+        <Button
+        w='100%'
+        h='65px'
+        padding='10px 20px'
+        // bgGradient='linear-gradient(to-b, #348099 60%, #51ACAD 100%)'
+        bgColor='#348099'
+        border= '1px solid #348099'
+        font-size= '24px'
+        onClick={e => handleAddOrder(e)}
+        >PURCHARSE</Button>
         <Text>Your Cart: {numberItems} Items</Text>
         <Text>Total: ${getTotalPrice()}</Text>
         <InputGroup flexDir='column' flexWrap='wrap'>

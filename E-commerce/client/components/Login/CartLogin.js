@@ -46,13 +46,9 @@ const router = useRouter()
     }
 
     function handleGoogleLog(){
-        router.push(`${BASEURL}/cart/auth/login/google`)
+        router.push(`${BASEURL}/auth/cart/login/google`)
     }
 
-    function handleChange(e){
-        setUser({...user, [e.target.name]: e.target.value})
-        
-    }
 
   return (
     
