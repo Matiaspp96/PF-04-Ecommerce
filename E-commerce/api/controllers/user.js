@@ -6,7 +6,6 @@ const getItems = async (req, res) => {
     const data = await userModel.find();
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_GET_ITEMS");
   }
 };
@@ -53,7 +52,6 @@ const deleteItem = async (req, res) => {
 
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_DELETE_ITEM");
   }
 };

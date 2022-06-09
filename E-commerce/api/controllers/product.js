@@ -43,7 +43,6 @@ const getItems = async (req, res) => {
       .populate("reviews");
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_GET_ITEMS");
   }
 };
@@ -73,7 +72,6 @@ const createItem = async (req, res) => {
     res.status(201);
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_CREATE_ITEMS");
   }
 };
@@ -81,7 +79,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
+    const  body  = req.body;
     const data = await productModel.findByIdAndUpdate(id, body);
     res.send({ data });
   } catch (e) {
@@ -104,7 +102,7 @@ const deleteItem = async (req, res) => {
 };
 
 //sección de categoría al producto
-const addCategoryProduct = async (req, res) => {
+const addProductCategory = async (req, res) => {
   try {
     const { idProduct, idCategory } = req.body;
     data = await productModel.findOneAndUpdate(
@@ -125,5 +123,5 @@ module.exports = {
   createItem,
   updateItem,
   deleteItem,
-  addCategoryProduct,
+  addProductCategory,
 };

@@ -1,14 +1,15 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
-const { API_URL } = process.env;
+
+const { API_URL, HOST, USER, PASS, PORTGMAIL } = process.env;
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
+  host: HOST,
+  port: PORTGMAIL,
   secure: true, // true for 465, false para otros puertos
   auth: {
-    user: "pet.elegant.ecommerce.henry@gmail.com",
-    pass: "vtyzgfozwwfcxnrd",
+    user: USER,
+    pass: PASS,
   },
 });
 

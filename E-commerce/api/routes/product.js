@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const {protectRoute, isAdmin} = require('../middleware/newAuth');
+const { protectRoute, isAdmin } = require("../middleware/newAuth");
 const router = Router();
 const authMiddleware = require("../middleware/auth");
 //const authRolMiddleware = require("../middleware/rol");
@@ -15,19 +15,15 @@ const {
   createItem,
   updateItem,
   deleteItem,
-  addCategoryProduct,
+  addProductCategory,
 } = require("../controllers/product");
-router.get("/",getItems);
+router.get("/", getItems);
 router.get("/", getItembyName);
 router.get("/:id", validateId, getItem);
+//para catergorías
+router.post("/addcategory", addProductCategory);
 
-router.post(
-  "/",
-  authMiddleware,
-  isAdmin,
-  validateObjectDataCreate,
-  createItem
-);
+router.post("/", authMiddleware, isAdmin, validateObjectDataCreate, createItem);
 router.put(
   "/:id",
   authMiddleware,
@@ -35,12 +31,6 @@ router.put(
   validateObjectDataUpdate,
   updateItem
 );
-router.delete(
-  "/:id",
-  authMiddleware,
-  isAdmin,
-  validateId,
-  deleteItem
-);
+router.delete("/:id", authMiddleware, isAdmin, validateId, deleteItem);
 
 module.exports = router;
