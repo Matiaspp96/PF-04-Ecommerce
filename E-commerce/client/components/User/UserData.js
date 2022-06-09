@@ -17,13 +17,14 @@ const Data = () => {
   const router = useRouter();
   useEffect(() => {
     (async () => {
+      console.log('paso por aca')
       const config = {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
       };
-
+      console.log('llego aca en el front paso al back')
       let getUser = await axios.get(urlUserData, config);
 
       //redux

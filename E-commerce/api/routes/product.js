@@ -18,7 +18,7 @@ const {
   addProductCategory,
 } = require("../controllers/product");
 router.get("/", getItems);
-router.get("/", getItembyName);
+router.get("/name", getItembyName);
 router.get("/:id", validateId, getItem);
 //para catergorías
 router.post("/addcategory", addProductCategory);
