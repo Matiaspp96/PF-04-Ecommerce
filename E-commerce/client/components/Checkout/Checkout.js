@@ -21,7 +21,7 @@ const Checkout = () => {
 
     function handleAddOrder(e){
         e.preventDefault();
-        if(cookie.get('role') === 'guest'){
+        if(!localStorage.getItem('userInfo')){
             router.push('/cart/login')
         } else {router.push('/checkout/order')}
     }
