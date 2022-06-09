@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { registerCtrl, loginCtrl, logOut, logError,forgotPassword,newPassword,logDataUserOauth } = require("../controllers/auth");
 const { validateRegister, validateLogin } = require("../validators/auth");
-const {loginGoogle, loginCallBackGoogle} = require('../controllers/google-auth');
+const { loginGoogleCart, loginCallBackGoogleCart, loginGoogle, loginCallBackGoogle} = require('../controllers/google-auth');
 
 //auth local
 router.post("/register", validateRegister, registerCtrl);
@@ -11,6 +11,10 @@ router.post("/login", validateLogin, loginCtrl);
 // auth google
 router.get("/login/google", loginGoogle);
 router.get("/login/google/callback", loginCallBackGoogle);
+
+//ruta de auth google carrito
+router.get("/cart/login/google", loginGoogleCart);
+router.get("/cart/login/google/callback", loginCallBackGoogleCart);
 
 //recuperar datos del usuario
 router.get('/data', logDataUserOauth);

@@ -44,7 +44,7 @@ const MenuLinks = ({ isOpen }) => {
          
        }
  
-  });
+  },[]);
 
   useEffect(() => {
     dispatch(getTotalItems());

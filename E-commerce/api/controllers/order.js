@@ -4,6 +4,7 @@ const { handleHttpError } = require("../utils/handleError");
 const { transporter, emailer } = require("../config/email");
 
 const getItems = async (req, res) => {
+  console.log('hola')
   try {
     const data = await orderModel.find().populate("products").populate("buyer");
     if (data.length) {

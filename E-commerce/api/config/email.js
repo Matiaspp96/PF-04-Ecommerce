@@ -1,5 +1,6 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
+
 const { API_URL, HOST, USER, PASS, PORTGMAIL } = process.env;
 
 const transporter = nodemailer.createTransport({
