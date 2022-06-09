@@ -19,7 +19,7 @@ const Ussers = () => {
     else{
       router.push("/notAllow");
     }
-  });
+  },[router]);
 
   return (
     <>

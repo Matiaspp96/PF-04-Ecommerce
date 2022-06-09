@@ -20,7 +20,7 @@ const Orders = () => {
     else{
       router.push("/notAllow");
     }
-  });
+  },[router]);
 
   return (
     <>

@@ -52,7 +52,7 @@ const Sidebar = ({ size }) => {
     } else {
       router.push("/notAllow");
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     dispatch(getUserData(user));
@@ -150,7 +150,7 @@ const Sidebar = ({ size }) => {
           </Flex>
 
           <Flex justifyContent={"center"}>
-            <Image src={"/Logo.png"} w={"6rem"} mb={5} />
+            <Image src={"/Logo.png"} alt={'Pet Elegant Logo'}w={"6rem"} mb={5} />
           </Flex>
         </Flex>
       )}

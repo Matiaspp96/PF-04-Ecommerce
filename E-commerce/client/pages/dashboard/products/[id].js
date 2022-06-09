@@ -20,7 +20,7 @@ const EditPage = () => {
     else{
       router.push("/notAllow");
     }
-  });
+  },[router]);
 
   return (
     <>
