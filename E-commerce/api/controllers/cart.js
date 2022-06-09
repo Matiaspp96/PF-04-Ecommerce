@@ -15,7 +15,7 @@ const getCartTheUser = async (req, res) => {
 
 //agregar Item al Carrito
 const addItem = async (req, res) => {
-  const { idUser, idProduct } = req.params;
+  /* const { idUser, idProduct } = req.params;
 
   try {
     user = await userModel.updateOne(
@@ -26,6 +26,19 @@ const addItem = async (req, res) => {
   } catch (err) {
     console.log(err);
     handleHttpError(res, "ERROR_CREATE_ITEM");
+  } */
+
+  try {
+    const { idUser, idProduct } = req.body;
+    data = await userModel.findOneAndUpdate(
+      { _id: idUser },
+      { $push: { cart: idProduct } }
+    );
+
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, "ERROR_ADD_ITEM_CATEGORY");
   }
 };
 

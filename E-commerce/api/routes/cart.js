@@ -16,7 +16,8 @@ const {
   cartLocalstorage,
 } = require("../controllers/cart");
 
-router.post("/:idUser/cart/:idProduct", addItem);
+/* router.post("/:idUser/cart/:idProduct", addItem); */
+router.post("/addcart", addItem);
 router.delete("/:idUser/cart", deleteItemsCart);
 router.get("/:idUser/itemsInCart", getCartTheUser);
 
