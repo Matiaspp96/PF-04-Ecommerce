@@ -99,6 +99,7 @@ const forgotPassword = async (req, res) => {
     const token = await tokenEmail();
     usuario.token = token;
     await usuario.save();
+    
     await SendEmailPassword({
       email: usuario.email,
       name: usuario.name,
@@ -113,12 +114,15 @@ const forgotPassword = async (req, res) => {
 const newPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
+  
   const usuario = await userModel.findOne({ token });
   if (usuario) {
-    usuario.password = password;
+    const pass = await encrypt(password)
+    usuario.password = pass;
     usuario.token = "";
+    await usuario.save();
     try {
-      await usuario.save();
+
       res.json({ msg: "Password Modificado Correctamente" });
     } catch (error) {
       console.log(error);
