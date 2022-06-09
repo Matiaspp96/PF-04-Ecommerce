@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const router = Router();
+const {protectRoute, isAdmin} = require('../middleware/newAuth')
 const authMiddleware = require("../middleware/auth");
-const authRolMiddleware = require("../middleware/rol");
+//const authRolMiddleware = require("../middleware/rol");
 const {
   validateId,
   validateObjectDataUpdate,
@@ -16,22 +17,25 @@ const {
 router.get(
   "/:id",
   authMiddleware,
-  authRolMiddleware("admin"),
+  isAdmin,
   validateId,
   getItem
 );
-router.get("/", authMiddleware, authRolMiddleware("admin"), getItems);
+router.get("/", 
+authMiddleware, 
+isAdmin, 
+getItems);
 router.put(
   "/:id",
   authMiddleware,
-  authRolMiddleware("admin"),
+  isAdmin,
   validateObjectDataUpdate,
   updateItem
 );
 router.delete(
   "/:id",
   authMiddleware,
-  authRolMiddleware("admin"),
+  isAdmin,
   validateId,
   deleteItem
 );

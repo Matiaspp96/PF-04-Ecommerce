@@ -1,7 +1,9 @@
 // Products
 export const GET_PRODUCTS = 'GET_PRODUCTS'
-export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const ORDER_PRODUCTS = 'ORDER_PRODUCTS'
+export const ADD_PRODUCT = 'ADD_PRODUCT'
+export const CREATE_PRODUCT = 'CREATE_PRODUCT'
+export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 
 //SearchBar
 export const GET_PRODUCTS_BY_NAME = 'GET_PRODUCTS_BY_NAME'
@@ -12,6 +14,9 @@ export const GET_DETAIL = "GET_DETAIL"
 //Categories
 export const GET_CATEGORIES = "GET_CATEGORIES"
 export const FILTER_BY_CATEGORIES = "FILTER_BY_CATEGORIES"
+export const CREATE_CATEGORY = "CREATE_CATEGORY"
+export const DELETE_CATEGORIES = "DELETE_CATEGORIES"
+export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
 
 //Favorites
 export const ADD_ITEM_FAVORITES = "ADD_ITEM_FAVORITES"
@@ -27,5 +32,9 @@ export const GET_ALL_CART = "GET_ALL_CART"
 export const GET_TOTAL_PRICE = "GET_TOTAL_PRICE"
 export const GET_TOTAL_ITEMS = "GET_TOTAL_ITEMS"
 
+//User
+export const GET_USER_DATA = "GET_USER_DATA"
 
+//Reviews
+export const GET_PRODUCT_REVIEWS = 'GET_PRODUCT_REVIEW'
 

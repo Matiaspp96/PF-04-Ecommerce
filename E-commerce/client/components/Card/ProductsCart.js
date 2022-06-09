@@ -1,4 +1,4 @@
-import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Divider, Center } from '@chakra-ui/react'
+import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Divider, Center, cookieStorageManager } from '@chakra-ui/react'
 import Card from './Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -11,16 +11,15 @@ import Checkout from '../Checkout/Checkout';
 export default function ProductCart() {
   const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
   const dispatch = useDispatch()
+  const [cart, setCart] = useState(productsCart)
 
   useEffect(()=>{
     dispatch(getItemsCart())
-  }, [productsCart, dispatch])
-
-  const [cart, setCart] = useState(productsCart)
+  }, [cart,dispatch])
 
   return (
-    <div>  
-      {productsCart.length < 1 ? 
+    <Box>  
+      {cart.length < 1  ? 
       <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center'>
         <AiOutlineShopping size='150'/>
         <Text fontSize='2em'>Your shopping bag is empty</Text>
@@ -33,7 +32,7 @@ export default function ProductCart() {
         gap={5} >
         {
           productsCart?.map(ps=>{ return (
-            <Card key={ps._id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>
+            <Card key={ps.product._id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>
             )})
           }
         </Grid>
@@ -45,6 +44,8 @@ export default function ProductCart() {
         </GridItem>
       </Grid>
       }
-    </div>
+    </Box>
     )
   }
+
+// export async function getServerSideProps()
