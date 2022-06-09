@@ -8,6 +8,7 @@ const getCartTheUser = async (req, res) => {
     user = await userModel.findOne({ _id: idUser }).populate("cart._id");
     res.send(user.cart);
   } catch (err) {
+    console.log(err);
     handleHttpError(res, "ERROR_GET_CART");
   }
 };
@@ -15,6 +16,7 @@ const getCartTheUser = async (req, res) => {
 //agregar Item al Carrito
 const addItem = async (req, res) => {
   const { idUser, idProduct } = req.params;
+
   try {
     user = await userModel.updateOne(
       { _id: idUser },
@@ -22,6 +24,7 @@ const addItem = async (req, res) => {
     );
     res.send("El item se agrego correctamente");
   } catch (err) {
+    console.log(err);
     handleHttpError(res, "ERROR_CREATE_ITEM");
   }
 };

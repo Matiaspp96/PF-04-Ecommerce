@@ -18,7 +18,7 @@ const {
 
 router.post("/:idUser/cart/:idProduct", addItem);
 router.delete("/:idUser/cart", deleteItemsCart);
-router.get("/:idUser/cart", getCartTheUser);
+router.get("/:idUser/itemsInCart", getCartTheUser);
 
 //ruta experimental
 router.post("/cartStorage", cartLocalstorage);
