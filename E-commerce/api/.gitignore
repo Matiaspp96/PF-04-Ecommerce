@@ -32,5 +32,4 @@ yarn-error.log*
 # vercel
 .vercel
 
-#momentaneo
-package.json
+
