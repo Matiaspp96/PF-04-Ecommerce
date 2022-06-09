@@ -45,7 +45,7 @@ const Data = () => {
         return router.push("/");
       }
     })();
-  }, []);
+  }, [dispatch, router]);
   return (
     <Center>
       <p>cargando...</p>
