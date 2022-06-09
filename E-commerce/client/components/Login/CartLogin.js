@@ -6,7 +6,7 @@ import { BASEURL } from '../../redux/actions/products'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from '../../redux/actions/user'
  
-const urlSignIn = `${BASEURL}/auth/login`;
+const urlSignIn = `${BASEURL}/auth/cart/login`;
 
 const Login = () => {
 
@@ -63,7 +63,7 @@ const router = useRouter()
     };
 
     function handleGoogleLog(){
-        router.push(`${BASEURL}/auth/login/google`)
+        router.push(`${BASEURL}/auth/cart/login/google`)
     };
 
     function handleChange(e){

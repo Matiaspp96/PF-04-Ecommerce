@@ -1,4 +1,4 @@
-import { Input, InputGroup, InputLeftElement, Spacer, Stack, Text, Button, } from '@chakra-ui/react'
+import { Input, InputGroup, InputLeftElement, Spacer, Stack, Text, Button, useColorMode, color, } from '@chakra-ui/react'
 import Link from 'next/link'
 import {useState} from 'react'
 import { IoSearchSharp } from 'react-icons/io5'
@@ -6,7 +6,7 @@ import {getProductsByName} from '../../redux/actions/products'
 import { useDispatch } from 'react-redux'
 
 const Search = ({ toggle, isOpen }) => {
-
+  const { colorMode } = useColorMode()
   const dispatch = useDispatch()
   const [name, setName] = useState('')
 
@@ -44,13 +44,15 @@ const Search = ({ toggle, isOpen }) => {
         border maxWidth='40em'
         type='text' 
         placeholder='Product...' 
+        _placeholder={{color:'blackAlpha.700'}}
         onChange = {(e) => handleInputProducts(e)}
         value = {name}
         />
         <Button 
           borderStartRadius='0' 
           borderEndRadius='15px' 
-          textColor='blackAlpha.800'
+          color='blackAlpha.800'
+          bgColor='gray.300'
           onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>      
         </Button>
       </InputGroup>

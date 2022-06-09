@@ -24,7 +24,7 @@ const nodemailer = require ("nodemailer");
       <p>Si tu no solicitaste este email, puedes ignorar el mensaje</p>     
       
       `,
-    });
-  };
+  });
+};
 
 module.exports = { SendEmailPassword };

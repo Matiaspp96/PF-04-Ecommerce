@@ -11,8 +11,8 @@ const {
   deleteItem,
 } = require("../controllers/order");
 
-router.get("/:id", authMiddleware, getItem);
-router.get("/", authMiddleware, getItems);
+router.get("/:id", getItem);
+router.get("/", getItems);
 router.post("/", authMiddleware, createItem);
 router.put("/:id", 
 isAdmin, 
