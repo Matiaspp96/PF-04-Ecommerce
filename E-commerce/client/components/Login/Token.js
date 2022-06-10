@@ -23,7 +23,7 @@ import axios from "axios";
 import { validatePassword } from "../../utils/authValidations"; 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-const token = () => {
+const Token = () => {
   const router = useRouter();
   const { token } = router.query;
   const [showPassword, setShowPassword] = useState(false);
@@ -145,4 +145,4 @@ const token = () => {
   );
 };
 
-export default token;
+export default Token;
