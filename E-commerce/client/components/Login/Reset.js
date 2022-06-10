@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { resetValidations } from "../../utils/authValidations";
+import { BASEURL } from '../../redux/actions/products'
 
 const Reset = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ const Reset = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `${process.env.API_URL}/auth/olvide-password`,
+        `${BASEURL}/auth/olvide-password`,
         email
       );
       setResult(response.data.msg);

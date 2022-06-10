@@ -22,6 +22,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { validatePassword } from "../../utils/authValidations"; 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { BASEURL } from '../../redux/actions/products'
 
 const Token = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const Token = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.put(
-        `${process.env.API_URL}/auth/olvide-password/${token}`,
+        `${BASEURL}/auth/olvide-password/${token}`,
         password
       );
       setResult(response.data.msg);
