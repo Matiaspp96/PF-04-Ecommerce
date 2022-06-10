@@ -24,7 +24,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../redux/actions/user";
 import Link from "next/link";
-import { signInValidations } from "../../utils/authValidations"; 
+import { signInValidations } from "../../utils/authValidations";
+import { BASEURL } from '../../redux/actions/products'
 
 const Login = () => {
   const [errors, setErrors] = useState({});
@@ -51,7 +52,7 @@ const Login = () => {
     };
     try {
       let getUser = await axios.post(
-        `${process.env.API_URL}/auth/login`,
+        `${BASEURL}/auth/login`,
         user,
         config
       );
@@ -97,7 +98,7 @@ const Login = () => {
   }
 
   function handleGoogleLog() {
-    router.push(`${process.env.API_URL}/auth/login/google`);
+    router.push(`${BASEURL}/auth/login/google`);
   }
 
   function handleChange(e) {
