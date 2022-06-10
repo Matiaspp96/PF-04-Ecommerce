@@ -69,7 +69,7 @@ export default function ProductForm({ id }) {
         price: detail.price,
         stock: detail.stock,
         image: detail.image,
-        category: detail.category.toLowerCase(),
+        category: detail.category?.toLowerCase(),
       });
     }
   }, [detail]);
