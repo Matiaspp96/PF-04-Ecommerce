@@ -49,9 +49,7 @@ const CheckoutForm = () => {
       payment: "",
     });
   
-  const [buyerMP, setBuyerMP] = useState(
-    email, name, items, id_order
-  )
+  const [buyerMP, setBuyerMP] = useState()
 
     function handleChange(event){
       setBuyer(buyer => {
