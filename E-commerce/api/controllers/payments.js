@@ -1,4 +1,5 @@
 const mercadopago = require('mercadopago');
+const orderModel = require(`../models/orders`);
 const {handleHttpError} = require('../utils/handleError');
 mercadopago.configure({
     access_token: process.env.ACCESS_TOKEN_MP,
@@ -7,8 +8,10 @@ mercadopago.configure({
 const initPaymentMp = async (req, res) => {
    
       
-    const {description, quantity, currency_id, unit_price, email,phone,name,total_amount, metadata} = req.body;
+    const {description, quantity, currency_id, unit_price, email,phone,name,total_amount, metadata, idOrder} = req.body;
 
+    const order = await orderModel.findById(idOrder);
+    console.log(order);
     let dataPay = {
         payer: {
                 phone: {
@@ -47,7 +50,6 @@ const initPaymentMp = async (req, res) => {
     
 		items: [
 			{
-
 				 title: description,
 			     unit_price: Number(unit_price),
 				 quantity: Number(quantity)
@@ -65,10 +67,15 @@ const initPaymentMp = async (req, res) => {
             email : metadata.email
         }
 	};
+   
     try {
         const preference = await mercadopago.preferences.create(dataPay);
         //OJO SETEAR EL ID DE LA PREFERENCIA LA ORDER, PARA PODER DARLE PERSISTENCIA AL ESTADO DEL PAGO
         // EN PREFERENCE VIEDE COMO id, pero en la respuesta del estado del pago viene por query como preference_id
+     
+        order.paymentId = preference.body.id;
+        await order.save();
+        console.log(order.paymentId)
         res.send({ preference });
     } catch (e) {
         handleHttpError(res, e);

@@ -10,8 +10,9 @@
 
     "scripts": {
 
-      "start": "node ./app.js",
-      "dev": "nodemon ./app.js"
+        "start": "node ./app.js",
+
+        "dev": "nodemon ./app.js"
 
     },
 
@@ -46,6 +47,8 @@
         "mercadopago": "^1.5.13",
 
         "mongoose": "^6.3.3",
+
+        "mongoose-autopopulate": "^0.16.1",
 
         "morgan": "^1.10.0",
 

@@ -49,6 +49,7 @@ const registerCtrl = async (req, res) => {
       return;
     }
     const password = await encrypt(body.password);
+    console.log(bodyInsert)
     const bodyInsert = { ...body, password };
     console.log(bodyInsert)
     //const {name, email, role } = req.body;
