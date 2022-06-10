@@ -1,4 +1,4 @@
-import { Button, Center } from "@chakra-ui/react";
+import { Center, Stack, Heading, Progress } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -27,7 +27,6 @@ const Data = () => {
       console.log('llego aca en el front paso al back')
       let getUser = await axios.get(urlUserData, config);
 
-      console.log(getUser);
       //redux
       dispatch(getUserData(getUser.data.user));
       //store local
@@ -60,10 +59,12 @@ const Data = () => {
   }
 
   return (
-    <Center>
-      <Button onClick={e => handleClick(e)}/>
-      <p>cargando...</p>
-    </Center>
+    <Center h={'100vh'}>
+        <Stack>
+          <Heading>Just a moment</Heading>
+          <Progress size='md' isIndeterminate />
+        </Stack>
+      </Center>
   );
 };
 export default Data;
