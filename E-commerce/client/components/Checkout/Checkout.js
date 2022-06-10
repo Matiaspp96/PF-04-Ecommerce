@@ -1,7 +1,6 @@
 import { Button, Flex, Input, InputGroup, Stack, TagLabel, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import router from 'next/router'
-import cookie from 'js-cookie'
 import React, { useEffect } from 'react'
 import { IoGiftOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,18 +10,28 @@ const Checkout = () => {
     const numberItems = useSelector(state => state.shoppingCartReducer.totalItems);
     const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
     const dispatch = useDispatch();
+    const [user, setUser] = useState(false)
+
 
     const getTotalPrice = () => {
         return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
     }
 
     useEffect(()=>{
+        let localUser
+        ( async() => {
+        if(localStorage.getItem('userInfo')){
+            localUser = JSON.parse(localStorage.getItem('userInfo'));
+            setUser(localUser)
+        }
+        })()
     }, [dispatch])
 
     function handleAddOrder(e){
-        if(localStorage.getItem('userInfo') === null){
-            router.push('/cart/login')
-        } else {router.push('/checkout/order')}
+        if(user){
+            router.push('/checkout/order')
+        } else {
+            router.push('/cart/login')}
     }
 
     return (

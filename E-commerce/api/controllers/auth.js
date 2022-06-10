@@ -73,6 +73,7 @@ const logOut = (req,res, next) => {
    
 };
 const logDataUserOauth = async (req,res) => {
+  console.log(`antes de entrar al try en logDataUserOaut ${req}`)
   try{
     console.log(`entro al try en logDataUserOaut ${req}`)
     if(req.user){
