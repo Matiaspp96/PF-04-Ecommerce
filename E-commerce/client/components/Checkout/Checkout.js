@@ -1,7 +1,6 @@
 import { Button, Flex, Input, InputGroup, Stack, TagLabel, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import router from 'next/router'
-import cookie from 'js-cookie'
 import React, { useEffect } from 'react'
 import { IoGiftOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,9 +19,10 @@ const Checkout = () => {
     }, [dispatch])
 
     function handleAddOrder(e){
-        if(localStorage.getItem('userInfo') === null){
-            router.push('/cart/login')
-        } else {router.push('/checkout/order')}
+        if(localStorage.getItem('userInfo')){
+            router.push('/checkout/order')
+        } else {
+            router.push('/cart/login')}
     }
 
     return (
