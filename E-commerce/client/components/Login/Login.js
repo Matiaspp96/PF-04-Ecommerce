@@ -15,6 +15,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  SlideFade
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
@@ -23,7 +24,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../redux/actions/user";
 import Link from "next/link";
-import { signInValidations } from "../../utils/authValidations";
+import { signInValidations } from "../../utils/authValidations"; 
 
 const Login = () => {
   const [errors, setErrors] = useState({});
@@ -104,7 +105,8 @@ const Login = () => {
   }
 
   return (
-    <Stack
+    <SlideFade key={router.route} in="true">
+<Stack
       minH={"100vh"}
       direction={{ base: "column", md: "row" }}
       bgColor={"#eceff1"}
@@ -220,6 +222,8 @@ const Login = () => {
         />
       </Flex>
     </Stack>
+    </SlideFade>
+    
   );
 };
 
