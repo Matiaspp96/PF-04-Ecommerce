@@ -44,7 +44,7 @@ const Sidebar = ({ size }) => {
       };
       (async () => {
         const userResponse = await axios.get(
-          `${process.env.API_URL}/users/${userActive._id}`,
+          `${BASEURL}/users/${userActive._id}`,
           configAxios
         );
         setUser(userResponse.data.data);
