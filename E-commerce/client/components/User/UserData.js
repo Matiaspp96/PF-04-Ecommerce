@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -36,7 +36,7 @@ const Data = () => {
         _id :getUser.data.user._id,
         role: getUser.data.user.role,
         email:getUser.data.user.email
-    }
+      }
       console.log(getUser.data)
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
 
@@ -49,8 +49,18 @@ const Data = () => {
       }
     })();
   }, [dispatch, router]);
+
+  function handleClick(e){
+    e.preventDefault();
+    setUser({
+      username: "",
+      password: "",
+    })
+  }
+
   return (
     <Center>
+      <Button onClick={e => handleClick(e)}/>
       <p>cargando...</p>
     </Center>
   );
