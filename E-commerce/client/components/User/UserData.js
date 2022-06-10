@@ -47,6 +47,15 @@ const Data = () => {
       }
     })();
   }, [dispatch, router]);
+
+  function handleClick(e){
+    e.preventDefault();
+    setUser({
+      username: "",
+      password: "",
+    })
+  }
+
   return (
     <Center h={'100vh'}>
         <Stack>
