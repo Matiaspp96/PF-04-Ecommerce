@@ -10,16 +10,25 @@ const Checkout = () => {
     const numberItems = useSelector(state => state.shoppingCartReducer.totalItems);
     const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
     const dispatch = useDispatch();
+    const [user, setUser] = useState(false)
+
 
     const getTotalPrice = () => {
         return productsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
     }
 
     useEffect(()=>{
+        let localUser
+        ( async() => {
+        if(localStorage.getItem('userInfo')){
+            localUser = JSON.parse(localStorage.getItem('userInfo'));
+            setUser(localUser)
+        }
+        })()
     }, [dispatch])
 
     function handleAddOrder(e){
-        if(localStorage.getItem('userInfo')){
+        if(user){
             router.push('/checkout/order')
         } else {
             router.push('/cart/login')}
