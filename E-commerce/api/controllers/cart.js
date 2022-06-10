@@ -5,7 +5,8 @@ const { handleHttpError } = require("../utils/handleError");
 const getCartTheUser = async (req, res) => {
   const { idUser } = req.params;
   try {
-    user = await userModel.findOne({ _id: idUser }).populate("cart._id");
+    user = await userModel.findOne({ _id: idUser }).populate("_id");
+    console.log(user);
     res.send(user.cart);
   } catch (err) {
     console.log(err);
@@ -15,27 +16,15 @@ const getCartTheUser = async (req, res) => {
 
 //agregar Item al Carrito
 const addItem = async (req, res) => {
-  /* const { idUser, idProduct } = req.params;
-
   try {
-    user = await userModel.updateOne(
+    const { idUser } = req.params;
+    const { idProduct } = req.body;
+    user = await userModel.findOneAndUpdate(
       { _id: idUser },
-      { $addToSet: { cart: [idProduct] } }
+      { $push: { cart: [idProduct] } }
     );
-    res.send("El item se agrego correctamente");
-  } catch (err) {
-    console.log(err);
-    handleHttpError(res, "ERROR_CREATE_ITEM");
-  } */
-
-  try {
-    const { idUser, idProduct } = req.body;
-    data = await userModel.findOneAndUpdate(
-      { _id: idUser },
-      { $push: { cart: idProduct } }
-    );
-
-    res.send(data);
+    console.log(user);
+    res.send("El item se agrego correctamente" + user);
   } catch (err) {
     console.log(err);
     handleHttpError(res, "ERROR_ADD_ITEM_CATEGORY");
@@ -47,8 +36,10 @@ const deleteItemsCart = async (req, res) => {
   const { idUser } = req.params;
   try {
     user = await userModel.updateOne({ _id: idUser }, { $pull: { cart: [] } });
+    console.log(user);
     res.send("El carrito quedo vacio");
   } catch (err) {
+    console.log(err);
     handleHttpError(res, "ERROR_DELETE_ITEMS");
   }
 };
@@ -57,7 +48,7 @@ const deleteItemsCart = async (req, res) => {
 const cartLocalstorage = async (req, res) => {
   let { cart, users } = req.body;
   try {
-    let foundUser = await User.findOne({ email: users.email });
+    let foundUser = await userModel.findOne({ email: users.email });
     if (!foundUser) {
       const newUser = new userModel({
         name: users.name,
