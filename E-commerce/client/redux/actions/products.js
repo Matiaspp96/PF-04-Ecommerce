@@ -45,10 +45,11 @@ export const getAllProducts = () => async (dispatch) => {
 export const getProductsByName = (name) => async (dispatch) => {
   try {
     // const responseProduct = await axios.get(`${BASEURL}/products?title=${title}`);
-    const response = await axios.get(`${BASEURL}/products?name=${name}`);
+    const response = await axios.get(`${BASEURL}/products/name?name=${name}`);
+    console.log(response)
     return dispatch({
       type: GET_PRODUCTS_BY_NAME,
-      payload: response.data.data,
+      payload: response.data,
     });
   } catch (err) {
     console.log(err)

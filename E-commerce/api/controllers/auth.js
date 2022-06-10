@@ -23,7 +23,7 @@ const loginCtrl = async (req, res,next) => {
     const checkPassword = await compare(body.password, user.password);
     
     if (!checkPassword) {
-      handleErrorResponse(res, "PASSWORD_INVALID", 402);
+      handleErrorResponse(res, "PASSWORD_INVALID", 404);
       return;
     }
     console.log('antes sign',user)
@@ -74,6 +74,26 @@ const logOut = (req,res, next) => {
   });
    
 };
+<<<<<<< HEAD
+=======
+const logDataUserOauth = async (req,res) => {
+  console.log(`antes de entrar al try en logDataUserOaut ${req}`)
+  try{
+    console.log(`entro al try en logDataUserOaut ${req}`)
+    if(req.user){
+    let token = await tokenSign(req.user)
+    const data = {
+     token: token,
+     user: req.user,
+    };
+    console.log(data, token)
+     return res.json(data)
+    }
+  } catch(err){
+    console.log(err)
+  }
+};
+>>>>>>> 3050de56c5e47cc4fb277a024207b070cc1fb8f2
 
 const logError = (req,res) => {
   return res.send('Error en log')
@@ -88,11 +108,13 @@ const forgotPassword = async (req, res) => {
   }
 
   try {
-    usuario.token = tokenEmail();
+    const token = await tokenEmail();
+    usuario.token = token;
     await usuario.save();
-    SendEmailPassword({
+    
+    await SendEmailPassword({
       email: usuario.email,
-      nombre: usuario.nombre,
+      name: usuario.name,
       token: usuario.token,
     });
 
@@ -118,12 +140,15 @@ const logDataUserOauth = async (req,res) => {
 const newPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
+  
   const usuario = await userModel.findOne({ token });
   if (usuario) {
-    usuario.password = password;
+    const pass = await encrypt(password)
+    usuario.password = pass;
     usuario.token = "";
+    await usuario.save();
     try {
-      await usuario.save();
+
       res.json({ msg: "Password Modificado Correctamente" });
     } catch (error) {
       console.log(error);

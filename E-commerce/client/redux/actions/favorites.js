@@ -4,7 +4,6 @@ import { ADD_ITEM_FAVORITES,
     DELETE_ITEM_FAVORITES
 } from "./actionstype";
 
-export const BASEURL = 'https://fakestoreapi.com';
 
 export const addItemToFav = (item) => {
   try {

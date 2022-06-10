@@ -91,7 +91,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   return (
       <Stack
         h={{base:'270', md:'290', lg:'365'}} 
-        w={{base: router.route === '/cart' ? '90vw' : 'auto'}}
+        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'auto', lg:'auto'}}
         overflow='auto'
         boxShadow='lg'
         >

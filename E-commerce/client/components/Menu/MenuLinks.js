@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTotalItems } from '../../redux/actions/cart';
 import { useRouter } from 'next/router';
 import ColorModeSwitch from "../ColorMode/ColorSwitch";
-import cookie from 'js-cookie'
+import { BASEURL } from '../../redux/actions/products'
 
 const MenuLinks = ({ isOpen }) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const MenuLinks = ({ isOpen }) => {
     const router = useRouter()
         const handleLogOut = ()=>{
         localStorage.removeItem('userInfo');
-        router.push(`${process.env.API_URL}/auth/logout`)
+        router.push(`${BASEURL}/auth/logout`)
         };
 
 
@@ -44,7 +44,7 @@ const MenuLinks = ({ isOpen }) => {
          
        }
  
-  });
+  },[]);
 
   useEffect(() => {
     dispatch(getTotalItems());

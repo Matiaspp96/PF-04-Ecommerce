@@ -10,6 +10,7 @@ import {
   Progress,
   Button,
   IconButton,
+  Text
 } from "@chakra-ui/react";
 import { IoReloadOutline } from "react-icons/io5";
 import Sidebar from "../../../components/Navbar/Sidebar.js";
@@ -36,52 +37,74 @@ const Products = () => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
-  return (
-    <Flex justifyContent={"space-between"}>
-      <Sidebar size={"large"} />
-      <Stack w={"100%"}>
-        {products.length ? (
-          <Stack>
-            <Flex
-              bgColor="#1884BE"
-              alignItems={"center"}
-              justifyContent={"center"}
-              p={".9rem"}
-            >
-              <IconButton icon={<IoReloadOutline />} onClick={reload} me={'1rem'} />
-              <Search />
-              <Button
-                onClick={() => router.push("/dashboard/products/newProduct")}
-                w={"8rem"}
-                ml={"1rem"}
-              >
-                New Product
-              </Button>
-            </Flex>
-            <Sort
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              setSort={setSort}
-            />
+  const [user, setUser] = useState(null);
 
-            <PaginationDisplayer
-              products={products}
-              elements={elements}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              Component={ProductTable}
-            />
+  useEffect(() => {
+    let localUser = {};
+    if (localStorage.getItem("userInfo")) {
+      localUser = JSON.parse(localStorage.getItem("userInfo"));
+    }
+    if (Object.keys(localUser).length !== 0 && localUser.role === 'admin') {
+      setUser(localUser.role);
+    }
+    
+    else{
+      router.push("/notAllow");
+    }
+  },[router]);
+
+  return (
+    <>
+    {user &&
+    <Flex justifyContent={"space-between"}>
+    <Sidebar size={"large"} />
+    <Stack w={"100%"}>
+      {products.length ? (
+        <Stack>
+          <Flex
+            bgColor="#1884BE"
+            alignItems={"center"}
+            justifyContent={"center"}
+            p={".9rem"}
+          >
+            <IconButton icon={<IoReloadOutline />} onClick={reload} me={'1rem'} />
+            <Search />
+            <Button
+              onClick={() => router.push("/dashboard/products/newProduct")}
+              w={"8rem"}
+              ml={"1rem"}
+            >
+              New Product
+            </Button>
+          </Flex>
+          <Sort
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setSort={setSort}
+          />
+
+          <PaginationDisplayer
+            products={products}
+            elements={elements}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            Component={ProductTable}
+          />
+        </Stack>
+      ) : (
+        <Center h={"100vh"}>
+          <Stack>
+            <Heading>Just a moment</Heading>
+            <Progress size="md" isIndeterminate />
           </Stack>
-        ) : (
-          <Center h={"100vh"}>
-            <Stack>
-              <Heading>Just a moment</Heading>
-              <Progress size="md" isIndeterminate />
-            </Stack>
-          </Center>
-        )}
-      </Stack>
-    </Flex>
+        </Center>
+      )}
+    </Stack>
+  </Flex>
+    }
+    
+    </>
+    
   );
 };
 
