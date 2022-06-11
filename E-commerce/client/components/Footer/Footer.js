@@ -12,7 +12,7 @@ import {
   Flex,
 } from '@chakra-ui/react'
 
-import { FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
+import { FaLinkedin, FaTwitter, FaInstagram, FaFacebook} from 'react-icons/fa'
 
 
 export default function Footer (){
@@ -81,14 +81,10 @@ export default function Footer (){
         Calle Falsa 123. Springfield
       </Text>
       <ButtonGroup variant="ghost">
-        <IconButton
-          as="a"
-          href="#"
-          aria-label="LinkedIn"
-          icon={<FaLinkedin fontSize="1.25rem" />}
-        />
+        <IconButton as="a" href="#"aria-label="LinkedIn" icon={<FaLinkedin fontSize="1.25rem" />}/>
         <IconButton as="a" href="#" aria-label="GitHub" icon={<FaInstagram fontSize="1.25rem" />} />
         <IconButton as="a" href="#" aria-label="Twitter" icon={<FaTwitter fontSize="1.25rem" />} />
+        <IconButton as="a" href="#" aria-label="Facebook" icon={<FaFacebook fontSize="1.25rem" />} />
       </ButtonGroup>
     </Stack>
   </Container>
