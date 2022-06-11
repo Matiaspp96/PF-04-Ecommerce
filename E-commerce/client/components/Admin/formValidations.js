@@ -12,7 +12,7 @@ export function formValidations(product){
         errors.descrption = 'Descriptions must be at least 10 letters long'
     }
 
-    if(!product.category){
+    if(!product.category.length){
         errors.category = 'Category is required'
       }
   
@@ -32,5 +32,13 @@ export function formValidations(product){
         errors.image = 'Image is required. Please pick a file and press the save button.'
       }
   
+    return errors
+  }
+
+  export  function categoryValidation(category){
+    let errors = {};
+    if(!category.name){
+      errors.name = 'Category name is required'
+    }
     return errors
   }

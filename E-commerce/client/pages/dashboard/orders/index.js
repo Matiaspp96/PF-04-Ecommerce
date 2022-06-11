@@ -28,7 +28,7 @@ const Orders = () => {
         <Flex justifyContent={"space-between"}>
           <Sidebar size={"large"} />
 
-          <Stack w={"80vw"} justifyContent={"center"}>
+          <Stack h={'100vh'} w={"80vw"} justifyContent={"center"}>
             <Text textAlign={"center"}>¡Hello!</Text>
             <Text textAlign={"center"}>
               Here you will be able to see and manage the orders
