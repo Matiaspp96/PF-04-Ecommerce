@@ -64,7 +64,7 @@ const Sidebar = ({ size }) => {
         <Flex
           bgColor="#1884BE"
           pos="sticky"
-          h="100vh"
+          h='auto'
           w={navSize === "small" ? "6vw" : "13vw"}
           flexDir="column"
           justifyContent="space-between"
