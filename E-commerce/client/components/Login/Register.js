@@ -21,7 +21,8 @@ import {
   import Link from "next/link";
   import { useRouter } from "next/router";
   import axios from "axios";
-  import { registerValidations } from "../../utils/authValidations"; 
+  import { registerValidations } from "../../utils/authValidations";
+  import { BASEURL } from '../../redux/actions/products'
   
   export default function Register() {
     const [errors, setErrors] = useState({});
@@ -41,7 +42,7 @@ import {
     function register(e) {
       e.preventDefault();
       axios
-        .post(`${process.env.API_URL}/auth/register`, user)
+        .post(`${BASEURL}/auth/register`, user)
         .then(function (response) {
           setResult(response.data);
         })
