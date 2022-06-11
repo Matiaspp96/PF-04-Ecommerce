@@ -26,7 +26,7 @@ const Dashboard = () => {
       {user ? (
         <Flex justifyContent={"space-between"}>
           <Sidebar />
-          <Stack w={"80vw"} justifyContent={"center"}>
+          <Stack w={"80vw"} h={'100vh'} justifyContent={"center"}>
             <Text textAlign={"center"}>¡Hello!</Text>
             <Text textAlign={"center"}>
               Here you will be able to see statistical data of your business
