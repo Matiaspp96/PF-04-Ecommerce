@@ -49,14 +49,8 @@ const registerCtrl = async (req, res) => {
       return;
     }
     const password = await encrypt(body.password);
-    console.log(bodyInsert)
-    const bodyInsert = { ...body, password };
-    console.log(bodyInsert)
-    //const {name, email, role } = req.body;
-    // let obj = { name,email,role,password }
-    // console.log(obj )
-    
-    const data = await userModel.create(bodyInsert);
+  
+    const data = await userModel.create({email: body.email,name: body.name, password});
     res.send({ data })
   } catch (e) {
     handleHttpError(res, e);
@@ -74,26 +68,7 @@ const logOut = (req,res, next) => {
   });
    
 };
-<<<<<<< HEAD
-=======
-const logDataUserOauth = async (req,res) => {
-  console.log(`antes de entrar al try en logDataUserOaut ${req}`)
-  try{
-    console.log(`entro al try en logDataUserOaut ${req}`)
-    if(req.user){
-    let token = await tokenSign(req.user)
-    const data = {
-     token: token,
-     user: req.user,
-    };
-    console.log(data, token)
-     return res.json(data)
-    }
-  } catch(err){
-    console.log(err)
-  }
-};
->>>>>>> 3050de56c5e47cc4fb277a024207b070cc1fb8f2
+
 
 const logError = (req,res) => {
   return res.send('Error en log')
@@ -111,7 +86,7 @@ const forgotPassword = async (req, res) => {
     const token = await tokenEmail();
     usuario.token = token;
     await usuario.save();
-    
+
     await SendEmailPassword({
       email: usuario.email,
       name: usuario.name,
@@ -140,10 +115,11 @@ const logDataUserOauth = async (req,res) => {
 const newPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
-  
+
   const usuario = await userModel.findOne({ token });
+
   if (usuario) {
-    const pass = await encrypt(password)
+    const pass = await encrypt(password);
     usuario.password = pass;
     usuario.token = "";
     await usuario.save();
