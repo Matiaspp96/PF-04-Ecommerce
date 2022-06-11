@@ -48,7 +48,8 @@ const CheckoutForm = () => {
       quantity: numberItems,
       payment: "",
     });
-
+  
+  const [buyerMP, setBuyerMP] = useState()
 
     function handleChange(event){
       setBuyer(buyer => {
@@ -65,6 +66,12 @@ const CheckoutForm = () => {
           ) */
           console.log(newBuyer)
           return newBuyer;
+      })
+      setBuyerMP({
+        ...buyerMP,
+        email: email,
+        name: user.name,
+        items: productsCart
       })
     };
 

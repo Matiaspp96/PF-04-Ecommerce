@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Stack, Heading, Progress } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -17,16 +17,16 @@ const Data = () => {
   const router = useRouter();
   useEffect(() => {
     (async () => {
+      console.log('paso por aca')
       const config = {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
       };
-
+      console.log('llego aca en el front paso al back')
       let getUser = await axios.get(urlUserData, config);
 
-      console.log(getUser);
       //redux
       dispatch(getUserData(getUser.data.user));
       //store local
@@ -34,8 +34,9 @@ const Data = () => {
         token : getUser.data.token,
         _id :getUser.data.user._id,
         role: getUser.data.user.role,
-        email:getUser.data.user.email
-    }
+        email:getUser.data.user.email,
+        name:getUser.data.user.name
+      }
       console.log(getUser.data)
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
 
@@ -48,10 +49,22 @@ const Data = () => {
       }
     })();
   }, [dispatch, router]);
+
+  function handleClick(e){
+    e.preventDefault();
+    setUser({
+      username: "",
+      password: "",
+    })
+  }
+
   return (
-    <Center>
-      <p>cargando...</p>
-    </Center>
+    <Center h={'100vh'}>
+        <Stack>
+          <Heading>Just a moment</Heading>
+          <Progress size='md' isIndeterminate />
+        </Stack>
+      </Center>
   );
 };
 export default Data;
