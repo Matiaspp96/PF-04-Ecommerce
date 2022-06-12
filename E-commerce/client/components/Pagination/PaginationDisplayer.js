@@ -1,4 +1,5 @@
 import PaginationButtons from "./PaginationButtons";
+import { Stack } from "@chakra-ui/react";
 
 const PaginationDisplayer = ({
   products,
@@ -39,7 +40,7 @@ const PaginationDisplayer = ({
   }
 
   return (
-    <>
+    <Stack w={'100%'} py={3}>
       <PaginationButtons
         handleClick={handleClick}
         prevClick={prevClick}
@@ -49,7 +50,7 @@ const PaginationDisplayer = ({
       />
 
       <Component products={getPaginatedProducts()} />
-    </>
+    </Stack>
   );
 };
 

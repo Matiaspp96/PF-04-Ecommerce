@@ -5,8 +5,8 @@ const authMiddleware = require("../middleware/auth");
 //const authRolMiddleware = require("../middleware/rol");
 const {
   validateId,
-  validateObjectDataUpdate,
-} = require("../validators/category");
+  validateUserRoleUpdate,
+} = require("../validators/user");
 const {
   getItems,
   getItem,
@@ -29,7 +29,7 @@ router.put(
   "/:id",
   authMiddleware,
   isAdmin,
-  validateObjectDataUpdate,
+  validateUserRoleUpdate,
   updateItem
 );
 router.delete(
