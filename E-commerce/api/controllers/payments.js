@@ -7,11 +7,11 @@ mercadopago.configure({
 
 const initPaymentMp = async (req, res) => {
    
-      
-    const {description, quantity, currency_id, unit_price, email,phone,name,total_amount, metadata, idOrder} = req.body;
+      console.log(req.body);
+    const {description,unit_price, quantity, email,phone,name, idOrder} = req.body;
 
     const order = await orderModel.findById(idOrder);
-    console.log(order);
+
     let dataPay = {
         payer: {
                 phone: {
@@ -56,16 +56,12 @@ const initPaymentMp = async (req, res) => {
 			},
            
 		],
-        total_amount: null,
 		back_urls: {
-			"success": "http://localhost:3001/api/payments/success",
-			"failure": "http://localhost:3001/api/payments/failure",
-			"pending": "http://localhost:3001/api/payments/pending"
+			"success": `${process.env.API_URL}/api/payments/success`,
+			"failure": `${process.env.API_URL}/api/payments/failure`,
+			"pending": `${process.env.API_URL}/api/payments/pending`
 		},
 		auto_return: "approved",
-        metadata : {
-            email : metadata.email
-        }
 	};
    
     try {
@@ -75,8 +71,9 @@ const initPaymentMp = async (req, res) => {
      
         order.paymentId = preference.body.id;
         await order.save();
-        console.log(order.paymentId)
-        res.send({ preference });
+      
+         res.send({ preference });
+        //res.redirect(preference.body.sandbox_init_point);
     } catch (e) {
         handleHttpError(res, e);
     }

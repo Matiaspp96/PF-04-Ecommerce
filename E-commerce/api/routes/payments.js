@@ -8,12 +8,17 @@ router.get('/', (req, res) => {
 // crear una ruta para el pago de mercado pago
 router.post('/checkoutmp', initPaymentMp )
 // pago exitoso
-router.get('/success', (req, res) => {
+router.get('/success',async (req, res) => {
     console.log(req.query);
-    res.send('Pago exitoso');
+    const order = await orderModel.findOne({paymentId : req.query.preference_id});
+    order.status = req.query.status;
+    order.payment = req.query.payment_type;
+    order.merchant_id = req.query.merchant_order_id;
+    await order.save();
+    return res.redirect(process.env.HOST_CLIENT)
 });
 // pago fallido
-router.get('/failure', (req, res) => {
+router.get('/failure', async (req, res) => {
     console.log(req.query);
     res.send('Pago failure');
 });
@@ -26,8 +31,17 @@ router.get('/pending', async (req, res) => {
     order.payment = req.query.payment_type;
     await order.save();
     //redirigir al usuario a la pagina de usuarios/ordenes
-    const validate = await orderModel.findOne({paymentId : req.query.preference_id});
-    console.log(validate);
+    res.send('Pago pending');
+});
+router.get('/updatestatuspayment/:preference_id', async (req, res) => {
+
+    console.log(req.params);
+
+    const order = await orderModel.findOne({paymentId : req.query.preference_id});
+    order.status = req.query.status;
+    order.payment = req.query.payment_type;
+    await order.save();
+    //redirigir al usuario a la pagina de usuarios/ordenes
     res.send('Pago pending');
 });
 module.exports = router;
