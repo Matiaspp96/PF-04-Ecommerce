@@ -7,13 +7,13 @@ import ProductCart from '../components/Card/ProductsCart';
 import Footer from '../components/Footer/Footer';
 import cookie from 'js-cookie'
 
-export default function Cart() {
+function Cart() {
   const dispatch = useDispatch();
   useEffect(()=>{
     (async () => {
       dispatch(getItemsCart())
     })()
-  })
+  }, [dispatch])
 
   return (   
     <Stack alignItems='center'>
@@ -23,3 +23,5 @@ export default function Cart() {
     </Stack>
   )
 }
+
+export default Cart
