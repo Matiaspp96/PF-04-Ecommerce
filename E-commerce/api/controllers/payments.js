@@ -9,7 +9,7 @@ const initPaymentMp = async (req, res) => {
    
       
     const {description, quantity, currency_id, unit_price, email,phone,name,total_amount, metadata, idOrder} = req.body;
-
+    console.log(req.body)
     const order = await orderModel.findById(idOrder);
     console.log(order);
     let dataPay = {

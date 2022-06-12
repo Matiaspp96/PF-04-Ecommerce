@@ -116,18 +116,6 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-const logDataUserOauth = async (req,res) => {
-  if(req.user){
-  let token = await tokenSign(req.user)
-  const data = {
-   token: token,
-   user: req.user,
- };
-   return res.json(data)
-  }
-};
-
-
 
 const newPassword = async (req, res) => {
   const { token } = req.params;

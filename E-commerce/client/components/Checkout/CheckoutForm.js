@@ -22,7 +22,7 @@ const CheckoutForm = () => {
   const [email, setEmail] = useState('');
   const [user, setUser] = useState('');
   const productsCart = itemsCart?.map((item) => item.product);
-  let itemsMP = itemsCart?.map((item) => typeof item === 'object' ? {title:item.product.name, unit_price:item.product.price, quantity:item.quantity } : null);
+  let itemsMP = itemsCart?.map((item) => typeof item === 'object' ? {description:item.product.name, unit_price:item.product.price, quantity:item.quantity } : null);
   const [buyerMP, setBuyerMP] = useState();
   const [buyer, setBuyer] = useState();
   const [error, setError] = useState({});
@@ -152,7 +152,7 @@ const CheckoutForm = () => {
           icon:'success',
           confirmButtonText: 'Accept'
         })
-        let responsePayment = await axios.post(`${BASEURL}/payments`, buyerMP, configAxios)
+        let responsePayment = await axios.post(`${BASEURL}/payments/checkoutmp`, buyerMP, configAxios)
         console.log(responsePayment)
       } else {
         Swal.fire({
