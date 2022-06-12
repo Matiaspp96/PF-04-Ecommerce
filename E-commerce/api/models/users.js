@@ -23,6 +23,9 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    token: {
+      type: String,
+    },
     cart: [
       {
         ref: "products",

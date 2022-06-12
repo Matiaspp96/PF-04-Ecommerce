@@ -13,9 +13,15 @@ import {
   Heading,
   Stack,
   SimpleGrid,
-  Text
+  Checkbox,
+  Text,
+  Box,
+  CloseButton,
+  Tag,
+  TagLabel,
+  TagRightIcon,
 } from "@chakra-ui/react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,7 +34,7 @@ import { formValidations } from "./formValidations";
 import { configAxios } from "../../utils/axiosConfig";
 
 export default function ProductForm({ id }) {
-  const [errors,setErrors] = useState({})
+  const [errors, setErrors] = useState({});
   const [msg, setMsg] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [imgFile, setImgFile] = useState("");
@@ -38,15 +44,15 @@ export default function ProductForm({ id }) {
   const [product, setProduct] = useState({
     name: "",
     description: "",
-    price: 0,
-    stock: 0,
+    price: "",
+    stock: "",
     image: imgSrc,
-    category: "",
+    category: [],
   });
 
-  useEffect(()=>{
-    setErrors(formValidations(product))
-  },[product])
+  useEffect(() => {
+    setErrors(formValidations(product));
+  }, [product]);
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -70,19 +76,22 @@ export default function ProductForm({ id }) {
         price: detail.price,
         stock: detail.stock,
         image: detail.image,
-        category: detail.category,
+        category: detail.category || [],
       });
     }
-  }, [detail,id]);
+  }, [detail, id]);
 
   const cloudinaryUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", imgFile);
-    formData.append("upload_preset", 'petelegant');
+    formData.append("upload_preset", "petelegant");
 
     try {
-      const response = await axios.post('https://api.cloudinary.com/v1_1/petelegant/image/upload', formData);
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/petelegant/image/upload",
+        formData
+      );
       setProduct({ ...product, image: response.data.url });
       console.log("todo ok");
     } catch (error) {
@@ -91,30 +100,38 @@ export default function ProductForm({ id }) {
   };
 
   const handleSubmit = async () => {
-    if(Object.keys(errors).length === 0){
-      let axiosConfig = configAxios()
+    if (Object.keys(errors).length === 0) {
+      let axiosConfig = configAxios();
 
       if (id) {
         try {
-          let response = await axios.put(`${BASEURL}/products/${id}`, product, axiosConfig);
+          let response = await axios.put(
+            `${BASEURL}/products/${id}`,
+            product,
+            axiosConfig
+          );
           setMsg(response.data);
           Swal.fire({
-            title: 'Product updated',
-            icon:'success',
-            confirmButtonText: 'Cool'
-          })
+            title: "Product updated",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
         } catch (error) {
           setMsg(error);
         }
       } else {
         try {
-          let response = await axios.post(`${BASEURL}/products`, product, axiosConfig);
+          let response = await axios.post(
+            `${BASEURL}/products`,
+            product,
+            axiosConfig
+          );
           setMsg(response.data);
           Swal.fire({
-            title: 'Product added to the store',
-            icon:'success',
-            confirmButtonText: 'Cool'
-          })
+            title: "Product added to the store",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
         } catch (error) {
           setMsg(error);
         }
@@ -122,10 +139,10 @@ export default function ProductForm({ id }) {
       setProduct({
         name: "",
         description: "",
-        price: '',
-        stock: '',
+        price: "",
+        stock: "",
         image: imgSrc,
-        category: "",
+        category: [],
       });
       router.push("/dashboard/products");
     }
@@ -146,17 +163,36 @@ export default function ProductForm({ id }) {
   };
 
   const handleChange = (e) => {
-    if (e.target.name === "stock" || e.target.name === "price") {
+    if (e.target.name === "category") {
+      if (product.category.includes(e.target.id)) {
+        setProduct({
+          ...product,
+          category: product.category.filter((cs) => {
+            return cs !== e.target.id;
+          }),
+        });
+      } else {
+        let newCategory = product.category.concat(e.target.id);
+        setProduct({ ...product, category: newCategory });
+      }
+    } else if (e.target.name === "stock" || e.target.name === "price") {
       setProduct({ ...product, [e.target.name]: Number(e.target.value) });
     } else {
       setProduct({ ...product, [e.target.name]: e.target.value });
     }
   };
 
+  const isInProduct = (id) => {
+    if (product.category.includes(id)) {
+      return true;
+    } else return false;
+  };
+
   return (
     <>
       {detail && (
-        <Stack h={"100vh"} px={"2rem"} bgColor={"#eceff1"}>
+        <Stack h={"auto"} px={"2rem"} bgColor={"#eceff1"}>
+          {console.log(product)}
           {id ? (
             <Heading
               color={"#1884BE"}
@@ -179,9 +215,9 @@ export default function ProductForm({ id }) {
             </Heading>
           )}
 
-          <SimpleGrid columns={2} spacing={10} alignItems={'center'}>
+          <SimpleGrid columns={2} spacing={10} alignItems={"center"}>
             <FormControl isRequired>
-              <Stack justifyContent={"space-between"} h={"80vh"}>
+              <Stack justifyContent={"space-between"} h={"auto"} mb={"3rem"}>
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
                   <FormLabel>Product Name:</FormLabel>
                   <Input
@@ -190,8 +226,9 @@ export default function ProductForm({ id }) {
                     onChange={handleChange}
                     value={product.name}
                   ></Input>
-                  {errors.name && <Text color={'red'}>{errors.name}</Text>}
+                  {errors.name && <Text color={"red"}>{errors.name}</Text>}
                 </Stack>
+
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
                   <FormLabel>Description:</FormLabel>
                   <Textarea
@@ -199,8 +236,37 @@ export default function ProductForm({ id }) {
                     onChange={handleChange}
                     value={product.description}
                   ></Textarea>
-                  {errors.description && <Text color={'red'}>{errors.description}</Text>}
+                  {errors.description && (
+                    <Text color={"red"}>{errors.description}</Text>
+                  )}
                 </Stack>
+
+                <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
+                  <FormLabel>Category:</FormLabel>
+
+                  <Box>
+                    {categories.map((cs, idx) => {
+                      return (
+                        <Checkbox
+                          key={cs._id}
+                          m={".3rem"}
+                          id={cs._id}
+                          value={product.category[idx]}
+                          isChecked={isInProduct(cs._id)}
+                          name={"category"}
+                          onChange={(e) => handleChange(e)}
+                        >
+                          {cs.name}
+                        </Checkbox>
+                      );
+                    })}
+                  </Box>
+
+                  {errors.category && (
+                    <Text color={"red"}>{errors.category}</Text>
+                  )}
+                </Stack>
+
                 <SimpleGrid
                   bgColor={"white"}
                   boxShadow="xl"
@@ -208,40 +274,26 @@ export default function ProductForm({ id }) {
                   columns={3}
                   spacing={6}
                 >
-                  <Stack>
-                    <FormLabel>Category:</FormLabel>
-                    <Select
-                      name="category"
-                      onChange={handleChange}
-                      value={product.category}
-                    >
-                      <option value="catlovers">Catlovers</option>
-                      <option value="doglovers">Doglovers</option>
-                      <option value="coat">Coat</option>
-                      <option value="t-shirt">T-shirts</option>
-                      <option value="harness">Harness</option>
-                    </Select>
-                    {errors.category && <Text color={'red'}>{errors.category}</Text>}
-                  </Stack>
+                
                   <Stack>
                     <FormLabel>Price:</FormLabel>
                     <Input
                       name="price"
                       onChange={handleChange}
-                      type={'number'}
+                      type={"number"}
                       value={product.price}
                     ></Input>
-                    {errors.price && <Text color={'red'}>{errors.price}</Text>}
+                    {errors.price && <Text color={"red"}>{errors.price}</Text>}
                   </Stack>
                   <Stack>
                     <FormLabel>Stock:</FormLabel>
                     <Input
                       name="stock"
                       onChange={handleChange}
-                      type={'number'}
+                      type={"number"}
                       value={product.stock}
                     ></Input>
-                    {errors.stock && <Text color={'red'}>{errors.stock}</Text>}
+                    {errors.stock && <Text color={"red"}>{errors.stock}</Text>}
                   </Stack>
                 </SimpleGrid>
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
@@ -252,7 +304,7 @@ export default function ProductForm({ id }) {
                       onChange={previewFile}
                       border={"none"}
                     ></Input>
-                    
+
                     <Button
                       bgColor={"#1884BE"}
                       borderRadius={"none"}
@@ -260,6 +312,7 @@ export default function ProductForm({ id }) {
                       color={"white"}
                       fontSize={"1rem"}
                       onClick={cloudinaryUpload}
+                      isDisabled={imgSrc? false : true}
                       _hover={{
                         background: "white",
                         color: "#1884BE",
@@ -268,7 +321,7 @@ export default function ProductForm({ id }) {
                       Save
                     </Button>
                   </Flex>
-                  {errors.image && <Text color={'red'}>{errors.image}</Text>}
+                  {errors.image && <Text color={"red"}>{errors.image}</Text>}
                 </Stack>
                 <Button
                   bgColor={"#1884BE"}
@@ -281,12 +334,10 @@ export default function ProductForm({ id }) {
                   _hover={{
                     background: "white",
                     color: "#1884BE",
-                    
                   }}
                 >
                   Upload
                 </Button>
-                
               </Stack>
             </FormControl>
             <Center
@@ -301,12 +352,11 @@ export default function ProductForm({ id }) {
                 maxW={"40vw"}
                 maxH={"75vh"}
                 src={product.image}
-                fallbackSrc={'/Logo.png'}
+                fallbackSrc={"/Logo.png"}
                 alt="Image preview..."
               />
             </Center>
           </SimpleGrid>
-          
         </Stack>
       )}
     </>

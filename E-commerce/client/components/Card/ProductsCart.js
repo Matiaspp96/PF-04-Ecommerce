@@ -1,4 +1,4 @@
-import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Divider, Container } from '@chakra-ui/react'
+import { SimpleGrid, Grid, Box, Heading, Text, Button, Flex, Stack, GridItem, Divider, Container, Center, Progress } from '@chakra-ui/react'
 import Card from './Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -12,17 +12,35 @@ import Checkout from '../Checkout/Checkout';
 export default function ProductCart() {
   const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
   const dispatch = useDispatch()
-  const [cart, setCart] = useState(productsCart)
+  const [cart, setCart] = useState()
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
   useEffect(()=>{
-    dispatch(getItemsCart())
+    console.log(productsCart)
+    async function fetchDataCart (){
+    await dispatch(getItemsCart())
+    setCart(productsCart)
+    setIsLoading(false)
+  }
+    fetchDataCart()
   }, [cart,dispatch])
+
+  if(isLoading){
+    return (
+      <Center h={"100vh"}>
+        <Stack>
+          <Heading>Just a moment</Heading>
+          <Progress size="md" isIndeterminate />
+        </Stack>
+      </Center>
+    )
+  }
 
   return (
     <Box w='95vw'>
       <Text><Link href='/'>Home </Link>/ Cart</Text>
-      {cart.length < 1  ? 
+      {cart.length < 1 ? 
       <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center' h={['90vh']}>
         <AiOutlineShopping size='150'/>
         <Text fontSize='2em'>Your shopping bag is empty</Text>
@@ -52,4 +70,3 @@ export default function ProductCart() {
     )
   }
 
-// export async function getServerSideProps()
