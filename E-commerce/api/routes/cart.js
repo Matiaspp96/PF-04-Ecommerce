@@ -19,7 +19,8 @@ const {
 router.post("/addItem/:idUser", addItem);
 /* router.post("/:idUser/cart/:idProduct", addItem); */
 /* router.post("/addcart", addItem); */
-router.delete("/:idUser/cart", deleteItemsCart);
+/* router.delete("/:idUser/cart", deleteItemsCart); */
+router.delete("/deleteCart", deleteItemsCart);
 router.get("/:idUser/itemsInCart", getCartTheUser);
 
 //ruta experimental

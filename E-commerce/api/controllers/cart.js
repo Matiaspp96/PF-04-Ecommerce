@@ -6,10 +6,8 @@ const getCartTheUser = async (req, res) => {
   const { idUser } = req.params;
   try {
     user = await userModel.findOne({ _id: idUser }).populate("_id");
-    console.log(user);
     res.send(user.cart);
   } catch (err) {
-    console.log(err);
     handleHttpError(res, "ERROR_GET_CART");
   }
 };
@@ -26,14 +24,13 @@ const addItem = async (req, res) => {
     console.log(user);
     res.send("El item se agrego correctamente" + user);
   } catch (err) {
-    console.log(err);
     handleHttpError(res, "ERROR_ADD_ITEM_CATEGORY");
   }
 };
 
 //Para vaciar el carrito
 const deleteItemsCart = async (req, res) => {
-  const { idUser } = req.params;
+  const { idUser } = req.body;
   try {
     user = await userModel.updateOne({ _id: idUser }, { $pull: { cart: [] } });
     console.log(user);
