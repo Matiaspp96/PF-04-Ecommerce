@@ -11,7 +11,7 @@ module.exports = {nextConfig,
     return [
       {
         // matching all API routes
-        source: process.env.API_URL + "/:path*",
+        source: "/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" },
