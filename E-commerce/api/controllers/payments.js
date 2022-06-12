@@ -8,7 +8,7 @@ mercadopago.configure({
 const initPaymentMp = async (req, res) => {
    
       console.log(req.body);
-    const {description,unit_price, quantity, email,phone,name, idOrder} = req.body;
+    const {items, email,phone,name, idOrder} = req.body;
 
     const order = await orderModel.findById(idOrder);
 
@@ -18,11 +18,11 @@ const initPaymentMp = async (req, res) => {
                     area_code: "",
                     number: Number(phone)
                 },
-                address: {
-                    zip_code: "",
-                    street_name: "",
-                    street_number: 5
-                },
+                // address: {
+                //     zip_code: "",
+                //     street_name: "",
+                //     street_number: 5
+                // },
                 email: email,
                 identification: {
                     number: "",
@@ -34,28 +34,8 @@ const initPaymentMp = async (req, res) => {
                 last_purchase: null
             
         },
-        shipments: {
-            default_shipping_method: 2,
-            receiver_address: {
-                zip_code: "",
-                street_name: "",
-                street_number: 4,
-                floor: "",
-                apartment: "",
-                city_name: null,
-                state_name: null,
-                country_name: null
-            }
-        },
     
-		items: [
-			{
-				 title: description,
-			     unit_price: Number(unit_price),
-				 quantity: Number(quantity)
-			},
-           
-		],
+		items: items,
 		back_urls: {
 			"success": `${process.env.API_URL}/api/payments/success`,
 			"failure": `${process.env.API_URL}/api/payments/failure`,

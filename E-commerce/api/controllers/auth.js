@@ -70,6 +70,23 @@ const logOut = (req,res, next) => {
 };
 
 
+const logDataUserOauth = async (req,res) => {
+  console.log(`antes de entrar al try en logDataUserOaut ${req}`)
+  try{
+    console.log(`entro al try en logDataUserOaut ${req}`)
+    if(req.user){
+    let token = await tokenSign(req.user)
+    const data = {
+     token: token,
+     user: req.user,
+    };
+    console.log(data, token)
+     return res.json(data)
+    }
+  } catch(err){
+    console.log(err)
+  }
+};
 const logError = (req,res) => {
   return res.send('Error en log')
 }
@@ -98,18 +115,6 @@ const forgotPassword = async (req, res) => {
     handleHttpError(res, "ERROR_GET_ITEM");
   }
 };
-
-const logDataUserOauth = async (req,res) => {
-  if(req.user){
-  let token = await tokenSign(req.user)
-  const data = {
-   token: token,
-   user: req.user,
- };
-   return res.json(data)
-  }
-};
-
 
 
 const newPassword = async (req, res) => {

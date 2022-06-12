@@ -17,17 +17,35 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-import { useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaEdit, FaRandom } from "react-icons/fa";
 import { IoTrashOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
-
+import { getAllCategories } from "../../redux/actions/categories";
 import { BASEURL } from "../../redux/actions/products";
 import { configAxios } from "../../utils/axiosConfig";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductTable = ({ products }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [mensaje, setMensaje] = useState("");
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
+
+  const categories = useSelector((state) => state.categoriesReducer.categories);
+
+ const getCategoryName = (id)=>{
+  let cat;
+  categories.map(cs=>{
+    if(cs._id === id){
+      cat = cs.name
+    }
+  });
+  return cat
+ }
 
   const deleteItem = (id) => {
     let axiosConfig = configAxios();
@@ -106,7 +124,8 @@ const ProductTable = ({ products }) => {
                     </Link>
                   </Td>
                   <Td p={1} textAlign={"center"}>
-                    {ps.category}
+                    {categories && ps.category?.map((cs,idx)=>{
+                      return <Text key={cs+idx}>{getCategoryName(cs)}</Text>})}
                   </Td>
                   <Td p={1} textAlign={"center"}>
                     {ps.stock}

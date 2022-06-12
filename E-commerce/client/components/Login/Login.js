@@ -38,43 +38,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-<<<<<<< HEAD
-const dispatch = useDispatch();
-const [result, setResult] = useState('')
-    const [user,setUser] = useState({
-    email: '',
-    password: ''
-})
-const router = useRouter()
-
-   async function handleSubmit(e){
-        e.preventDefault();
-       
-        const config = {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		};
-       
-        let getUser = await axios.post(urlSignIn,user,config);
-        dispatch(getUserData(getUser.data.user));
-        let localInfo = {
-            token : getUser.data.token,
-            _id :getUser.data.user._id,
-            role : getUser.data.user.role
-        }
-        localStorage.setItem(
-            'userInfo',
-            JSON.stringify(localInfo)
-          );   
-         setUser({
-         email: '',
-         password: ''
-        })
-        if(getUser.status ===200){
-            return router.push('/');
-        }  
-=======
   useEffect(() => {
     setErrors(signInValidations(user));
   }, [user]);
@@ -86,7 +49,6 @@ const router = useRouter()
       headers: {
         "Content-Type": "application/json",
       },
->>>>>>> 3050de56c5e47cc4fb277a024207b070cc1fb8f2
     };
     try {
       let getUser = await axios.post(
@@ -129,18 +91,11 @@ const router = useRouter()
       //añadir otro if error 500
 
       setUser({
-<<<<<<< HEAD
-        email: '',
-        password: ''
-    });
-    };
-=======
         email: "",
         password: "",
       });
     }
   }
->>>>>>> 3050de56c5e47cc4fb277a024207b070cc1fb8f2
 
   function handleGoogleLog() {
     router.push(`${BASEURL}/auth/login/google`);
@@ -150,30 +105,6 @@ const router = useRouter()
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
-<<<<<<< HEAD
-    function handleChange(e){
-        setUser({...user, [e.target.name]: e.target.value})
-        
-    };
-    console.log(user)
-  return (
-    
-        <Center>
-            <Stack>
-            <FormControl >
-                    <Stack>
-                        <FormLabel htmlFor="username">Username</FormLabel>
-                        <Input id="email"  onChange={handleChange} name="email" type="text" autoComplete="username" required autoFocus />
-                    </Stack>
-                    <Stack>
-                        <FormLabel htmlFor="current-password">Password</FormLabel>
-                        <Input onChange={handleChange} id="current-password" name="password" type="password" autoComplete="current-password" required />
-                    </Stack>
-                    <Button onClick={e=>{handleSubmit(e)}}>Sign in</Button>
-                    <Button onClick={e=>{handleSubmitLogin(e)}}>Log in</Button>
-                </FormControl>
-                <Button pos='relative' top='10rem' onClick={handleGoogleLog}>Log in with google</Button>  
-=======
   return (
     <SlideFade key={router.route} in="true">
 <Stack
@@ -274,7 +205,6 @@ const router = useRouter()
                   <Text color={"#1884BE"}>Register Now</Text>
                 </Link>
               </Flex>
->>>>>>> 3050de56c5e47cc4fb277a024207b070cc1fb8f2
             </Stack>
           </Box>
         </Stack>
