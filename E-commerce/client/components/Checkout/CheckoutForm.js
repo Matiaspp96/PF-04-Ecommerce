@@ -64,7 +64,7 @@ const CheckoutForm = () => {
       }
     }
     fetchDataUser()
-  },[user])
+  })
     
   const getTotalPrice = itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
 
@@ -227,10 +227,7 @@ const CheckoutForm = () => {
               <FormControl isRequired>
                   <FormLabel>Street address</FormLabel>
                   <InputGroup>
-                  <InputLeftElement
-                    pointerEvents='none'
-                    children={<IoLocationOutline color='gray.300' />}
-                  />
+                  <InputLeftElement pointerEvents='none'><IoLocationOutline color='gray.300' /></InputLeftElement>
                   <Input placeholder='Address...' id='address' name='street' value={buyer.shipping.street} onChange={e => handleShipping(e)} type='text'  autoComplete='off'/>
                   </InputGroup>
                   {error.street ? <FormHelperText color='red.400'>{error.street}</FormHelperText> : <FormHelperText>Add a house number if you have one</FormHelperText>}
@@ -238,20 +235,14 @@ const CheckoutForm = () => {
               <FormControl>
                   <FormLabel>Between streets (optional)</FormLabel>
                   <InputGroup>
-                  <InputLeftElement
-                    pointerEvents='none'
-                    children={<AiOutlineBorderlessTable color='gray.300' />}
-                  />
+                  <InputLeftElement pointerEvents='none'><AiOutlineBorderlessTable color='gray.300' /></InputLeftElement>
                   <Input placeholder='Between...' name='between' value={buyer.shipping.between} onChange={e => handleShipping(e)} type='text'  autoComplete='off'/>
                   </InputGroup>
               </FormControl>
               <FormControl>
                   <FormLabel>Apartment, suite, etc. (optional)</FormLabel>
                   <InputGroup>
-                  <InputLeftElement
-                    pointerEvents='none'
-                    children={<MdOutlineApartment color='gray.300' />}
-                  />
+                  <InputLeftElement pointerEvents='none'><MdOutlineApartment color='gray.300' /></InputLeftElement>
                   <Input id='apartment' name='floor' value={buyer.shipping.floor} onChange={e => handleShipping(e)}
                   placeholder='Floor...' type='text' autoComplete='off'/>
                   </InputGroup>
@@ -272,10 +263,7 @@ const CheckoutForm = () => {
               <FormControl>
                   <FormLabel>Phone (optional)</FormLabel>
                   <InputGroup>
-                  <InputLeftElement
-                    pointerEvents='none'
-                    children={<AiOutlinePhone color='gray.300' />}
-                  />
+                  <InputLeftElement pointerEvents='none'><AiOutlinePhone color='gray.300' /></InputLeftElement>
                   <Input placeholder='Phone...' id='phone' name='phone' value={buyer.phone} onChange={e => handleChange(e)} type='num' autoComplete='off'/>
                   </InputGroup>
                   <FormHelperText>In case we need to contact you about your order</FormHelperText>
