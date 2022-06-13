@@ -71,12 +71,7 @@ export const getDetail = (id) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err)
-    alert.fire({
-      title: 'Error!',
-      text: 'We cant find these products',
-      icon: 'error',
-      confirmButtonText: 'Cool'
-    })
+    
   }
 };
 
