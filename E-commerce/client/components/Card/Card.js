@@ -118,7 +118,8 @@ export default function Card({ producto, quantity, cart, setCart }) {
           alignSelf={'flex-start'}
           fontSize={'x-small'}
           fontStyle={'italic'}>
-            {category?.map(e => <Text>
+            {category?.map(e => 
+            <Text key={e}>
               {getCategoryName(e)} { e !== category[category.length-1] ? '-' : ''}
             </Text>)}
         </Tag>

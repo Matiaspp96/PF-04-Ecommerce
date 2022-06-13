@@ -1,4 +1,5 @@
 const { encrypt, compare } = require("../utils/handleJwt");
+
 const {
   handleHttpError,
   handleErrorResponse,
@@ -8,10 +9,11 @@ const {SendEmailPassword}=require("../utils/handleEmail")
 const { userModel } = require("../models");
 const { matchedData } = require("express-validator");
 
-
 const loginCtrl = async (req, res,next) => {
+  
   try {
     const body = matchedData(req);
+    
     const user = await userModel.findOne({ email: body.email });
      
     if (!user) {
@@ -19,12 +21,12 @@ const loginCtrl = async (req, res,next) => {
       return;
     }
     const checkPassword = await compare(body.password, user.password);
-
+    
     if (!checkPassword) {
       handleErrorResponse(res, "PASSWORD_INVALID", 404);
       return;
     }
-    
+    console.log('antes sign',user)
     const tokenJwt = await tokenSign(user);
 
     const data = {
@@ -47,13 +49,8 @@ const registerCtrl = async (req, res) => {
       return;
     }
     const password = await encrypt(body.password);
-    const bodyInsert = { ...body, password };
-    console.log(bodyInsert)
-    //const {name, email, role } = req.body;
-    // let obj = { name,email,role,password }
-    // console.log(obj )
-    
-    const data = await userModel.create(bodyInsert);
+  
+    const data = await userModel.create({email: body.email,name: body.name, password});
     res.send({ data })
   } catch (e) {
     handleHttpError(res, e);
@@ -61,7 +58,6 @@ const registerCtrl = async (req, res) => {
 };
 
 const logOut = (req,res, next) => {
-  
   req.logout(function(err) {  //version nueva requiere pasar un callback
     if (err) { return next(err); }
     req.session.destroy();
@@ -72,6 +68,8 @@ const logOut = (req,res, next) => {
   });
    
 };
+
+
 const logDataUserOauth = async (req,res) => {
   console.log(`antes de entrar al try en logDataUserOaut ${req}`)
   try{
@@ -89,7 +87,6 @@ const logDataUserOauth = async (req,res) => {
     console.log(err)
   }
 };
-
 const logError = (req,res) => {
   return res.send('Error en log')
 }
@@ -106,7 +103,7 @@ const forgotPassword = async (req, res) => {
     const token = await tokenEmail();
     usuario.token = token;
     await usuario.save();
-    
+
     await SendEmailPassword({
       email: usuario.email,
       name: usuario.name,
@@ -118,13 +115,16 @@ const forgotPassword = async (req, res) => {
     handleHttpError(res, "ERROR_GET_ITEM");
   }
 };
+
+
 const newPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
-  
+
   const usuario = await userModel.findOne({ token });
+
   if (usuario) {
-    const pass = await encrypt(password)
+    const pass = await encrypt(password);
     usuario.password = pass;
     usuario.token = "";
     await usuario.save();

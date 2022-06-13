@@ -25,15 +25,12 @@ import { getAllCategories } from '../../redux/actions/categories';
     },[dispatch,id,newReviewAdded]);
 
     const product = useSelector((state)=> state.productReducer.details);
+    console.log(product)
     const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{
       if(ps.category?.includes(product.category[0])){
         return ps
-      } 
-    }
-    ).slice(0,3)
-
-      
-      // return ps.category === product.category[0]}).slice(0,5)
+      }})
+    .slice(0,3)
 
     useEffect(() => {
       if (!sugestions.length){
@@ -108,7 +105,7 @@ import { getAllCategories } from '../../redux/actions/categories';
                 fontSize={'sm'}
                 fontStyle={'italic'}>
                  {product.category?.map(e => 
-                  <Text>
+                  <Text key= {e}>
                     {getCategoryName(e)} { e !== product.category[product.category.length-1] ? '-' : ''}
                   </Text>)}
               </Tag>

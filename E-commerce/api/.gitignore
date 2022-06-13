@@ -33,4 +33,4 @@ yarn-error.log*
 .vercel
 
 #momentaneo
-package.json
+.env
