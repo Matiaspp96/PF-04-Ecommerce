@@ -8,7 +8,6 @@ import { getAllCategories } from "../../redux/actions/categories";
 
 const Sort = ({ setCurrentPage, setSort }) => {
   const [, setCategories] = useState("");
-  const categoriesTotal = useSelector((state) => state.productReducer.products);
   const dispatch = useDispatch();
 
   const handleSort= (e) => {
