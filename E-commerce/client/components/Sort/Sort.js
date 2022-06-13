@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { orderProducts } from "../../redux/actions/products";
 import { filterByCategory } from "../../redux/actions/categories";
 import { Flex, Text, Select, Button, MenuList, MenuItemOption, Menu, MenuButton, MenuOptionGroup, Image } from "@chakra-ui/react";
 import {ChevronDownIcon} from '@chakra-ui/icons'
+import { getAllCategories } from "../../redux/actions/categories";
 
 const Sort = ({ setCurrentPage, setSort }) => {
-  const [categories, setCategories] = useState("");
+  const [, setCategories] = useState("");
+  const categoriesTotal = useSelector((state) => state.productReducer.products);
   const dispatch = useDispatch();
 
   const handleSort= (e) => {
@@ -16,9 +18,27 @@ const Sort = ({ setCurrentPage, setSort }) => {
   };
 
   const handleFilterByCategories = (e) => {
+    console.log(e)
     setCurrentPage(1)
+    setCategories(e);
     dispatch(filterByCategory(e));
   }
+
+  const categories = useSelector((state) => state.categoriesReducer.categories);
+
+  const getCategoryName = (id)=>{
+  let cat;
+  categories.map(cs=>{
+    if(cs._id === id){
+      cat = cs.name
+    }
+  });
+    return cat
+  }
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
 
   return (
     <Flex
@@ -62,61 +82,12 @@ const Sort = ({ setCurrentPage, setSort }) => {
             type='radio'
             onChange={handleFilterByCategories}
             defaultValue='All'>
-            <MenuItemOption value='All'>
-              <Image 
-                boxSize='4rem'
-                borderRadius='full'
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReClGeOih4N829qKUFLSJiBruKnh8YHYLvQA&usqp=CAU'
-                alt='Fluffybuns the destroyer'
-                mr='15px'
-                />
-              <span>All</span>
-            </MenuItemOption>
-            <MenuItemOption value='doglovers'>
-              <Image 
-              boxSize='4rem'
-              borderRadius='full'
-              src='https://sc04.alicdn.com/kf/Hd3400a17d69f41c7ba01a2ed6097ad0am.png'
-              alt='Fluffybuns the destroyer'
-              mr='15px'
-              />
-              <span>Dog Lovers</span>
-            </MenuItemOption>
-            <MenuItemOption value='catlovers'>
-              <Image 
-              boxSize='4rem'
-              borderRadius='full'
-              src='https://as2.ftcdn.net/v2/jpg/02/61/28/85/1000_F_261288506_hEV7OFNfF2UJSx4VZGzUynJXSz2Uh0yE.jpg'
-              mr='15px'
-              />
-              <span>Cat Lovers</span>
-            </MenuItemOption>
-            <MenuItemOption value='coat'>
-              <Image 
-              boxSize='4rem'
-              borderRadius='full'
-              src='https://ae01.alicdn.com/kf/Hde1a20dabc8a41629a604454e568e348J/Winter-Cat-Dog-Clothes-Warm-Christmas-Dog-Cat-Sweater-For-Small-Dogs-Cats-Yorkies-Chihuahua-Pet.jpg_Q90.jpg_.webp'
-              mr='15px'
-              />
-              <span>Coat</span>
-            </MenuItemOption>
-            <MenuItemOption value='T-SHIRT'>
-              <Image
-              boxSize='4rem'
-              borderRadius='full'
-              src='https://m.media-amazon.com/images/I/81AYBnRdJtL.jpg'
-              />
-              <span>T-Shirt</span>
-            </MenuItemOption>
-            <MenuItemOption value='Harness'>
-              <Image
-              boxSize='4rem'
-              borderRadius='full'
-              src='https://http2.mlstatic.com/D_NQ_NP_637734-MLA46568321189_062021-O.webp'
-              mr='15px'
-              />
-              <span>Harness</span>
-            </MenuItemOption>
+            <MenuItemOption value='All'>All</MenuItemOption>
+            {categories && categories.map((e) => (
+              <MenuItemOption key={e._id} value={e._id}>
+                {getCategoryName(e._id)}
+              </MenuItemOption> 
+            ))}
           </MenuOptionGroup>
         </MenuList>
       </Menu>
