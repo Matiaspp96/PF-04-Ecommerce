@@ -21,20 +21,23 @@ const addItem = async (req, res) => {
       { _id: idUser },
       { $push: { cart: [idProduct] } }
     );
-    console.log(user);
+
     res.send("El item se agrego correctamente" + user);
   } catch (err) {
-    handleHttpError(res, "ERROR_ADD_ITEM_CATEGORY");
+    console.log(err);
+    handleHttpError(res, "ERROR_ADD_ITEM_CART");
   }
 };
 
 //Para vaciar el carrito
 const deleteItemsCart = async (req, res) => {
-  const { idUser } = req.body;
   try {
-    user = await userModel.updateOne({ _id: idUser }, { $pull: { cart: [] } });
-    console.log(user);
-    res.send("El carrito quedo vacio");
+    const { idUser } = req.body;
+    user = await userModel.updateOne(
+      { _id: idUser },
+      { cart: [], quantity: 0 }
+    );
+    res.json(user);
   } catch (err) {
     console.log(err);
     handleHttpError(res, "ERROR_DELETE_ITEMS");

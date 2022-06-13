@@ -34,11 +34,7 @@ const UserSchema = new mongoose.Schema(
           select: ["name", "image", "description", "price", "sales"],
         }, */
 
-        /* _id: {
-          ref: "products",
-          type: mongoose.Types.ObjectId,
-        },
-        quantity: Number, */
+        quantity: Number,
       },
     ],
     orders: [
