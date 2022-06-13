@@ -1,6 +1,8 @@
 const mercadopago = require('mercadopago');
+const { transporter, emailOrder } = require('../config/email');
 const orderModel = require(`../models/orders`);
 const {handleHttpError} = require('../utils/handleError');
+
 mercadopago.configure({
     access_token: process.env.ACCESS_TOKEN_MP,
 });
@@ -63,9 +65,9 @@ const initPaymentMp = async (req, res) => {
 			"pending": "http://localhost:3001/api/payments/pending"
 		},
 		auto_return: "approved",
-        metadata : {
-            email : metadata.email
-        }
+        // metadata : {
+        //     email : metadata.email
+        // }
 	};
    
     try {
@@ -76,6 +78,7 @@ const initPaymentMp = async (req, res) => {
         order.paymentId = preference.body.id;
         await order.save();
         console.log(order.paymentId)
+        // transporter.sendMail(emailOrder(users));
         res.send({ preference });
     } catch (e) {
         handleHttpError(res, e);

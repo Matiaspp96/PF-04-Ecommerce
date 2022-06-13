@@ -58,7 +58,6 @@ const CheckoutForm = () => {
           ...buyerMP,
           items: itemsMP,
           phone: 0,
-          total_amount:getTotalPrice
         })
         setIsLoading(false)
       }
@@ -142,10 +141,12 @@ const CheckoutForm = () => {
           payment: ""
         });
         console.log(response.data._id)
-        setBuyerMP({
+        setBuyerMP(buyerMP=>{
+          let newBuyerMP = {
           ...buyerMP,
           idOrder: response.data._id
-        })
+          }
+        return newBuyerMP})
         Swal.fire({
           title: 'Order created',
           text: 'We transfer you to the payment✔️',
@@ -183,7 +184,7 @@ const CheckoutForm = () => {
   return (
   <Stack w='95vw'>
       <Flex gap='0.3rem'><Link href='/'>Home</Link><Link href='/cart'>/ Cart</Link>/ Checkout</Flex>
-      <Flex  flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
+      <Flex zIndex='1' flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
           <Flex flexDir='column' minW='40%' gap='2em' p={['1rem','3rem']} border='1px solid #348099' borderRadius='20px'
           boxShadow='xl'>
               <Heading as='h4' size='md'>Shipping information</Heading>
@@ -272,7 +273,7 @@ const CheckoutForm = () => {
                   Submit
               </Button>
           </Flex>
-          <Stack zIndex='-1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
+          <Stack zIndex='1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
               <Center>
               <Heading as='h4' size='md' >Your Order: {numberItems} Items</Heading>
               </Center>
