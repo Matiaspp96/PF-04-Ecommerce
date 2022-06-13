@@ -23,6 +23,7 @@ import {
       case DELETE_ITEM_FAVORITES:
         let index = itemsFav.findIndex(e => e._id === action.payload)
         let newFav = [...itemsFav];
+        console.log(index, newFav)
         if(index >= 0){
           newFav.splice(index,1)
           Swal.fire({

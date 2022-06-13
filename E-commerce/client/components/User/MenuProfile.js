@@ -15,6 +15,14 @@ export default function MenuProfile() {
     router.push(`${BASEURL}/auth/logout`)
     };
 
+    const handleOrders = ()=>{
+    router.push(`${proccess.env.HOST_CLIENT}/orders`) // Ruta a order
+    };
+
+    const handleMyAccount = ()=>{
+    router.push(`${proccess.env.HOST_CLIENT}/user`)
+    };
+
 
     useEffect(() => {
     
@@ -24,7 +32,7 @@ export default function MenuProfile() {
         }
         if(Object.keys(localUser).length !== 0){
             setUser(localUser.role)
-            
+    
         }
     
     },[]);
@@ -47,8 +55,8 @@ export default function MenuProfile() {
         </MenuButton>
         <MenuList bgColor='#1884BE'>
             <MenuGroup title='Profile' fontSize='md'>
-            <MenuItem icon={<FaUser />} _hover={{bgColor:'blackAlpha.400'}}>My Account</MenuItem>
-            <MenuItem icon={<FaList />} _hover={{bgColor:'blackAlpha.400'}}>Orders </MenuItem>
+            <MenuItem icon={<FaUser />} onClick ={handleMyAccount} _hover={{bgColor:'blackAlpha.400'}}>My Account</MenuItem>
+            <MenuItem icon={<FaList />} onClick ={handleOrders} _hover={{bgColor:'blackAlpha.400'}}>Orders </MenuItem>
             <MenuItem icon={<FaSignOutAlt />} onClick ={handleLogOut} _hover={{bgColor:'blackAlpha.400'}}>Log Out </MenuItem>
             </MenuGroup>
             <MenuDivider />
