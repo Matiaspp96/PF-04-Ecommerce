@@ -112,6 +112,7 @@ const addProductCategory = async (req, res) => {
 
     res.send("The category has been successfully added to the product." + data);
   } catch (err) {
+    console.log(err);
     handleHttpError(res, "ERROR_ADD_ITEM_CATEGORY");
   }
 };
