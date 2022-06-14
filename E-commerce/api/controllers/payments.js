@@ -1,5 +1,4 @@
 const mercadopago = require('mercadopago');
-const { transporter, emailOrder } = require('../config/email');
 const orderModel = require(`../models/orders`);
 const userModel = require('../models/users');
 const { emailOrder, transporter} = require('../config/email');

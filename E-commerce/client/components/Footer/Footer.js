@@ -16,9 +16,12 @@ import {
 import { FaLinkedin, FaTwitter, FaInstagram, FaFacebook} from 'react-icons/fa'
 import { useState } from 'react'
 import Map from '../Maps/Map'
+import {useRouter} from 'next/router'
+
 
 
 export default function Footer (){
+  const router = useRouter()
 
   // const [map, setMap] = useState("Mendoza")
   return (
@@ -92,7 +95,7 @@ export default function Footer (){
         <IconButton as="a" href="#" aria-label="Facebook" icon={<FaFacebook fontSize="1.25rem" />} />
       </ButtonGroup>
     </Stack>
-      <Map />
+      {router.pathname === '/' ? <Map /> : null}   
     </Container>
   )
 }
