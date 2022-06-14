@@ -12,6 +12,7 @@ import CardItem from '../Card/CardItem'
 import Swal from 'sweetalert2';
 import formValidate from './formValidations';
 import { AiOutlinePhone } from 'react-icons/ai';
+import router from 'next/router';
 
 const CheckoutForm = () => {
   const itemsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
@@ -21,6 +22,10 @@ const CheckoutForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [user, setUser] = useState('');
+  //se agrega la propiedad quantity a product
+  itemsCart.forEach(element => {
+    element.product.quantity = element.quantity;
+  });
   const productsCart = itemsCart?.map((item) => item.product);
   let itemsMP = itemsCart?.map((item) => typeof item === 'object' ? {description:item.product.name, unit_price:item.product.price, quantity:item.quantity } : null);
   const [buyerMP, setBuyerMP] = useState();
@@ -35,7 +40,8 @@ const CheckoutForm = () => {
 
         if(localStorage.getItem('userInfo')){
           localUser = JSON.parse(localStorage.getItem('userInfo'));
-        }
+        };
+       
         setUser(localUser)
         setEmail(localUser.email)
         setBuyer({
@@ -144,8 +150,10 @@ const CheckoutForm = () => {
         console.log(response.data._id)
         setBuyerMP({
           ...buyerMP,
-          idOrder: response.data._id
-        })
+          idOrder: await response.data._id
+        });
+        buyerMP.idOrder = response.data._id;
+    
         Swal.fire({
           title: 'Order created',
           text: 'We transfer you to the payment✔️',
@@ -153,7 +161,8 @@ const CheckoutForm = () => {
           confirmButtonText: 'Accept'
         })
         let responsePayment = await axios.post(`${BASEURL}/payments/checkoutmp`, buyerMP, configAxios)
-        console.log(responsePayment)
+        console.log(responsePayment);
+        router.push(responsePayment.data.preference.body.sandbox_init_point)
       } else {
         Swal.fire({
           title: 'Complete all required fields',
