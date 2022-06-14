@@ -44,7 +44,7 @@ export default function Cards() {
     <Flex justifyContent={"space-between"}>
       <Stack w={"100%"}>
         {products.length ? (
-          <Stack>
+          <Stack alignItems='center'>
             <Sort
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}

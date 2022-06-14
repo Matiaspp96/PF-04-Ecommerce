@@ -1,14 +1,16 @@
 import Navbar from '../components/Navbar/Navbar'
-import { Grid } from '@chakra-ui/react'
+import { Grid, Stack } from '@chakra-ui/react'
 import ProductsFavs from '../components/Card/ProductsFavs'
+import Footer from '../components/Footer/Footer';
 
 
 
 export default function Favorites() {
   return (   
-    <Grid row={2}>
+    <Stack alignItems='center'>
       <Navbar />
       <ProductsFavs />
-    </Grid>
+      <Footer />
+    </Stack>
   )
 }

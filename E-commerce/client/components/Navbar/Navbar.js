@@ -5,6 +5,7 @@ import MenuToggle from '../Menu/MenuToggle'
 import Search from '../Searchbar/Search'
 import NavBarContainer from './NavBarContainer'
 import MenuLinks from '../Menu/MenuLinks'
+import MenuProfile from '../User/MenuProfile'
 
 const Navbar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +25,11 @@ const Navbar = (props) => {
                 Pet Elegant
                 </Link>
                 <Search toggle={toggle} isOpen={isOpen}/>
+                <Flex flexDir={{base:'row', md:'row-reverse'}} alignItems='center' gap='1rem'>
                 <MenuToggle toggle={toggle} isOpen={isOpen} />
+                <MenuProfile/>
                 <MenuLinks isOpen={isOpen} />
+                </Flex>
             </NavBarContainer>
             
         </Flex>

@@ -12,9 +12,12 @@ import {
 } from "./actionstype";
 
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
+export const HOSTURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : `${process.env.HOST_CLIENT}`;
+
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
+    console.log(BASEURL)
   // config de axios, enviar headers con token tomado desde localstorage. 
   //  USAR EN RUTAS PROTEGIDAS 
   //  const localUser = localStorage.getItem(
@@ -71,12 +74,7 @@ export const getDetail = (id) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err)
-    alert.fire({
-      title: 'Error!',
-      text: 'We cant find these products',
-      icon: 'error',
-      confirmButtonText: 'Cool'
-    })
+    
   }
 };
 

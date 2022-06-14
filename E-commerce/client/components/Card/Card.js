@@ -7,6 +7,7 @@ import { handleAddToCartOrFav, handleRemoveFromCart, handleRemoveFromFav } from 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import router, { Router, useRouter } from 'next/router'
+import {getAllCategories} from '../../redux/actions/categories';
 
 
 export default function Card({ producto, quantity, cart, setCart }) {
@@ -27,6 +28,23 @@ export default function Card({ producto, quantity, cart, setCart }) {
     dispatch(getItemsCart())
   }, [dispatch])
   
+
+  const categories = useSelector((state) => state.categoriesReducer.categories);
+
+  const getCategoryName = (id)=>{
+  let cat;
+  categories.map(cs=>{
+    if(cs._id === id){
+      cat = cs.name
+    }
+  });
+    return cat
+  }
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }
+  , [dispatch]);
 
   /*-------- Total Price ---------*/
   const getTotalPrice = (cart) => {
@@ -83,8 +101,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
     setRemoveCart.toggle()
   }
 
-  function handleRemoveToFavOnClick(e, producto){
-    dispatch(deleteItemOfFav(handleRemoveFromFav(e, producto)))
+  function handleRemoveToFavOnClick(producto){
+    console.log(producto)
+    dispatch(deleteItemOfFav(handleRemoveFromFav(producto)))
     setRemoveFavorite.toggle()
   }
 
@@ -100,7 +119,10 @@ export default function Card({ producto, quantity, cart, setCart }) {
           alignSelf={'flex-start'}
           fontSize={'x-small'}
           fontStyle={'italic'}>
-            {category}
+            {category?.map(e => 
+            <Text key={e}>
+              {getCategoryName(e)} { e !== category[category.length-1] ? '-' : ''}
+            </Text>)}
         </Tag>
         <Flex 
           flexDir='column'
@@ -182,7 +204,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 />
                 { router.pathname === '/favorites' ?
                   <IconButton 
-                  onClick={e=>handleRemoveToFavOnClick(e,product)}
+                  onClick={handleRemoveToFavOnClick(product)}
                   backgroundColor='transparent'
                   icon={<IoTrashOutline size='2em'/>}
                   color={removeFavorite ? '#1884BE' : 'grey'}

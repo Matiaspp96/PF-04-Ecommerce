@@ -26,9 +26,9 @@ const loginCtrl = async (req, res,next) => {
       handleErrorResponse(res, "PASSWORD_INVALID", 404);
       return;
     }
-    console.log('antes sign',user)
+    
     const tokenJwt = await tokenSign(user);
-
+     
     const data = {
       token: tokenJwt,
       user: user,
@@ -71,16 +71,16 @@ const logOut = (req,res, next) => {
 
 
 const logDataUserOauth = async (req,res) => {
-  console.log(`antes de entrar al try en logDataUserOaut ${req}`)
+
   try{
-    console.log(`entro al try en logDataUserOaut ${req}`)
+ 
     if(req.user){
     let token = await tokenSign(req.user)
     const data = {
      token: token,
      user: req.user,
     };
-    console.log(data, token)
+  
      return res.json(data)
     }
   } catch(err){

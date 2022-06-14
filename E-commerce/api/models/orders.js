@@ -27,9 +27,14 @@ const OrderSchema = new mongoose.Schema(
       },
     ],
 
-    status: {
+    statusPay: {
       type: String,
-      default: "Pending",
+      default: "payment not started",
+      required: false,
+    },
+    statusPurchase: {
+      type: String,
+      default: " payment in process",
       required: false,
     },
     shipping: {
@@ -56,7 +61,10 @@ const OrderSchema = new mongoose.Schema(
     },
     paymentId: {
       type: String
-    }
+    },
+    merchant_id: { 
+      type: String 
+    },
   },
   {
     timestamps: false,
