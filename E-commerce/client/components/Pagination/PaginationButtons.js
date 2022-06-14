@@ -26,6 +26,7 @@ const PaginationButtons = ({
       <Button
         me={"1em"}
         onClick={prevClick}
+        
         leftIcon={<FaChevronLeft />}
         colorScheme="blue"
         variant="solid"
@@ -35,6 +36,8 @@ const PaginationButtons = ({
 
       {buttons.map((btn, id) => (
         <Button
+        colorScheme="blue"
+        variant='outline'
           key={id}
           me={"1em"}
           size="sm"

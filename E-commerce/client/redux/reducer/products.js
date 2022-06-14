@@ -36,7 +36,12 @@ export default function productReducer(state= initialState, action) {
     const categoriesProducts = 
       action.payload === 'All'
         ? todo
-        : todo.filter((e) => e.category === action.payload) 
+        : todo.filter(e => {
+          if(Array.isArray(e.category)){
+            if(e.category.includes(action.payload))
+              return e
+          }
+        })
         return {
           ...state,
           products: categoriesProducts,

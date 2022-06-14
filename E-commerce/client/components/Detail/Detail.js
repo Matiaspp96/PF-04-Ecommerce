@@ -9,6 +9,7 @@ import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites.js'
 import Review from '../Review/Review.js';
 import CardMinimal from '../Card/CardMinimal.js';
 import { handleAddToCartOrFav } from '../../utils/handles';
+import { getAllCategories } from '../../redux/actions/categories';
 
 
   export default function Detail() {
@@ -24,6 +25,12 @@ import { handleAddToCartOrFav } from '../../utils/handles';
     },[dispatch,id,newReviewAdded]);
 
     const product = useSelector((state)=> state.productReducer.details);
+    console.log(product)
+    // const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{
+    //   if(ps.category?.includes(product.category[0])){
+    //     return ps
+    //   }})
+    // .slice(0,3)
     const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{return ps.category === product.category}).slice(0,5)
 
     useEffect(() => {
@@ -48,6 +55,22 @@ import { handleAddToCartOrFav } from '../../utils/handles';
         setFlag.off()
       }
     }
+
+    const categories = useSelector((state) => state.categoriesReducer.categories);
+
+    const getCategoryName = (id)=>{
+    let cat;
+    categories.map(cs=>{
+      if(cs._id === id){
+        cat = cs.name
+      }
+    });
+      return cat
+    }
+
+    useEffect(() => {
+      dispatch(getAllCategories());
+    }, [dispatch]);
 
     return (
       <Container maxW={'7xl'} 
@@ -82,7 +105,10 @@ import { handleAddToCartOrFav } from '../../utils/handles';
                 alignSelf={'flex-start'}
                 fontSize={'sm'}
                 fontStyle={'italic'}>
-                  {product.category}
+                 {product.category?.map(e => 
+                  <Text key= {e}>
+                    {getCategoryName(e)} { e !== product.category[product.category.length-1] ? '-' : ''}
+                  </Text>)}
               </Tag>
               <Heading
                 lineHeight={1.1}
