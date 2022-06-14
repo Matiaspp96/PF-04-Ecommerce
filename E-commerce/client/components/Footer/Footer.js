@@ -10,12 +10,20 @@ import {
   Stack,
   Text,
   Flex,
+  AspectRatio,
 } from '@chakra-ui/react'
 
 import { FaLinkedin, FaTwitter, FaInstagram, FaFacebook} from 'react-icons/fa'
+import { useState } from 'react'
+import Map from '../Maps/Map'
+import {useRouter} from 'next/router'
+
 
 
 export default function Footer (){
+  const router = useRouter()
+
+  // const [map, setMap] = useState("Mendoza")
   return (
     
     <Container as="footer" role="contentinfo" maxW='60%'>
@@ -78,7 +86,7 @@ export default function Footer (){
       <Text fontSize="sm" color="subtle">
         &copy; {new Date().getFullYear()} E-Commerce. All rights reserved.
         <br/>
-        Calle Falsa 123. Springfield
+       Patricias Argentinas 665, Maipú, Mendoza, Argentina.
       </Text>
       <ButtonGroup variant="ghost">
         <IconButton as="a" href="#"aria-label="LinkedIn" icon={<FaLinkedin fontSize="1.25rem" />}/>
@@ -87,6 +95,7 @@ export default function Footer (){
         <IconButton as="a" href="#" aria-label="Facebook" icon={<FaFacebook fontSize="1.25rem" />} />
       </ButtonGroup>
     </Stack>
-  </Container>
+      {router.pathname === '/' ? <Map /> : null}   
+    </Container>
   )
 }

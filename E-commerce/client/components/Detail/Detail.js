@@ -25,20 +25,7 @@ import { getAllCategories } from '../../redux/actions/categories';
     },[dispatch,id,newReviewAdded]);
 
     const product = useSelector((state)=> state.productReducer.details);
-    console.log(product)
-    // const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{
-    //   if(ps.category?.includes(product.category[0])){
-    //     return ps
-    //   }})
-    // .slice(0,3)
-    const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{return ps.category === product.category}).slice(0,5)
-
-    useEffect(() => {
-      if (!sugestions.length){
-        dispatch(getAllProducts())
-      }
-    },[dispatch,sugestions.length]);
-
+    
     function buyItem(e){
       dispatch(addItemToCart(handleAddToCartOrFav(e,product)))
       dispatch(getTotalItems())
@@ -55,23 +42,36 @@ import { getAllCategories } from '../../redux/actions/categories';
         setFlag.off()
       }
     }
-
+    
     const categories = useSelector((state) => state.categoriesReducer.categories);
-
+    
     const getCategoryName = (id)=>{
-    let cat;
-    categories.map(cs=>{
-      if(cs._id === id){
-        cat = cs.name
-      }
-    });
+      let cat;
+      categories.map(cs=>{
+        if(cs._id === id){
+          cat = cs.name
+        }
+      });
       return cat
     }
-
+    
     useEffect(() => {
       dispatch(getAllCategories());
     }, [dispatch]);
+    
+    const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{
+      if(ps.category?.includes(product.category[0])){
+        return ps
+      }})
+    .slice(0,3)
 
+    useEffect(() => {
+      if (!sugestions.length){
+        dispatch(getAllProducts())
+      }
+    },[dispatch,sugestions.length]);
+
+    
     return (
       <Container maxW={'7xl'} 
       >
