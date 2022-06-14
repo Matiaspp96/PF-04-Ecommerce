@@ -58,9 +58,11 @@ const Login = () => {
       );
       dispatch(getUserData(getUser.data.user));
       let localInfo = {
-        token: getUser.data.token,
-        _id: getUser.data.user._id,
+        token : getUser.data.token,
+        _id :getUser.data.user._id,
         role: getUser.data.user.role,
+        email:getUser.data.user.email,
+        name:getUser.data.user.name
       };
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
       setUser({
