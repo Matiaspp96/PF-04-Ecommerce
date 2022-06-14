@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import {
     ADD_ITEM_FAVORITES,
     DELETE_ITEM_FAVORITES,
@@ -9,9 +10,9 @@ import {
     itemsFav: [],
     totalPrice: 0,
   }
+  let itemsFav = initialState.itemsFav
   
   export default function favoritesReducer(state = initialState, action) {
-    let itemsFav = state.itemsFav
     switch(action.type) {
       case ADD_ITEM_FAVORITES:
         // console.log(action.payload)
@@ -20,8 +21,9 @@ import {
           itemsFav: [...state.itemsFav, action.payload],
         } 
       case DELETE_ITEM_FAVORITES:
-        let index = itemsFav.findIndex(e => e.product._id === action.payload._id)
+        let index = itemsFav.findIndex(e => e._id === action.payload)
         let newFav = [...itemsFav];
+        console.log(index, newFav)
         if(index >= 0){
           newFav.splice(index,1)
           Swal.fire({

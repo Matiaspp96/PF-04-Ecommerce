@@ -37,6 +37,7 @@ const ProductSchema = new mongoose.Schema(
       {
         ref: "categories",
         type: mongoose.Types.ObjectId,
+        /* autopopulate: { select: "name" }, */
       },
     ],
 
@@ -52,5 +53,6 @@ const ProductSchema = new mongoose.Schema(
     autopopulate: true,
   }
 );
+
 ProductSchema.plugin(require("mongoose-autopopulate"));
 module.exports = mongoose.model("products", ProductSchema);

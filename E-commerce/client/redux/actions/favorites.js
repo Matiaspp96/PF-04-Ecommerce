@@ -16,11 +16,12 @@ export const addItemToFav = (item) => {
   }
 };
 
-export const deleteItemOfFav = (id) => {
+export const deleteItemOfFav = ({_id}) => {
+  console.log(_id)
   try {
     return {
       type: DELETE_ITEM_FAVORITES,
-      payload: id,
+      payload: _id,
     }
   } catch (err) {
     console.log(err)

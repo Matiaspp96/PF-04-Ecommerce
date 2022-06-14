@@ -31,7 +31,7 @@ const Search = ({ toggle, isOpen }) => {
   }
 
   return (
-    <Stack spacing={4} width='50%'  ali={{base:'center'}}>
+    <Stack spacing={4} width={{base:'50%',md:'50%'}}  ali={{base:'center'}}>
       <InputGroup 
       display={{ base: isOpen ? 'flex' : "none", md: "flex" }}
       ali={{base:'center'}}>

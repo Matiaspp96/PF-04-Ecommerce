@@ -4,7 +4,7 @@ const { handleHttpError } = require("../utils/handleError");
 const { transporter, emailer } = require("../config/email");
 
 const getItems = async (req, res) => {
-  console.log('hola')
+
   try {
     const data = await orderModel.find().populate("products").populate("buyer");
     if (data.length) {
@@ -43,8 +43,9 @@ const createItem = async (req, res) => {
     cost,
     quantity,
   } = req.body;
-  console.log("products", products);
+
   try {
+
     const newOrder = new orderModel({
       phone,
       shipping,
@@ -57,7 +58,7 @@ const createItem = async (req, res) => {
     newOrder.products = products;
 
     const foundUser = await userModel.findOne({ email: users.email });
-    console.log(`Esto es ${foundUser}`);
+ 
     if (!foundUser) {
       const newUser = new userModel({
         name: users.name,
@@ -81,7 +82,7 @@ const createItem = async (req, res) => {
         { email: users.email },
         { $addToSet: { shipping: savedOrder.shipping } }
       );
-      console.log("este es el id de la orden " + savedOrder._id);
+ 
       return res.status(201).send(savedOrder);
     }
     return res.status(404).send("Error: the order has not been created.");
