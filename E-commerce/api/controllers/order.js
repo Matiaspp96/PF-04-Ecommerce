@@ -3,8 +3,27 @@ const { handleHttpError } = require("../utils/handleError");
 
 const { transporter, emailer } = require("../config/email");
 
-const getItems = async (req, res) => {
+const getUserOrders = async (req, res) => {
+  const { id } = req.params;
 
+  try {
+    const user = await userModel.findOne({ _id: id }).populate({
+      path: "orders",
+      populate: { path: "products" },
+    });
+
+    if (user.orders.length > 0) {
+      res.json(user.orders);
+    } else {
+      res.status(404).send("The user does not have purchase orders");
+    }
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, "ERROR_GET_ORDERS");
+  }
+};
+
+const getItems = async (req, res) => {
   try {
     const data = await orderModel.find().populate("products").populate("buyer");
     if (data.length) {
@@ -45,7 +64,6 @@ const createItem = async (req, res) => {
   } = req.body;
 
   try {
-
     const newOrder = new orderModel({
       phone,
       shipping,
@@ -58,7 +76,7 @@ const createItem = async (req, res) => {
     newOrder.products = products;
 
     const foundUser = await userModel.findOne({ email: users.email });
- 
+
     if (!foundUser) {
       const newUser = new userModel({
         name: users.name,
@@ -82,7 +100,7 @@ const createItem = async (req, res) => {
         { email: users.email },
         { $addToSet: { shipping: savedOrder.shipping } }
       );
- 
+
       return res.status(201).send(savedOrder);
     }
     return res.status(404).send("Error: the order has not been created.");
@@ -141,4 +159,5 @@ module.exports = {
   updateItem,
   deleteItem,
   purchaseEmail,
+  getUserOrders,
 };
