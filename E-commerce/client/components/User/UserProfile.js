@@ -9,19 +9,19 @@ import {
   Stack,
   Progress,
 } from '@chakra-ui/react';
-
 import { Icon } from '@chakra-ui/react';
-
 import UserImage from './UserImage';
 import Link from 'next/link';
 import axios from 'axios';
 import { BASEURL } from '../../redux/actions/products';
+import { useSelector } from 'react-redux';
 
 
 const UserProfile = () => {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
-
+    const userState = useSelector(state => state.userReducer.user)
+    console.log(user)
 
     useEffect(()=>{
     async function fetchDataUser(){
@@ -32,14 +32,13 @@ const UserProfile = () => {
             },
           };
         let getUser = await axios.get(`${BASEURL}/auth/data`, config);
+        // let ordersUser = await axios.get(`${BASEURL}/orders/${getUser.data.user}`)
         setUser(getUser.data.user)
         setIsLoading(false)
         }
     fetchDataUser()
     },[isLoading])
 
-
-    console.log(user)
 
     if(isLoading){
         return (
@@ -60,9 +59,9 @@ const UserProfile = () => {
         <VStack>
           <Heading>{user.name}</Heading>
           <Text color="gray">
-            {user.phone}, {user.location}, {user.email}
+            {user.phone} {user.location} {user.email}
           </Text>
-          <Text>Orders:</Text>
+          <Text>History Orders:</Text>
           <HStack>
             {/* {user.orders?.map(order => (
               <Text colorScheme="blue" key={order}>

@@ -26,6 +26,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   
   useEffect(()=>{
     dispatch(getItemsCart())
+    console.log(productsCart)
   }, [dispatch])
   
 
@@ -114,7 +115,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
         overflow='auto'
         boxShadow='lg'
         >
-        <Tag
+        {/* {<Tag
           borderRadius={'none'}
           alignSelf={'flex-start'}
           fontSize={'x-small'}
@@ -123,7 +124,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
             <Text key={e}>
               {getCategoryName(e)} { e !== category[category.length-1] ? '-' : ''}
             </Text>)}
-        </Tag>
+        </Tag>} */}
         <Flex 
           flexDir='column'
           height='100%'

@@ -1,5 +1,4 @@
 import React from 'react';
-import DogP from '../Banner/Img/Bulldog Hooded Sweater Black.webp'
 import { Image } from '@chakra-ui/react';
 const UserImage = ({ avatar, name }) => (
   <Image

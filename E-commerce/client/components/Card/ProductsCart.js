@@ -17,7 +17,7 @@ export default function ProductCart() {
   const router = useRouter()
 
   useEffect(()=>{
-    console.log(productsCart)
+
     async function fetchDataCart (){
     await dispatch(getItemsCart())
     setCart(productsCart)

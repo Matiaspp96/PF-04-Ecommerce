@@ -5,10 +5,11 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../redux/actions/user";
 import { BASEURL } from "../../redux/actions/products";
+import { wrapper } from "../../redux/store";
 
 const urlUserData = `${BASEURL}/auth/data`;
 
-const Data = () => {
+const Data = ({getUser}) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     username: "",
@@ -67,4 +68,5 @@ const Data = () => {
       </Center>
   );
 };
+
 export default Data;
