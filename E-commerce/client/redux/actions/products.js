@@ -12,6 +12,8 @@ import {
 } from "./actionstype";
 
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
+export const HOSTURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : `${process.env.HOST_CLIENT}`;
+
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {

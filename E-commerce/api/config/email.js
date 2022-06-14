@@ -4,16 +4,16 @@ const nodemailer = require("nodemailer");
 const { API_URL, HOST, USER, PASS, PORTGMAIL } = process.env;
 
 const transporter = nodemailer.createTransport({
-  host: HOST,
-  port: PORTGMAIL,
-  secure: true, // true for 465, false para otros puertos
-  auth: {
-    user: USER,
-    pass: PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
+  host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: true, // true for 465, false para otros puertos
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false
+    }
 });
 
 const emailer = function (users) {
@@ -67,14 +67,13 @@ const emailOrder = function (user, data) {
     <h2 style="color: #000000">Tu compra se procesó correctamente, a continuación te dejamos los detalles de la misma: </h2>
     <div style="background-color: #fff; color: #000000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
     <ul>
-    ${console.log("Esto est data.products" + data.products)}
     ${data.products.map(
       (e) => `
-    /* <img src=${API_URL}/products/images/${e.image} width="140" height="180" align="right" > */
-    <h3 style="color: color: #000000;"> - ${e.name}</h3>
-    <h4 style="color: color: #000000;">Precio unitario: ${e.price}</h4>
-    <h4 style="color: color: #000000;">Cantidad: ${e.quantity}</h4>
-    <h4 style="color: color: #000000;">Características: ${e.description}</h4>
+    <img src=${e.image} width="140" height="180" align="right" >
+    <h3 style="color: color: #000000"> - ${e.name}</h3>
+    <h4 style="color: color: #000000">Precio unitario: ${e.price}</h4>
+    <h4 style="color: color: #000000">Cantidad: ${e.quantity}</h4>
+    <h4 style="color: color: #000000">Características: ${e.description}</h4>
     `
     )}
     </ul>

@@ -12,6 +12,7 @@ import CardItem from '../Card/CardItem'
 import Swal from 'sweetalert2';
 import formValidate from './formValidations';
 import { AiOutlinePhone } from 'react-icons/ai';
+import router from 'next/router';
 
 const CheckoutForm = () => {
   const itemsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
@@ -21,6 +22,10 @@ const CheckoutForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [user, setUser] = useState('');
+  //se agrega la propiedad quantity a product
+  itemsCart.forEach(element => {
+    element.product.quantity = element.quantity;
+  });
   const productsCart = itemsCart?.map((item) => item.product);
   let itemsMP = itemsCart?.map((item) => typeof item === 'object' ? {description:item.product.name, unit_price:item.product.price, quantity:item.quantity } : null);
   const [buyerMP, setBuyerMP] = useState();
@@ -35,7 +40,8 @@ const CheckoutForm = () => {
 
         if(localStorage.getItem('userInfo')){
           localUser = JSON.parse(localStorage.getItem('userInfo'));
-        }
+        };
+       
         setUser(localUser)
         setEmail(localUser.email)
         setBuyer({
@@ -58,7 +64,6 @@ const CheckoutForm = () => {
           ...buyerMP,
           items: itemsMP,
           phone: 0,
-          total_amount:getTotalPrice
         })
         setIsLoading(false)
       }
@@ -142,10 +147,14 @@ const CheckoutForm = () => {
           payment: ""
         });
         console.log(response.data._id)
-        setBuyerMP({
+        setBuyerMP(buyerMP=>{
+          let newBuyerMP = {
           ...buyerMP,
           idOrder: response.data._id
-        })
+          }
+        return newBuyerMP})
+        buyerMP.idOrder = response.data._id;
+    
         Swal.fire({
           title: 'Order created',
           text: 'We transfer you to the payment✔️',
@@ -153,7 +162,8 @@ const CheckoutForm = () => {
           confirmButtonText: 'Accept'
         })
         let responsePayment = await axios.post(`${BASEURL}/payments/checkoutmp`, buyerMP, configAxios)
-        console.log(responsePayment)
+        console.log(responsePayment);
+        router.push(responsePayment.data.preference.body.sandbox_init_point)
       } else {
         Swal.fire({
           title: 'Complete all required fields',
@@ -183,7 +193,7 @@ const CheckoutForm = () => {
   return (
   <Stack w='95vw'>
       <Flex gap='0.3rem'><Link href='/'>Home</Link><Link href='/cart'>/ Cart</Link>/ Checkout</Flex>
-      <Flex  flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
+      <Flex zIndex='1' flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
           <Flex flexDir='column' minW='40%' gap='2em' p={['1rem','3rem']} border='1px solid #348099' borderRadius='20px'
           boxShadow='xl'>
               <Heading as='h4' size='md'>Shipping information</Heading>
@@ -272,7 +282,7 @@ const CheckoutForm = () => {
                   Submit
               </Button>
           </Flex>
-          <Stack zIndex='-1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
+          <Stack zIndex='1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
               <Center>
               <Heading as='h4' size='md' >Your Order: {numberItems} Items</Heading>
               </Center>
