@@ -6,13 +6,16 @@ import {
   Text,
   VStack,
   HStack,
+  Stack,
+  Progress,
 } from '@chakra-ui/react';
 
 import { Icon } from '@chakra-ui/react';
 
 import UserImage from './UserImage';
-import Link from './Link';
+import Link from 'next/link';
 import axios from 'axios';
+import { BASEURL } from '../../redux/actions/products';
 
 
 const UserProfile = () => {
@@ -29,14 +32,14 @@ const UserProfile = () => {
             },
           };
         let getUser = await axios.get(`${BASEURL}/auth/data`, config);
-        setUser(getUser.data)
+        setUser(getUser.data.user)
         setIsLoading(false)
         }
     fetchDataUser()
-    })
+    },[isLoading])
 
 
-
+    console.log(user)
 
     if(isLoading){
         return (
@@ -61,16 +64,22 @@ const UserProfile = () => {
           </Text>
           <Text>Orders:</Text>
           <HStack>
-            {user.orders.map(order => (
+            {/* {user.orders?.map(order => (
               <Text colorScheme="blue" key={order}>
                 {order.quantity}
-                {order.products.map(products =>{
+                {order.products?.map(products =>{
                     <Text key={products._id}>
                     {products.name}
                     </Text>
                 })}
-              </Text>
-            ))}
+              </Text> */}
+            {/* ))} */}
+            <Text>
+            {user.orders.length}
+            </Text>
+            <Text>
+            {/* <Link href=``>{user.orders[0]}</Link> */}
+            </Text>
           </HStack>
         </VStack>
       </Center>

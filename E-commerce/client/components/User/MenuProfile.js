@@ -4,7 +4,7 @@ import NextLink from "next/link";
 import React, { useEffect, useState } from 'react'
 import { FaFirstOrder, FaList, FaQuestion, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import { IoDocumentSharp } from 'react-icons/io5'
-import { BASEURL } from '../../redux/actions/products';
+import { BASEURL, HOSTURL } from '../../redux/actions/products';
 
 export default function MenuProfile() {
     const [user, setUser] = useState(null);
@@ -16,11 +16,11 @@ export default function MenuProfile() {
     };
 
     const handleOrders = ()=>{
-    router.push(`${proccess.env.HOST_CLIENT}/orders`) // Ruta a order
+    router.push(`${HOSTURL}/orders`) // Ruta a order
     };
 
     const handleMyAccount = ()=>{
-    router.push(`${proccess.env.HOST_CLIENT}/user`)
+    router.push(`${HOSTURL}/user`)
     };
 
 
@@ -58,11 +58,6 @@ export default function MenuProfile() {
             <MenuItem icon={<FaUser />} onClick ={handleMyAccount} _hover={{bgColor:'blackAlpha.400'}}>My Account</MenuItem>
             <MenuItem icon={<FaList />} onClick ={handleOrders} _hover={{bgColor:'blackAlpha.400'}}>Orders </MenuItem>
             <MenuItem icon={<FaSignOutAlt />} onClick ={handleLogOut} _hover={{bgColor:'blackAlpha.400'}}>Log Out </MenuItem>
-            </MenuGroup>
-            <MenuDivider />
-            <MenuGroup title='Help' fontSize='md'>
-            <MenuItem icon={<IoDocumentSharp />} _hover={{bgColor:'blackAlpha.400'}}>Docs</MenuItem>
-            <MenuItem icon={<FaQuestion />} _hover={{bgColor:'blackAlpha.400'}}>FAQ</MenuItem>
             </MenuGroup>
         </MenuList>
         </Menu>
