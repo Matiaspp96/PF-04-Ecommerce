@@ -4,7 +4,8 @@ import {
     GET_PRODUCTS,
     GET_PRODUCTS_BY_NAME,
     GET_DETAIL,
-    ORDER_PRODUCTS,
+    ORDER_PRODUCTS_BY_NAME,
+    ORDER_PRODUCTS_BY_PRICE,
     CREATE_PRODUCT,
     UPDATE_PRODUCT,
     DELETE_PRODUCT,
@@ -78,12 +79,20 @@ export const getDetail = (id) => async (dispatch) => {
   }
 };
 
-export const orderProducts = (way)=>{
+export const orderByPrice = (way)=>{
   return {
-    type: ORDER_PRODUCTS,
+    type: ORDER_PRODUCTS_BY_PRICE,
     payload: way
   }
 }
+
+export const orderByName = (e)=>{
+  return {
+    type: ORDER_PRODUCTS_BY_NAME,
+    payload: e
+  }
+}
+
 export const addProduct = (product) => async (dispatch) => {
   try {
     const response = await axios.post(`${BASEURL}/products`, product);

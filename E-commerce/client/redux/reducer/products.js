@@ -2,7 +2,8 @@ import {
   GET_PRODUCTS,
   GET_DETAIL,
   GET_PRODUCTS_BY_NAME,
-  ORDER_PRODUCTS,
+  ORDER_PRODUCTS_BY_PRICE,
+  ORDER_PRODUCTS_BY_NAME,
   FILTER_BY_CATEGORIES,
   GET_PRODUCT_REVIEWS
 } from '../actions/actionstype.js' 
@@ -54,7 +55,7 @@ export default function productReducer(state= initialState, action) {
       }
 
 
-    case ORDER_PRODUCTS:
+    case ORDER_PRODUCTS_BY_PRICE:
       if(action.payload === 'MIN'){
           let psOrdered = state.products.sort((a,b)=>{
               if(a.price < b.price) return -1;
@@ -75,7 +76,30 @@ export default function productReducer(state= initialState, action) {
             ...state,
             products: psOrdered,
         }
-      }else if(action.payload === 'A-Z') {
+      // }else if(action.payload === 'A-Z') {
+      //   let psOrdered = state.products.sort((a,b)=>{
+      //     if(a.name < b.name) return -1;
+      //     if(a.name > b.name) return 1;
+      //     else return 0;
+      //   });
+      //   return {
+      //     ...state,
+      //     products: psOrdered,
+      // }
+      // }else if(action.payload === 'Z-A') {
+      //   let psOrdered = state.products.sort((a,b)=>{
+      //     if(a.name < b.name) return 1;
+      //     if(a.name > b.name) return -1;
+      //     else return 0;
+      //   });
+        // return {
+        //     ...state,
+        //     products: psOrdered,
+        // }
+    }
+
+    case ORDER_PRODUCTS_BY_NAME:
+      if(action.payload === 'A-Z') {
         let psOrdered = state.products.sort((a,b)=>{
           if(a.name < b.name) return -1;
           if(a.name > b.name) return 1;
