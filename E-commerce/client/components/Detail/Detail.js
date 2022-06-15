@@ -10,6 +10,7 @@ import Review from '../Review/Review.js';
 import CardMinimal from '../Card/CardMinimal.js';
 import { handleAddToCartOrFav } from '../../utils/handles';
 import { getAllCategories } from '../../redux/actions/categories';
+import { GiCamargueCross } from 'react-icons/gi';
 
 
   export default function Detail() {
@@ -17,14 +18,50 @@ import { getAllCategories } from '../../redux/actions/categories';
     const { id } = router.query;
     const dispatch = useDispatch();
     const [flag, setFlag] = useBoolean();
-    const[newReviewAdded,setNewReviewAdded] = useState(false)
+    const [newReviewAdded,setNewReviewAdded] = useState(false)
+    const sugestions = useSelector((state)=>state.productReducer.products)
+    const product = useSelector((state)=> state.productReducer.details);
+    const [psDetail, setPsDetail] = useState(product)
+    const [isLoading, setIsLoading] = useState(true)
+    const [psSugestions, setPsSugestions] = useState(sugestions)
+
+    useEffect(()=>{
+      if(isLoading){
+        async function getProduct(){
+          setPsDetail(ps => {
+              let newPs={
+                  ...ps,
+                  product
+              };
+              return newPs;
+            })
+          setPsSugestions(ps => {
+              let newPs={
+                  ...ps,
+                  sugestions
+              };
+              return newPs;
+            })
+          setIsLoading(false)
+        }
+        getProduct()
+      }
+      if(psSugestions.length > 1 && psSugestions.length !== 3 && product.hasOwnProperty('_id')){
+        console.log(psSugestions, psDetail)
+        setPsSugestions(psSugestions.filter((ps)=>{
+          if(ps.category?.includes(product.category[0])){
+            return ps
+          }})
+          .slice(0,3))
+        }
+        console.log(psSugestions, psDetail)
+    })
 
     useEffect(() => {
       dispatch(getDetail(id))
       setNewReviewAdded(false)
     },[dispatch,id,newReviewAdded]);
 
-    const product = useSelector((state)=> state.productReducer.details);
     
     function buyItem(e){
       dispatch(addItemToCart(handleAddToCartOrFav(e,product)))
@@ -59,17 +96,12 @@ import { getAllCategories } from '../../redux/actions/categories';
       dispatch(getAllCategories());
     }, [dispatch]);
     
-    const sugestions = useSelector((state)=>state.productReducer.products).filter((ps)=>{
-      if(ps.category?.includes(product.category[0])){
-        return ps
-      }})
-    .slice(0,3)
 
     useEffect(() => {
-      if (!sugestions.length){
+      if (!psSugestions.length){
         dispatch(getAllProducts())
       }
-    },[dispatch,sugestions.length]);
+    },[dispatch,psSugestions.length]);
 
     
     return (
@@ -212,7 +244,7 @@ import { getAllCategories } from '../../redux/actions/categories';
               <Container
               overflow={{base:'visible', lg:'auto' }}>
                 <Center fontSize='3xl' fontWeight={'bold'}>You may also like</Center>
-                {sugestions.map(ps=>{ return (
+                {psSugestions.map(ps=>{ return (
                           <CardMinimal key={ps._id} producto={ps} />
                         )})}
               </Container>

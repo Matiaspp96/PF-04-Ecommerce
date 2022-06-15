@@ -31,7 +31,7 @@ const Checkout = () => {
         if(user){
             router.push('/checkout/order')
         } else {
-            router.push('/cart/login')}
+            router.push('/login')}
     }
 
     return (
