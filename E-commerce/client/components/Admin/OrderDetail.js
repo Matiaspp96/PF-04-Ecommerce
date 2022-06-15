@@ -135,7 +135,7 @@ const OrderDetail = ({ id }) => {
                 </Heading>
               </Center>
               {console.log(details)}
-              <Stack h={'60vh'} overflow={'auto'}>
+              <Stack maxH={'60vh'} overflow={'auto'}>
                 {details.products.map((ps) => {
                   return (
                     <Flex key={ps._id}>
