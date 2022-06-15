@@ -71,7 +71,7 @@ const logOut = (req,res, next) => {
 
 
 const logDataUserOauth = async (req,res) => {
-
+  console.log(req)
   try{
  
     if(req.user){

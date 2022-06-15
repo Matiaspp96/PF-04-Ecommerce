@@ -11,6 +11,7 @@ import CardMinimal from '../Card/CardMinimal.js';
 import { handleAddToCartOrFav } from '../../utils/handles';
 import { getAllCategories } from '../../redux/actions/categories';
 import { GiCamargueCross } from 'react-icons/gi';
+import PsSugestions from './PsSugestions.js';
 
 
   export default function Detail() {
@@ -25,38 +26,7 @@ import { GiCamargueCross } from 'react-icons/gi';
     const [isLoading, setIsLoading] = useState(true)
     const [psSugestions, setPsSugestions] = useState(sugestions)
 
-    useEffect(()=>{
-      if(isLoading){
-        async function getProduct(){
-          setPsDetail(ps => {
-              let newPs={
-                  ...ps,
-                  product
-              };
-              return newPs;
-            })
-          setPsSugestions(ps => {
-              let newPs={
-                  ...ps,
-                  sugestions
-              };
-              return newPs;
-            })
-          setIsLoading(false)
-        }
-        getProduct()
-      }
-      if(psSugestions.length > 1 && psSugestions.length !== 3 && product.hasOwnProperty('_id')){
-        console.log(psSugestions, psDetail)
-        setPsSugestions(psSugestions.filter((ps)=>{
-          if(ps.category?.includes(product.category[0])){
-            return ps
-          }})
-          .slice(0,3))
-        }
-        console.log(psSugestions, psDetail)
-    })
-
+    
     useEffect(() => {
       dispatch(getDetail(id))
       setNewReviewAdded(false)
@@ -96,6 +66,36 @@ import { GiCamargueCross } from 'react-icons/gi';
       dispatch(getAllCategories());
     }, [dispatch]);
     
+    useEffect(()=>{
+      if(isLoading){
+        async function getProduct(){
+          setPsDetail(ps => {
+              let newPs={
+                  ...ps,
+                  product
+              };
+              return newPs;
+            })
+          }
+        async function getSug(){
+          setPsSugestions(ps => {
+            let newPs= sugestions.filter((ps)=>{
+                  if(ps.category?.includes(product.category[0])){
+                    return ps
+                  }})
+                  .slice(0,3)
+            return newPs;
+          })
+          }
+          getProduct()
+          getSug()
+          if(psSugestions){
+            setIsLoading(false)
+          }
+      }}, [isLoading])
+      console.log(psSugestions)
+
+
 
     useEffect(() => {
       if (!psSugestions.length){
@@ -103,12 +103,21 @@ import { GiCamargueCross } from 'react-icons/gi';
       }
     },[dispatch,psSugestions.length]);
 
+    if(isLoading){
+      return (
+        <Center h={"100vh"}>
+          <Stack>
+            <Heading>Just a moment</Heading>
+            <Progress size="md" isIndeterminate />
+          </Stack>
+        </Center>
+      )
+    }
     
     return (
       <Container maxW={'7xl'} 
       >
-        {product.name
-        ?
+        {product.name && psSugestions ? 
         <>
           <SimpleGrid 
             
@@ -241,13 +250,7 @@ import { GiCamargueCross } from 'react-icons/gi';
                 </TabPanels>
               </Tabs>
               </Container>
-              <Container
-              overflow={{base:'visible', lg:'auto' }}>
-                <Center fontSize='3xl' fontWeight={'bold'}>You may also like</Center>
-                {psSugestions.map(ps=>{ return (
-                          <CardMinimal key={ps._id} producto={ps} />
-                        )})}
-              </Container>
+              <PsSugestions PsDetail={PsDetail} sugestions={sugestions} product={product} psSugestions={psSugestions}/>
           </SimpleGrid>
         </>
         :

@@ -23,6 +23,7 @@ const Data = ({getUser}) => {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          'llego aca en el front paso al back': 'paso por aca'
         },
       };
       console.log('llego aca en el front paso al back')

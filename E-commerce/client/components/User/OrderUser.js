@@ -5,7 +5,7 @@ import { AiFillClockCircle, AiOutlineClockCircle } from 'react-icons/ai'
 import { IoCheckbox, IoCheckboxOutline, IoCheckmark, IoMedal } from 'react-icons/io5'
 
 export default function OrderUser({order}) {
-    const {buyer, cost, payment, phone, products, quantity, statusPay, shipping, _id} = order
+    const {buyer, cost, payment, phone, products, quantity, statusPay, shipping, _id, date} = order
   return (
     <Accordion minW='300px' allowToggle>
     <AccordionItem >
@@ -24,7 +24,7 @@ export default function OrderUser({order}) {
         </AccordionButton>
         <AccordionPanel pb={4}>
         <UnorderedList>
-            <ListItem>Time & Date : {quantity}</ListItem>
+            <ListItem>Date : {date}</ListItem>
             <ListItem>Total payment: ${cost}</ListItem>
             <ListItem>Quantity products: {quantity}</ListItem>
         </UnorderedList>
