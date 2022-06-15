@@ -2,6 +2,7 @@ import { GET_USER_DATA, GET_ALL_USERS } from "../actions/actionstype";
 
 const initialState = {
   user: {},
+  users: []
 };
 
 export default function userReducer(state = initialState, action) {
@@ -12,7 +13,6 @@ export default function userReducer(state = initialState, action) {
         user: action.payload,
       };
     case GET_ALL_USERS:
-      console.log(action.payload);
       return {
         ...state,
         users: action.payload,

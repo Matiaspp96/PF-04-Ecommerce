@@ -1,7 +1,9 @@
-import { Text, Stack, Button, Flex, Center, Heading, Progress } from "@chakra-ui/react";
+import { Text, Stack, Button, Flex, Center, Heading, Progress, Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/Navbar/Sidebar";
+import Barchar from "../../components/Chart/Barchar";
+import Piechart from "../../components/Chart/Piechart";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -26,13 +28,14 @@ const Dashboard = () => {
       {user ? (
         <Flex justifyContent={"space-between"}>
           <Sidebar />
-          <Stack w={"80vw"} h={'100vh'} justifyContent={"center"}>
-            <Text textAlign={"center"}>¡Hello!</Text>
-            <Text textAlign={"center"}>
-              Here you will be able to see statistical data of your business
-            </Text>
-            <Text textAlign={"center"}>Page under construction</Text>
-          </Stack>
+          <Box w={'100%'}>
+            <Box w={'50%'}>
+            <Barchar />
+            
+            </Box>
+            <Piechart></Piechart>
+          </Box>
+          
         </Flex>
       ) :
       <Center h={'100vh'}>

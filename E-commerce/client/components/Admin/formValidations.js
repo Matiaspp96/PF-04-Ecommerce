@@ -9,7 +9,7 @@ export function formValidations(product){
     if(!product.description){
       errors.description = 'Description is required'
     }else if(product.description.length < 10){
-        errors.descrption = 'Descriptions must be at least 10 letters long'
+        errors.description = 'Descriptions must be at least 10 letters long'
     }
 
     if(!product.category.length){
@@ -20,12 +20,6 @@ export function formValidations(product){
       errors.price = 'Price is required'
     } else if(product.price < 0){
         errors.price = 'Negative numbers are not allow'
-    }
-  
-    if(!product.stock){
-      errors.stock = 'Stock is required'
-    }else if(product.stock < 0){
-        errors.stock = 'Negative numbers are not allow'
     }
 
     if(!product.image){

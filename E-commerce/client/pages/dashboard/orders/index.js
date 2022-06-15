@@ -2,10 +2,24 @@ import { Text, Stack, Button, Flex, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Sidebar from "../../../components/Navbar/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrders } from "../../../redux/actions/admin.js";
+import OrdersTable from "../../../components/Table/OrdersTable";
+import PaginationDisplayer from "../../../components/Pagination/PaginationDisplayer";
+import FilterOrders from "../../../components/Sort/FilterOrders";
 
 const Orders = () => {
   const router = useRouter();
+  const elements = 7;
+  const [currentPage, setCurrentPage] = useState(1);
   const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const totalOrders = useSelector((state) => state.adminReducer.totalOrders);
+
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, [dispatch]);
 
   useEffect(() => {
     let localUser = {};
@@ -15,25 +29,22 @@ const Orders = () => {
     if (Object.keys(localUser).length !== 0 && localUser.role === 'admin') {
       setUser(localUser.role);
     }
-  
-    
     else{
       router.push("/notAllow");
     }
   },[router]);
+
+
 
   return (
     <>
       {user && (
         <Flex justifyContent={"space-between"}>
           <Sidebar size={"large"} />
-
-          <Stack h={'100vh'} w={"80vw"} justifyContent={"center"}>
-            <Text textAlign={"center"}>¡Hello!</Text>
-            <Text textAlign={"center"}>
-              Here you will be able to see and manage the orders
-            </Text>
-            <Text textAlign={"center"}>Page under construction</Text>
+          <Stack w={'100%'}>
+            <FilterOrders setCurrentPage={setCurrentPage} />
+            <PaginationDisplayer products={totalOrders} elements={elements} setCurrentPage={setCurrentPage} currentPage={currentPage} Component={OrdersTable}/>
+            
           </Stack>
         </Flex>
       )}
