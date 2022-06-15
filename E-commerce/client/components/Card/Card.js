@@ -1,4 +1,4 @@
-import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box } from '@chakra-ui/react'
+import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box, useColorMode } from '@chakra-ui/react'
 import { IoCart, IoCartOutline, IoHeart, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addItemToCartInput, deleteItemOfCart, getItemsCart, getTotalItems, getTotalPrice, removeItemOfCart } from '../../redux/actions/cart';
@@ -20,6 +20,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   const [removeCart, setRemoveCart] = useBoolean()
   const { name, price, category, image, _id, rating } = producto;
   const router = useRouter();
+  const { colorMode } = useColorMode();
 
   const [product, setProduct] = useState(producto);
   const [input, setInput] = useState();
@@ -110,8 +111,10 @@ export default function Card({ producto, quantity, cart, setCart }) {
   return (
       <Stack
         h={{base:'270', md:'290', lg:'365'}} 
-        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'auto', lg:'auto'}}
+        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'auto', lg:'300px'}}
+        maxW={{base:'50vw', md:'auto'}}
         overflow='auto'
+        bgColor={colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.200'}
         boxShadow='lg'
         >
         {<Tag
