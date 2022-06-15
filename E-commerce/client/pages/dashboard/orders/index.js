@@ -10,7 +10,7 @@ import FilterOrders from "../../../components/Sort/FilterOrders";
 
 const Orders = () => {
   const router = useRouter();
-  const elements = 7;
+  const elements = 8;
   const [currentPage, setCurrentPage] = useState(1);
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const Orders = () => {
       {user && (
         <Flex justifyContent={"space-between"}>
           <Sidebar size={"large"} />
-          <Stack w={'100%'}>
+          <Stack w={'100%'} >
             <FilterOrders setCurrentPage={setCurrentPage} />
             <PaginationDisplayer products={totalOrders} elements={elements} setCurrentPage={setCurrentPage} currentPage={currentPage} Component={OrdersTable}/>
             
