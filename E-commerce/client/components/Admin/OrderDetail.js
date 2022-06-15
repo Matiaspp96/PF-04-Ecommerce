@@ -135,13 +135,13 @@ const OrderDetail = ({ id }) => {
                 </Heading>
               </Center>
               {console.log(details)}
-              <Grid justifyItems="center" gap="0.5rem">
+              <Stack h={'60vh'} overflow={'auto'}>
                 {details.products.map((ps) => {
                   return (
                     <Flex key={ps._id}>
                       <Stack>
                         <Center>
-                          <Image src={ps.image} w={"50%"}></Image>
+                          <Image src={ps.image} maxW={"40%"}></Image>
                         </Center>
 
                         <Text textAlign={"center"}>{ps.name}</Text>
@@ -159,7 +159,7 @@ const OrderDetail = ({ id }) => {
                     </Flex>
                   );
                 })}
-              </Grid>
+              </Stack>
               <Divider></Divider>
               <Text fontWeight="bold" textAlign={"end"}>
                 Total: ${details.cost}
