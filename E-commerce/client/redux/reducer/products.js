@@ -24,6 +24,11 @@ export default function productReducer(state= initialState, action) {
         ...state,
         products: action.payload,
         filter: action.payload,
+        productsTop: action.payload.sort((a,b)=>{
+          if(a.rating > b.rating) return -1;
+          if(a.rating < b.rating) return 1;
+          else return 0;
+        }).slice(0,12)
       }
       
     case GET_DETAIL: 

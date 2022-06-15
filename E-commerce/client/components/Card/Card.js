@@ -42,10 +42,10 @@ export default function Card({ producto, quantity, cart, setCart }) {
     return cat
   }
 
-  useEffect(() => {
-    dispatch(getAllCategories());
-  }
-  , [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllCategories());
+  // }
+  // , [dispatch]);
 
   /*-------- Total Price ---------*/
   const getTotalPrice = (cart) => {
@@ -109,12 +109,12 @@ export default function Card({ producto, quantity, cart, setCart }) {
   }
 
   return (
-      <Stack
-        h={{base:'270', md:'290', lg:'365'}} 
-        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'auto', lg:'300px'}}
-        maxW={{base:'50vw', md:'auto'}}
+      <Flex
+        flexDir='column'
+        h={{base: router.route === '/cart' ? '70vh' : '40vh', md:'290', lg: router.route === '/cart' ? '420' : '365'}} 
+        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'22.5vw', lg:'100%'}}
+        maxW={{base: router.route === '/cart' ? '90vw' : '50vw', md:'auto'}}
         overflow='auto'
-        bgColor={colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.200'}
         boxShadow='lg'
         >
         {<Tag
@@ -127,7 +127,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
               {getCategoryName(e)} { e !== category[category.length-1] ? '-' : ''}
             </Text>)}
         </Tag>}
-        <Flex 
+        <Flex
+          pt='0.5em'
+          bgColor={colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.200'} 
           flexDir='column'
           height='100%'
           justifyContent='space-between'
@@ -137,7 +139,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
               src={image} 
               alt={name} 
               backgroundSize='cover'
-              boxSize={{base:'80px', md:'100px', lg:'190px'}}
+              boxSize={{base: router.route === '/cart' ? '40vh' : '20vh', md:'100px', lg: router.route === '/cart' ? '275' :'190px'}}
               alignItems='center'/>
           </Center>
 
@@ -222,6 +224,6 @@ export default function Card({ producto, quantity, cart, setCart }) {
               </Flex>}
           </Stack>      
         </Flex>
-      </Stack>
+      </Flex>
     )
   }

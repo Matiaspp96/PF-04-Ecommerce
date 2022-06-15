@@ -1,4 +1,4 @@
-import { Grid, Center, Box, SimpleGrid, keyframes, Text, Button, Flex, Skeleton, VStack, Icon, Heading } from '@chakra-ui/react'
+import { Grid, Center, Box, SimpleGrid, keyframes, Text, Button, Flex, Skeleton, VStack, Icon, Heading, useColorMode } from '@chakra-ui/react'
 import Card from './Card';
 import { AiOutlineHeart, AiOutlineLike, AiOutlineOrderedList } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +7,8 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { getAllProducts, getProductsTop } from '../../redux/actions/products';
-import { BiBone } from 'react-icons/bi';
-import { FaCat, FaDog } from 'react-icons/fa';
+import { IoArrowRedoOutline, IoArrowUndoOutline } from 'react-icons/io5';
+import { BsHandIndexThumb, BsMouse } from 'react-icons/bs';
 
 export default function Cards() {
     const products = useSelector((state) => state.productReducer.productsTop);
@@ -19,22 +19,32 @@ export default function Cards() {
     const [posX, setPosX] = useState(0)
     const [isActive,setIsActive]= useState(false)
     const [isLoading,setIsLoading]= useState(false)
+    const { colorMode } = useColorMode();
 
-    console.log(top)
+
+    useEffect(() => {
+      dispatch(getAllProducts());
+    }, [dispatch]);
     
     useEffect(()=>{
       async function getProducts (){
-        await dispatch(getAllProducts())
-        await dispatch(getProductsTop())
-        setTop(products)
-        if(top.length > 1){
-          setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
-          console.log(width)
+        if(products.length > 1){
+          setTop(products)
         }
+        // if(top.length > 1){
+        //   setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
+        // }
         setIsLoading(true) 
-          }
-         getProducts()
-    }, [dispatch,isLoading])
+        }
+        getProducts()
+    })
+
+    useEffect(()=>{
+      console.log(carousel.current.scrollWidth)
+      // setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth + 470)
+      setWidth(2220)
+  })
+
 
     const scroll = keyframes`
     0% { transform: translateX(-${posX}); }
@@ -53,8 +63,8 @@ export default function Cards() {
         e.preventDefault();
         setPosX(x)
         setTimeout(()=>{
-            setIsActive(false)
-        }, 5000)
+          setIsActive(false)
+      }, 5000)
     }
 
   return (
@@ -63,13 +73,17 @@ export default function Cards() {
       <Heading fontSize='2em' >Products Highlights</Heading>
       </Center>
       {top.length < 1 ? 
-      <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center' h={['90vh']}>
+      <Flex flexDir='column' justifyContent='center' alignItems='center' textAlign='center' h={['90vh']}
+      ref={carousel}
+      >
         <Skeleton h={{base:'270', md:'290', lg:'365'}} w={{base:'full', md:'fit-content', lg:'full'}} ><div></div></Skeleton>
       </Flex> :
       <Skeleton isLoaded={top.length > 1} w='95vw'>
       <Flex justifyContent='center'
       pos='relative'
-      bgColor='blackAlpha.200'
+      flexDir='column'
+      bgColor='#aadae3'
+      bgGradient={colorMode === 'light' ? 'linear-gradient(to-t, #b2e1e3 40%, #51ACAD 170%)' : 'linear-gradient(to-t, #02192e 40%, #51ACAD 170%)'}
       w='100%'
       as={motion.div} initial={{x: '-50%', opacity:0, scale: 0.5}}
       animate={{x: 0, opacity:1, scale: 1}} 
@@ -79,7 +93,8 @@ export default function Cards() {
       // _before={{content:`''`, opacity:0.5, background:'linear-gradient(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100% )'}}
       // _after={{content:`''`, opacity:0.5, background:'linear-gradient(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100% )'}}
       >
-          <Flex  h={{base:'fit-content', md:'5em', lg:'fit-content'}}
+          <Grid display={{base: 'flex', md:'grid'}} templateColumns={{ base: '1fr 1fr', sm: '1fr 1fr', md:'repeat(12, 10%)', lg:'repeat(12, 18%)' }}
+          h={{base:'fit-content', md:'fit-content', lg:'fit-content'}}
           as={motion.div}
           ref={carousel}
           drag='x' dragConstraints={{
@@ -87,7 +102,7 @@ export default function Cards() {
               left: -width
           }}
           onDragStart={e => handleActive(e)}
-          onDragEnd={(e,info) => handleInactive(e,info.point.x)}
+          onDragEnd={(e,info) => handleInactive(e, info.point.x)}
           // dragMomentum={false}
           animation={isActive ? `none` : `${scroll} 40s linear infinite`}
           w={{base:'full', md:'fit-content', lg:'full'}}
@@ -100,13 +115,20 @@ export default function Cards() {
           >
         {
           top?.map(ps=>{ return (
-            <Box pos='relative'
-            zIndex='0' key={ps._id} as={motion.div} minW='fit-content' minH='fit-content' overflow='hidden'>
+            <Box pos='relative' 
+            zIndex='2' key={ps._id} minW='fit-content' minH='fit-content' overflow='hidden' pb='5rem'>
               <Card key={ps._id} producto={ps}></Card>
             </Box>
             )})
           }
-        </Flex>
+        </Grid>
+        <Center> 
+          <Flex pos='relative' top='-20px' alignItems='flex-end' h='max-content' w='max-content'  color='blackAlpha.800'>
+            <IoArrowUndoOutline size='1.5rem' color='blackAlpha.100'/>
+            <BsHandIndexThumb size='1.5rem' color='blackAlpha.100'/>
+            <IoArrowRedoOutline size='1.5rem'  color='blackAlpha.100'/>
+          </Flex>
+        </Center>
         </Flex>
         </Skeleton>
       }

@@ -28,7 +28,6 @@ export default function MenuProfile() {
     router.push(`${HOSTURL}/user`)
     };
 
-    console.log(user)
     useEffect(() => {
 
     let localUser = {};
@@ -59,10 +58,10 @@ export default function MenuProfile() {
         </MenuButton>
         <MenuList bgColor='#1884BE'>
             <MenuGroup title={`Hi ${user.name}`} fontSize='md'>
-            <MenuItem icon={<FaUser size='1.2rem' />} onClick ={handleMyAccount} _hover={{bgColor:'blackAlpha.400'}}>My Account</MenuItem>
-            <MenuItem icon={<FaList size='1.2rem'/>} onClick ={handleOrders} _hover={{bgColor:'blackAlpha.400'}}>Orders </MenuItem>
-            <MenuItem icon={<FaSignOutAlt size='1.2rem'/>} onClick ={handleLogOut} _hover={{bgColor:'blackAlpha.400'}}>Log Out </MenuItem>
-            {user.role === 'user' ? (<MenuItem icon={<BsPersonLinesFill size='1.2rem'/>} onClick ={handleAdmin} _hover={{bgColor:'blackAlpha.400'}}>Control Panel </MenuItem>) : null}
+            <MenuItem icon={<FaUser size='1.2rem' />} _focus='blackAlpha.400' onClick ={handleMyAccount} _hover={{bgColor:'blackAlpha.400'}}>My Account</MenuItem>
+            <MenuItem icon={<FaList size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleOrders} _hover={{bgColor:'blackAlpha.400'}}>Orders </MenuItem>
+            <MenuItem icon={<FaSignOutAlt size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleLogOut} _hover={{bgColor:'blackAlpha.400'}}>Log Out </MenuItem>
+            {user.role === 'user' ? (<MenuItem icon={<BsPersonLinesFill size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleAdmin} _hover={{bgColor:'blackAlpha.400'}}>Control Panel </MenuItem>) : null}
             </MenuGroup>
         </MenuList>
         </Menu>

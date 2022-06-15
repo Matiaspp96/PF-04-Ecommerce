@@ -26,7 +26,7 @@ const UserProfile = () => {
     const [order, setOrder] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
     const userState = useSelector(state => state.userReducer.user)
-    console.log(user)
+    console.log(userState)
     useEffect(()=>{
     async function fetchDataUser(){
         const config = {
@@ -40,15 +40,16 @@ const UserProfile = () => {
           // let ordersUser = await axios.get(`${BASEURL}/orders/${getUser.data.user._id}/orderlist`)
           let ordersUser = await axios.get(`${BASEURL}/orders/62999a9589e817d325d46bb4/orderlist`)
           setOrder(ordersUser.data)
+          setUser(getUser.data.user)
+          setIsLoading(false)
+          console.log(ordeordersUserr, getUser)
         } catch(err){
           console.log(err.response.data)
           setOrder(0)
         }
-        setUser(getUser.data.user)
-        setIsLoading(false)
         }
     fetchDataUser()
-    },[isLoading])
+    })
 
 
     if(isLoading){
@@ -61,13 +62,12 @@ const UserProfile = () => {
           </Center>
         )
       }
-    
 
   return (
     <Box w='95vw'>
       <Text><Link href='/'>Home </Link>/ My Account</Text>
     <Container mt={4}>
-      <UserImage avatar={user.avatar} name={user.name} />
+      {/* <UserImage avatar={user.avatar === null ? "https://i.pinimg.com/originals/0b/e7/20/0be720d92134fbdbb80102333ff2b6f5.png" : user.avatar} name={user.name} /> */}
       <Center>
         <VStack>
           <Heading>{user.name}</Heading>
