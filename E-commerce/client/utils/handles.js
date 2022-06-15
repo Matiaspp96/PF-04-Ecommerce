@@ -11,7 +11,6 @@ export const handleAddToCartOrFav = (e, item) => {
         category: item.category,
         rating: item.rating
     };
-    console.log(product)
     return product
 }
 

@@ -36,7 +36,8 @@ const Data = ({getUser}) => {
         _id :getUser.data.user._id,
         role: getUser.data.user.role,
         email:getUser.data.user.email,
-        name:getUser.data.user.name
+        name:getUser.data.user.name,
+        avatar:getUser.data.user.avatar
       }
       console.log(getUser.data)
       localStorage.setItem("userInfo", JSON.stringify(localInfo));

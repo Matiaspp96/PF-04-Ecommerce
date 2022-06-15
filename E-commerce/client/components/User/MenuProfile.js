@@ -25,11 +25,10 @@ export default function MenuProfile() {
     };
 
     const handleAdmin = ()=>{
-    router.push(`${HOSTURL}/user`)
+    router.push(`${HOSTURL}/dashboard`)
     };
 
     useEffect(() => {
-
     let localUser = {};
         if(localStorage.getItem('userInfo')){
             localUser = JSON.parse(localStorage.getItem('userInfo'));
@@ -52,7 +51,7 @@ export default function MenuProfile() {
         <Image
             boxSize='2.5rem'
             borderRadius='full'
-            src='https://placekitten.com/100/100'
+            src={user.avatar ? user.avatar : 'https://placekitten.com/100/100'}
             alt='Cat'
           />
         </MenuButton>
@@ -61,7 +60,7 @@ export default function MenuProfile() {
             <MenuItem icon={<FaUser size='1.2rem' />} _focus='blackAlpha.400' onClick ={handleMyAccount} _hover={{bgColor:'blackAlpha.400'}}>My Account</MenuItem>
             <MenuItem icon={<FaList size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleOrders} _hover={{bgColor:'blackAlpha.400'}}>Orders </MenuItem>
             <MenuItem icon={<FaSignOutAlt size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleLogOut} _hover={{bgColor:'blackAlpha.400'}}>Log Out </MenuItem>
-            {user.role === 'user' ? (<MenuItem icon={<BsPersonLinesFill size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleAdmin} _hover={{bgColor:'blackAlpha.400'}}>Control Panel </MenuItem>) : null}
+            {user.role === 'admin' ? (<MenuItem icon={<BsPersonLinesFill size='1.2rem'/>} _focus='blackAlpha.400' onClick ={handleAdmin} _hover={{bgColor:'blackAlpha.400'}}>Control Panel </MenuItem>) : null}
             </MenuGroup>
         </MenuList>
         </Menu>

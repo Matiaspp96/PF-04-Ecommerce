@@ -40,7 +40,6 @@ export default function Cards() {
     })
 
     useEffect(()=>{
-      console.log(carousel.current.scrollWidth)
       // setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth + 470)
       setWidth(2220)
   })

@@ -20,7 +20,6 @@ export default function BannerPets (){
     ` 
 
     useEffect(()=>{
-        console.log(carousel.current.scrollWidth, carousel.current.offsetWidth)
         setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
     })
 

@@ -102,7 +102,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
     setRemoveCart.toggle()
   }
 
-  function handleRemoveToFavOnClick(producto){
+  function handleRemoveToFavOnClick(e, producto){
     console.log(producto)
     dispatch(deleteItemOfFav(handleRemoveFromFav(producto)))
     setRemoveFavorite.toggle()
@@ -209,7 +209,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 />
                 { router.pathname === '/favorites' ?
                   <IconButton 
-                  onClick={handleRemoveToFavOnClick(product)}
+                  onClick={e=>handleRemoveToFavOnClick(e,product)}
                   backgroundColor='transparent'
                   icon={<IoTrashOutline size='2em'/>}
                   color={removeFavorite ? '#1884BE' : 'grey'}
