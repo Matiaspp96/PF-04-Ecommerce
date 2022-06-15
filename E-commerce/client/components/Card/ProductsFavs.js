@@ -1,12 +1,36 @@
-import { Grid, Center, Box, SimpleGrid, Text, Button, Flex } from '@chakra-ui/react'
+import { Grid, Center, Box, SimpleGrid, Text, Button, Flex, Stack, Heading, Progress } from '@chakra-ui/react'
 import Card from './Card';
 import { AiOutlineHeart, AiOutlineLike, AiOutlineOrderedList } from "react-icons/ai";
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { getItemsFav } from '../../redux/actions/favorites';
 
 export default function Cards() {
   const productsFavs = useSelector((state)=> state.favoritesReducer.itemsFav);
+  const [isLoading, setIsLoading] = useState(true);
+  const [favorites, setFavorites] = useState();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    async function fetchData(){
+    setFavorites(productsFavs)
+    setIsLoading(false)
+  }
+    fetchData()
+  }, [favorites, dispatch, isLoading])
+
+
+  if(isLoading){
+    return (
+      <Center h={"100vh"}>
+        <Stack>
+          <Heading>Just a moment</Heading>
+          <Progress size="md" isIndeterminate />
+        </Stack>
+      </Center>
+    )
+  }
 
   return (
     <Box w='95vw'>

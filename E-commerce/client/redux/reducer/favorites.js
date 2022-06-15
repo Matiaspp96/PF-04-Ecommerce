@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import cookie from 'js-cookie'
 import {
     ADD_ITEM_FAVORITES,
     DELETE_ITEM_FAVORITES,
@@ -10,20 +11,31 @@ import {
     itemsFav: [],
     totalPrice: 0,
   }
-  let itemsFav = initialState.itemsFav
+  
   
   export default function favoritesReducer(state = initialState, action) {
+    let itemsFav = state.itemsFav
+    let favs = state.itemsFav
     switch(action.type) {
       case ADD_ITEM_FAVORITES:
-        // console.log(action.payload)
-        return{
-          ...state,
-          itemsFav: [...state.itemsFav, action.payload],
-        } 
+        let itemFav = itemsFav?.find(e => e._id === action.payload._id)
+        if(itemFav) {
+          favs = itemsFav.map(e => {
+            if(e._id === action.payload._id) return e
+          })
+        } else {
+          favs = [...itemsFav, action.payload] 
+        }
+        cookie.set('favs', JSON.stringify(favs))
+          return{
+            ...state,
+            itemsFav: favs,
+          } 
+
       case DELETE_ITEM_FAVORITES:
+        console.log(action.payload, itemsFav)
         let index = itemsFav.findIndex(e => e._id === action.payload)
         let newFav = [...itemsFav];
-        console.log(index, newFav)
         if(index >= 0){
           newFav.splice(index,1)
           Swal.fire({
@@ -46,6 +58,7 @@ import {
           itemsFav: newFav
         }
       case GET_ALL_FAV:
+        console.log(itemsFav)
         return {
           ...state,
           itemsFav

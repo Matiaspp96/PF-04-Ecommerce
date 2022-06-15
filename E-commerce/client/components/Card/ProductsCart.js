@@ -17,7 +17,7 @@ export default function ProductCart() {
   const router = useRouter()
 
   useEffect(()=>{
-    console.log(productsCart)
+
     async function fetchDataCart (){
     await dispatch(getItemsCart())
     setCart(productsCart)
@@ -47,7 +47,7 @@ export default function ProductCart() {
         <Link href="/"><Button pos='relative' color='blackAlpha.800' borderRadius='15px' p='1em' mt='1em'>Continue Shopping</Button></Link>
       </Flex> :
       <Grid 
-        templateColumns={{ base: '1fr', sm: '1fr', md:'1fr 1em 20rem', lg:'1fr 1em 20rem' }}
+        templateColumns={{ base: '1fr', sm: '1fr', md:'1fr 1em 15rem', lg:'1fr 1em 20rem' }}
         margin={{base: '.5em', md:'1em 0em', lg:'2em 0em'}} height='auto'
         >
         <Grid templateColumns={{ base: '1fr', sm: '1fr', md:'repeat(3, 1fr)', lg:'repeat(3, 1fr)' }}

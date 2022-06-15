@@ -5,10 +5,11 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../redux/actions/user";
 import { BASEURL } from "../../redux/actions/products";
+import { wrapper } from "../../redux/store";
 
 const urlUserData = `${BASEURL}/auth/data`;
 
-const Data = () => {
+const Data = ({getUser}) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     username: "",
@@ -35,7 +36,8 @@ const Data = () => {
         _id :getUser.data.user._id,
         role: getUser.data.user.role,
         email:getUser.data.user.email,
-        name:getUser.data.user.name
+        name:getUser.data.user.name,
+        avatar:getUser.data.user.avatar
       }
       console.log(getUser.data)
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
@@ -67,4 +69,5 @@ const Data = () => {
       </Center>
   );
 };
+
 export default Data;
