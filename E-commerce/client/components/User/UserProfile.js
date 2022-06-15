@@ -76,13 +76,12 @@ const UserProfile = () => {
           </Text>
           <Text>Your History Orders:</Text>
           <HStack>
-            {
-            order?.map(o => (
-              <OrderedList>
-                <ListItem><OrderUser order={o} key={Math.random()}/></ListItem>
-              </OrderedList>
-            ))
-            }
+            <OrderedList>
+              {order?.map(o => (
+                <ListItem key={Math.random()}><OrderUser order={o} key={Math.random()}/></ListItem>
+              ))
+             }
+            </OrderedList>
           </HStack>
         </VStack>
       </Center>
