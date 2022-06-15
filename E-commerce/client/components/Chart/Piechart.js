@@ -1,54 +1,95 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import { Box } from "@chakra-ui/react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrders } from "../../redux/actions/admin.js";
+import { getAllProducts } from "../../redux/actions/products.js";
+import { getAllCategories } from "../../redux/actions/categories.js";
 
-export const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    title: {
+      display: true,
+      text: "Products by  category",
+    },
+  },
+};
 
 const Piechart = () => {
-    const dispatch = useDispatch();
-  const totalOrders = useSelector((state) => state.adminReducer.totalOrders);
-
+  const dispatch = useDispatch();
+  const labels = useSelector((state) => state.categoriesReducer.categories).map(
+    (cs) => {
+      return cs.name;
+    }
+  );
+  const id = useSelector((state) => state.categoriesReducer.categories).map(
+    (cs) => {
+      return cs._id;
+    }
+  );
+  const products = useSelector((state) => state.productReducer.products);
 
   useEffect(() => {
-    dispatch(getAllOrders);
+    dispatch(getAllCategories());
+    dispatch(getAllProducts());
   }, [dispatch]);
 
-    const productsSold = totalOrders?.map(or =>{return or.products})
-    // const productsName = productsSold.map()
+  const getPsByCategory = (arr, id) => {
+    const ps = arr.filter((el) => {
+      if (el.category.includes(id)) {
+        return el;
+      }
+    });
+    return ps.length;
+  };
+
+  function ColorCode() {
+    var makingColorCode = "0123456789ABCDEF";
+    var finalCode = "#";
+    for (var counter = 0; counter < 6; counter++) {
+      finalCode = finalCode + makingColorCode[Math.floor(Math.random() * 16)];
+    }
+    return finalCode;
+  }
+
+  const data = useMemo(
+    function () {
+      return {
+        datasets: [
+          {
+            data: id.map((cs) => {
+              return getPsByCategory(products, cs);
+            }),
+            backgroundColor: labels.map((cs) => {
+              return ColorCode();
+            }),
+          },
+        ],
+        labels,
+      };
+    },
+    [products]
+  );
 
   return (
-    <div>PieChart</div>
-  )
-}
+    <>
+      {products.length && (
+        <Box
+          bgColor={"white"}
+          boxShadow="xl"
+          m={".5rem"}
+          p={"1rem"}
+          borderRadius={5}
+        >
+          <Pie data={data} options={options} />
+        </Box>
+      )}
+    </>
+  );
+};
 
-export default Piechart
+export default Piechart;
