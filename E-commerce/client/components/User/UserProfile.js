@@ -79,9 +79,7 @@ const UserProfile = () => {
             {
             order?.map(o => (
               <OrderedList>
-                <ListItem><OrderUser order={o} key={o._id}/></ListItem>
-                <ListItem><OrderUser order={o} key={o._id}/></ListItem>
-                <ListItem><OrderUser order={o} key={o._id}/></ListItem>
+                <ListItem><OrderUser order={o} key={Math.random()}/></ListItem>
               </OrderedList>
             ))
             }
