@@ -60,12 +60,22 @@ const Sort = ({ setCurrentPage, setSort }) => {
             justifyContent='center'
             alignContent='center'
             type='radio'
-            onChange={handleSort}>
+            onChange={handleSort}
+            title='Price'
+            defaultValue='MIN'>
             <MenuItemOption value='MIN'>Lower price</MenuItemOption>
             <MenuItemOption value='MAX'>Higher price</MenuItemOption>
+          </MenuOptionGroup>
+          <MenuOptionGroup 
+            justifyContent='center'
+            alignContent='center'
+            type='radio'
+            onChange={handleSort}
+            title='Order'
+            defaultValue='A-Z'>
             <MenuItemOption value='A-Z'>A-Z</MenuItemOption>
             <MenuItemOption value='Z-A'>Z-A</MenuItemOption>
-          </MenuOptionGroup>
+            </MenuOptionGroup>
         </MenuList>
       </Menu>
       <Menu>
@@ -76,7 +86,7 @@ const Sort = ({ setCurrentPage, setSort }) => {
           <MenuOptionGroup 
             justifyContent='center'
             alignContent='center'
-            type='radio'
+            type='radio' // type='checkbox'
             onChange={handleFilterByCategories}
             defaultValue='All'>
             <MenuItemOption value='All'>All</MenuItemOption>

@@ -11,7 +11,9 @@ export default function Map() {
   const [map, setMap] = useState("Mendoza")
   return (
     <div>
-    <Flex >
+    <Flex  
+      justifyContent='center'
+      alignContent='center'>
       <Button
       onClick={() => setMap("Mendoza")}
       >
