@@ -81,7 +81,8 @@ const CheckoutForm = () => {
             users: {email: email},
             [event.target.name]: event.target.value,
             cost: getTotalPrice,
-            quantity: numberItems, 
+            quantity: numberItems,
+            date: new Date().toDateString() 
         };
         console.log(newBuyer)
         return newBuyer;

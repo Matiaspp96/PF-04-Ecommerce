@@ -124,9 +124,6 @@ const statusPay = async (req, res) => {
   //en construccion
 };
 
-<<<<<<< HEAD
-module.exports = { initPaymentMp,successPay, pendingPay, failurePay, statusPay };
-=======
 module.exports = {
   initPaymentMp,
   successPay,
@@ -134,4 +131,3 @@ module.exports = {
   failurePay,
   statusPay,
 };
->>>>>>> ad16233988ea6153a0279b10b1d35b0420aaa760

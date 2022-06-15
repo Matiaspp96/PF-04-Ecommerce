@@ -17,9 +17,7 @@ import { BiBone, BiHeart } from "react-icons/bi";
 import { GiDogHouse } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalItems } from '../../redux/actions/cart';
-import { useRouter } from 'next/router';
 import ColorModeSwitch from "../ColorMode/ColorSwitch";
-import { BASEURL } from '../../redux/actions/products'
 
 const MenuLinks = ({ isOpen }) => {
   const dispatch = useDispatch();
@@ -64,7 +62,7 @@ const MenuLinks = ({ isOpen }) => {
         flexDir="row"
         spacing={4}
         align="center"
-        gap={{ lg: "1em" }}
+        gap={{base:'0.5rem', lg: "1em" }}
         justify={["space-between", "space-between", "flex-end", "center"]}
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}

@@ -8,6 +8,9 @@ import {
   HStack,
   Stack,
   Progress,
+  OrderedList,
+  ListItem,
+  Box,
 } from '@chakra-ui/react';
 import { Icon } from '@chakra-ui/react';
 import UserImage from './UserImage';
@@ -15,14 +18,15 @@ import Link from 'next/link';
 import axios from 'axios';
 import { BASEURL } from '../../redux/actions/products';
 import { useSelector } from 'react-redux';
+import OrderUser from './OrderUser';
 
 
 const UserProfile = () => {
     const [user, setUser] = useState(null)
+    const [order, setOrder] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
     const userState = useSelector(state => state.userReducer.user)
     console.log(user)
-
     useEffect(()=>{
     async function fetchDataUser(){
         const config = {
@@ -32,7 +36,14 @@ const UserProfile = () => {
             },
           };
         let getUser = await axios.get(`${BASEURL}/auth/data`, config);
-        // let ordersUser = await axios.get(`${BASEURL}/orders/${getUser.data.user}`)
+        try{
+          // let ordersUser = await axios.get(`${BASEURL}/orders/${getUser.data.user._id}/orderlist`)
+          let ordersUser = await axios.get(`${BASEURL}/orders/62999a9589e817d325d46bb4/orderlist`)
+          setOrder(ordersUser.data)
+        } catch(err){
+          console.log(err.response.data)
+          setOrder(0)
+        }
         setUser(getUser.data.user)
         setIsLoading(false)
         }
@@ -53,6 +64,8 @@ const UserProfile = () => {
     
 
   return (
+    <Box w='95vw'>
+      <Text><Link href='/'>Home </Link>/ My Account</Text>
     <Container mt={4}>
       <UserImage avatar={user.avatar} name={user.name} />
       <Center>
@@ -61,29 +74,25 @@ const UserProfile = () => {
           <Text color="gray">
             {user.phone} {user.location} {user.email}
           </Text>
-          <Text>History Orders:</Text>
+          <Text>Your History Orders:</Text>
           <HStack>
-            {/* {user.orders?.map(order => (
-              <Text colorScheme="blue" key={order}>
-                {order.quantity}
-                {order.products?.map(products =>{
-                    <Text key={products._id}>
-                    {products.name}
-                    </Text>
-                })}
-              </Text> */}
-            {/* ))} */}
-            <Text>
-            {user.orders.length}
-            </Text>
-            <Text>
-            {/* <Link href=``>{user.orders[0]}</Link> */}
-            </Text>
+            {
+            order?.map(o => (
+              <OrderedList>
+                <ListItem><OrderUser order={o} key={order._id}/></ListItem>
+                <ListItem><OrderUser order={o} key={order._id}/></ListItem>
+                <ListItem><OrderUser order={o} key={order._id}/></ListItem>
+              </OrderedList>
+            ))
+            }
           </HStack>
         </VStack>
       </Center>
     </Container>
+    </Box>
   );
 };
 
 export default UserProfile;
+
+
