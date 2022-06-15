@@ -28,16 +28,17 @@ passport.use('google',new GoogleStrategy({
   async function(req,accessToken, refreshToken, profile, cb) {
    const email = profile.emails[0].value;
    const name = profile.name.givenName;
+   const avatar = profile.photos[0].value;
     const validateUser = await Users.findOne({email});
    
-    if(validateUser){
+   if(validateUser){
     
         return cb(null,validateUser); //se valida si el email ya exite
 
     };
-    const user = await Users.create({email,name});
+   const user = await Users.create({email, name, avatar});
 
-    return cb(null,user)
+   return cb(null,user)
       
   }
 ));
