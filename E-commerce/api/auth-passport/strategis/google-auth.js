@@ -26,8 +26,8 @@ passport.use(
     async function (req, accessToken, refreshToken, profile, cb) {
       const email = profile.emails[0].value;
       const name = profile.name.givenName;
-      const validateUser = await Users.findOne({ email });
       const avatar = profile.photos[0].value;
+      const validateUser = await Users.findOne({ email });
 
       if (validateUser) {
         return cb(null, validateUser); //se valida si el email ya exite
