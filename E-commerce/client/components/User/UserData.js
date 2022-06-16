@@ -61,7 +61,7 @@ const Data = () => {
     if(query._id){
       fetchUser()
     }
-  },[dispatch, user]);
+  },[dispatch, query, router]);
 
   function handleClick(e){
     e.preventDefault();
