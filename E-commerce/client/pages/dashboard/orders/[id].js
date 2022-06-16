@@ -4,7 +4,7 @@ import Sidebar from "../../../components/Navbar/Sidebar";
 import { Flex, Center } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
-const orderDetailPage = () => {
+const OrderDetailPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const [user, setUser] = useState(null);
@@ -33,4 +33,4 @@ const orderDetailPage = () => {
   );
 };
 
-export default orderDetailPage;
+export default OrderDetailPage;
