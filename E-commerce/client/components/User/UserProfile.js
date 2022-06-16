@@ -26,18 +26,35 @@ const UserProfile = () => {
     const [order, setOrder] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
     const userState = useSelector(state => state.userReducer.user)
+    console.log(userState)
     useEffect(()=>{
     async function fetchDataUser(){
-        const config = {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          };
-        let getUser = await axios.get(`${BASEURL}/auth/data`, config);
-        setUser(getUser.data.user)
+      console.log(BASEURL)
+      const configAxios = ()=>{
+        const localUser = localStorage.getItem('userInfo');
+        const userActive = JSON.parse(localUser);
+        let configAxios = {};
+        
+        if(userActive){
+         configAxios ={
+           headers: {
+             'Content-Type': 'application/json',
+             Authorization: `${userActive.token}`,
+           },
+         }
+        };
+        return configAxios;
+    }  
+        let localUser = {};
+        if(localStorage.getItem('userInfo')){
+            localUser = JSON.parse(localStorage.getItem('userInfo'));
+        }
+        if(Object.keys(localUser).length !== 0){
+            setUser(localUser)
+        }
+        
         try{
-          let ordersUser = await axios.get(`${BASEURL}/orders/${getUser.data.user._id}/orderlist`)
+          let ordersUser = await axios.get(`${BASEURL}/orders/${localUser._id}/orderlist`)
           setOrder(ordersUser.data)
         } catch(err){
           setOrder(0)
