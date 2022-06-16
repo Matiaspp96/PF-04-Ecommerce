@@ -33,31 +33,22 @@ export default function MenuHistory({order}) {
             size= 'lg'
             borderColor= 'blue'          
           >
-            <Thead>
-              <Tr>
-                <Th p={1} textAlign={"center"}>Products</Th>
-                <Th p={1} textAlign={"center"}>Date</Th>
-                <Th p={1} textAlign={"center"}>order status</Th>
-                <Th p={1} textAlign={"center"}>Quantity products</Th>
-                <Th p={1} textAlign={"center"}>Total payment</Th>
-              </Tr>
-            </Thead>
             <Tbody>
               <Tr key={_id}>
                 <Td p={1} textAlign={"center"}>
-                  {products}
+                  {order.products}
                 </Td>
                 <Td p={1} textAlign={"center"}>
-                  {date}
+                  {order.date}
                 </Td>
                 <Td p={1} textAlign={"center"}>
-                  {statusPay}
+                  {order.statusPay}
                 </Td>
                 <Td p={1} textAlign={"center"}>
-                  {quantity}
+                  {order.quantity}
                 </Td>
                 <Td p={1} textAlign={"center"}>
-                  {cost}
+                  {order.cost}
                 </Td>
               </Tr>
             </Tbody>

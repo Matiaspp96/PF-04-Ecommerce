@@ -20,7 +20,7 @@ import React, { useState, useEffect } from 'react';
 import { OrderUser } from '../User/OrderUser';
 import { BASEURL } from '../../redux/actions/products';
 import { useRouter } from 'next/router';
-import { OrderHistory } from './OrderHistory';
+// import { OrderHistory } from './OrderHistory';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Link from 'next/link';
@@ -54,7 +54,7 @@ export default function MenuHistory() {
       }
   fetchDataUser()
   },[isLoading])
-  // console.log(order)
+  console.log(order)
 
   if(isLoading){
       return (
@@ -86,12 +86,25 @@ export default function MenuHistory() {
                 <Th p={1} textAlign={"center"}>Total payment</Th>
               </Tr>
             </Thead>
-            <Flex>
-              { order && order?.map((os) => {
-                <Tr key={os._id}> <OrderHistory/> </Tr>
+            <Tbody>
+              {order.map((order)=>{
+                return(
+                  <Tr key={order._id}>
+                    <Td p={1} textAlign={"center"}>
+                      <Td p={1} textAlign={"center"}>
+                        {order.products.map(ps=>{return <Text key={ps.name}>{ps.name}</Text>})}
+                      </Td>
+                    </Td>
+                    <Td p={1} textAlign={"center"}>{order.date}</Td>
+                    <Td p={1} textAlign={"center"}>{order.statusPay}</Td>
+                    <Td p={1} textAlign={"center"}>{order.quantity}</Td>
+                    <Td p={1} textAlign={"center"}>${order.cost}</Td>
+                  </Tr>
+                 
+                )
               }
               )}
-            </Flex>
+            </Tbody>
             
         </Table>
       </TableContainer>

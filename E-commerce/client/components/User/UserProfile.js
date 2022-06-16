@@ -26,10 +26,10 @@ const UserProfile = () => {
     const [order, setOrder] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
     const userState = useSelector(state => state.userReducer.user)
-    console.log(userState)
+    // console.log(userState)
     useEffect(()=>{
     async function fetchDataUser(){
-      console.log(BASEURL)
+      // console.log(BASEURL)
       const configAxios = ()=>{
         const localUser = localStorage.getItem('userInfo');
         const userActive = JSON.parse(localUser);
@@ -63,7 +63,7 @@ const UserProfile = () => {
         }
     fetchDataUser()
     },[isLoading])
-    console.log(order)
+    // console.log(order)
 
     if(isLoading){
         return (
