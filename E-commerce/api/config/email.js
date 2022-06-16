@@ -134,7 +134,7 @@ const emailOrderFailure = function (user, data) {
     <h2 style="color: #000000">Se presento un problema con tu metodo de pago: </h2>
     
     <h3> por favor valida con tu banco si todo esta bien.</h3>
-    <h3> para retomar el pago de tu orden, haz click en el enlace pagar</h3>
+    <h3> para retomar el pago de tu orden, haz click en el enlace</h3>
     <a href="https://sandbox.mercadopago.com.co/checkout/v1/redirect?pref_id=${data.paymentId}" >Intentar el Pago Nuevamente</a>
     </div>
     
@@ -154,11 +154,10 @@ const emailOrderPending= function (user, data) {
     <h1 style="color: #fff;">Hola ${user.name}, gracias por elegirnos!</h1>
     </ul>
     </div>
-    <h2 style="color: #000000">Tu compra se procesó correctamente, a continuación te dejamos los detalles de la misma: </h2>
-    <h3>Parace que tu banco aun no aprueba el pago</h3>
+    <h2>Parace que tu banco aun no aprueba el pago</h2>
     <h3>debemos esperar la confirmacion, mientras pueder ir por un taza de cafe</h3>
     <h3>puedes validar el estado del pago ingresando a tu cuenta en ordenes, o tambien puedes darle click en el enlace</h3>
-    <a href="${process.env.HOST_CLIENT}" ></a>
+    <a href="${process.env.HOST_CLIENT}" > ver estado de la orden</a>
     </div>
     
    </span><br /><br />All rights reserved by &copy; <a href="https://petelegant.vercel.app/">Pet Elegant</a></p>
@@ -175,7 +174,7 @@ const emailSaleNotification= function (user, data) {
     html: `
     <div style="background-color: #2b9423; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
     <ul>
-    <h1> style="color: #fff;">Nombre del comprador  ${data.buyer.name}</h1>
+    <h1 style="color: #fff;">Nombre del comprador  ${data.buyer.name}</h1>
     <h2> revisa el detalle de la orden en el siguente enlace</h2>
     <a href="${process.env.HOST_CLIENT}/dashboard/orders/${data._id}" > ver orden</a>
 
