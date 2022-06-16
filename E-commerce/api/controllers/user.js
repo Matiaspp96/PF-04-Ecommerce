@@ -12,8 +12,10 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
   try {
-    const { id } = req.params;
-    const data = await userModel.findById(id);
+    const { name } = req.params;
+    const data = await userModel.findOne({
+      name: { $regex: name, $options: "i" },
+    });
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_GET_ITEM");

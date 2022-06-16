@@ -71,17 +71,20 @@ const logOut = (req,res, next) => {
 
 
 const logDataUserOauth = async (req,res) => {
-  console.log(req.user)
-  try{
-    if(req.user){
-    let token = await tokenSign(req.user)
-    const data = {
-     token: token,
-     user: req.user,
-    }
+  console.log('Entro aca')
   
+  console.log(`esto es req.body ${req.body._id}`)
+  try{
+    const user = await userModel.findById(req.body._id)
+    let token = await tokenSign(user)
+    const data = {
+      token: token,
+      user: user,
+    }
+
     return res.json(data)
-    } else throw new Error('hola')
+    // return res.json(data)
+    // } else throw new Error('hola')
   } catch(err){
     console.log(err)
   }
