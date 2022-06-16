@@ -2,20 +2,20 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Heading,
   Center,
   Stack,
   Progress,
   Text,
+  Box,
+  Image,
   Flex
 } from '@chakra-ui/react'
-
+import { FaEdit} from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
 import { OrderUser } from '../User/OrderUser';
 import { BASEURL } from '../../redux/actions/products';
@@ -27,18 +27,19 @@ import Link from 'next/link';
 
 
 
+
 export default function MenuHistory() {
   const [user, setUser] = useState(null)
   const [order, setOrder] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
   const userState = useSelector(state => state.userReducer.user)
-  // console.log(userState)
+  const router = useRouter()
+
   useEffect(()=>{
   async function fetchDataUser(){ 
       let localUser = {};
       if(localStorage.getItem('userInfo')){
         localUser = JSON.parse(localStorage.getItem('userInfo'));
-        // console.log(`este es el localUser${localUser}`)
       }
       if(Object.keys(localUser).length !== 0){
           setUser(localUser)
@@ -69,16 +70,22 @@ export default function MenuHistory() {
 
 
   return (
+      <Box w='95vw'> 
+        <Text><Link href='/'>Home </Link>/ My Orders</Text>
+      <Center>
+
       <TableContainer 
-        minW='100%'>
+        width={['100%', '100%', '100%', '100%', '100%']}
+        
+        >
           <Table 
             variant='striped'
-            colorScheme= 'blue'
+            colorScheme= 'teal'
             size= 'lg'
-            borderColor= 'blue'          
+            // borderColor= 'blue'          
           >
             <Thead>
-              <Tr>
+              <Tr >
                 <Th p={1} textAlign={"center"}>Products</Th>
                 <Th p={1} textAlign={"center"}>Date</Th>
                 <Th p={1} textAlign={"center"}>order status</Th>
@@ -91,13 +98,29 @@ export default function MenuHistory() {
                 return(
                   <Tr key={order._id}>
                     <Td p={1} textAlign={"center"}>
-                      <Td p={1} textAlign={"center"}>
-                        {order.products.map(ps=>{return <Text key={ps.name}>{ps.name}</Text>})}
+                      <Td p={1} >
+                        {order.products.map(ps=> {
+                          return (
+                          <Flex 
+                            flexDirection={'row'}
+                            alignItems='center'
+                            width={'10vw'}
+                            hover={{
+                              cursor: 'pointer'
+                            }}
+                            onClick= { () => router.push(`/product/${ps._id}`)} key={ps.name}>
+                              <Image src={ps.image} boxSize={"50px"} alt={ps.name} />
+                              <Text>{ps.name} </Text>
+                          </Flex>
+                          )
+                          })}
                       </Td>
                     </Td>
                     <Td p={1} textAlign={"center"}>{order.date}</Td>
                     <Td p={1} textAlign={"center"}>{order.statusPay}</Td>
-                    <Td p={1} textAlign={"center"}>{order.quantity}</Td>
+                    <Td p={1} textAlign={"center"}>
+                      {order.products.map(ps=>{return <Text mt={'1.5rem'} mb={'1.5rem'} key={ps.name}>{ps.quantity}</Text>})}
+                      </Td>
                     <Td p={1} textAlign={"center"}>${order.cost}</Td>
                   </Tr>
                  
@@ -108,6 +131,8 @@ export default function MenuHistory() {
             
         </Table>
       </TableContainer>
+      </Center>
+      </Box>
   )
 }
   

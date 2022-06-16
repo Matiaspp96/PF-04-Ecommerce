@@ -29,22 +29,7 @@ const UserProfile = () => {
     // console.log(userState)
     useEffect(()=>{
     async function fetchDataUser(){
-      // console.log(BASEURL)
-      const configAxios = ()=>{
-        const localUser = localStorage.getItem('userInfo');
-        const userActive = JSON.parse(localUser);
-        let configAxios = {};
-        
-        if(userActive){
-         configAxios ={
-           headers: {
-             'Content-Type': 'application/json',
-             Authorization: `${userActive.token}`,
-           },
-         }
-        };
-        return configAxios;
-    }  
+      // console.log(BASEURL) 
         let localUser = {};
         if(localStorage.getItem('userInfo')){
             localUser = JSON.parse(localStorage.getItem('userInfo'));

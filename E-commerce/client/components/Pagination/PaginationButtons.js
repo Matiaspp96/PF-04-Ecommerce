@@ -22,7 +22,7 @@ const PaginationButtons = ({
   }
 
   return (
-    <Flex justifyContent={"center"} flexDir="row" flexWrap="wrap">
+    <Flex justifyContent={"center"} flexDir="row" flexWrap="wrap" align-items= 'center'>
       <Button
         me={"1em"}
         onClick={prevClick}

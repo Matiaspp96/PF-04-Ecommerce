@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Stack,Flex,Text,Select  } from '@chakra-ui/react'
 import Banner from '../components/Banner/Banner'
 import ProductsTop from '../components/Card/ProductsTop'
+import Map from '../components/Maps/Map'
 
 
 
@@ -35,6 +36,7 @@ export default function Home() {
       <Banner />
       <ProductsTop />
       <Cards />
+      <Map />
       <Footer />
     </Flex>
   );

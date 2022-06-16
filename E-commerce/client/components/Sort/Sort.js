@@ -28,7 +28,7 @@ const Sort = ({ setCurrentPage, setOrderName, setOrderPrice }) => {
   };
 
   const handleFilterByCategories = (e) => {
-    // console.log(e)
+    console.log(e)
     setCurrentPage(1)
     setCategories(e);
     dispatch(filterByCategory(e));

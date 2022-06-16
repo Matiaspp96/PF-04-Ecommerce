@@ -50,7 +50,7 @@ const OrdersTable = ({products}) => {
               return (
                 <Tr key={os._id}>
                   <Td p={1}>
-                    {os.buyer.name}
+                    {os.buyer?.name}
                   </Td>
                   <Td p={1} textAlign={"center"}>
                   {os.products.map(ps=>{return <Text key={ps.name}>{ps.name}</Text>})}
