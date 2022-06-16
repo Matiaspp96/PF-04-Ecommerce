@@ -1,147 +1,97 @@
 
-import { Select, Text, SimpleGrid, Center, Flex, Box, Heading, Stack, Progress, Button, } from '@chakra-ui/react'
+import { 
+  SimpleGrid, 
+  Center, Flex, 
+  Heading, 
+  Stack, 
+  Progress,
+  IconButton, 
+} from '@chakra-ui/react'
 import Card from './Card';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { orderProducts } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products';
-import {filterByCategory} from "../../redux/actions/categories"
+import Sort from '../Sort/Sort'
+import PaginationDisplayer from '../Pagination/PaginationDisplayer';
+import { IoReloadOutline } from "react-icons/io5";
 
 
 export default function Cards() {
   const elements = 10;
-  const [currentPage,setCurrentPage] = useState(1)
-  const dispatch = useDispatch()
-  const [sort,setSort] = useState('');
-  let productos = useSelector((state)=> state.productReducer.products)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sort, setSort] = useState("");
 
-  const [, setCategories] = useState('')
-  const totalCategories = useSelector((state) => state.productReducer.products);
-  
-  
-  useEffect(() => {
-    dispatch(getAllProducts())
-  }, [dispatch]);
-  
-  
-  const pages = Math.ceil(productos.length/elements);
-  
-  const buttons = [];
-    for(let i=1; i<=pages; i++){
-        buttons.push(i)
-    }
-  
-  const handleFilterByCategories = (e) => {
-    e.preventDefault();
-    dispatch(filterByCategory(e.target.value));
-    setCategories(e.target.value);
-  }
-    
-  const handleSort= (e) => {
-    e.preventDefault()
-    console.log(e.target.value)
-    setSort(e.target.value)
-    dispatch(orderProducts(e.target.value))
-  };
-  
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.productReducer.products);
+
   const getPaginatedProducts = () => {
     const idxEnd = currentPage * elements;
     const idxStart = idxEnd - elements;
-      return productos.slice(idxStart, idxEnd);
+      return products.slice(idxStart, idxEnd);
    };
 
-  function handleClick(e){
-    let page = parseInt(e.target.innerText);
-    setCurrentPage(page)
-  }
+  const reload = () => {
+    dispatch(getAllProducts());
+    setCurrentPage(1)
+  };
 
-  function prevClick(){
-    let page = currentPage;
-    if(page === 1){
-      return;
-    } else {
-      setCurrentPage(page-1) 
-    } 
-  }
-
-  function nextClick(){
-    let page = currentPage;
-    if(page === pages){
-      return
-    } else {
-      setCurrentPage(page+1) 
-    }
-  }
-
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   return (
-    <Box margin={{base: '.5em', md:'1em', lg:'3em'}}>
-      {productos.length ? 
-      <Box>
-        <Flex justifyContent={{base:'center', lg:'flex-start'}} ml={{base:0, lg:'1rem'}}>
-          <Flex alignItems={'center'} mb={'1.2rem'}  > 
-              <Text fontWeight={'bold'} me={'1rem'} >Sort by:</Text>
-              <Flex>
-                  <Select variant='flushed' placeholder='' onChange={handleSort}>
-                      <option value='MIN'>Lower price</option>
-                      <option value='MAX'>Higher price</option>
-                      <option value='A-Z'>A-Z</option>
-                      <option value='Z-A'>Z-A</option>
-                  </Select>
-                  {/* <Tag> Categories</Tag> */}
-                  <Text fontWeight={'bold'} me={'1rem'} >Categories:</Text>
-                  <Select
-                    placeholder=""
-                    onChange={handleFilterByCategories}
-                    >
-                        <option value='All'>All</option>
-                        <option value='Doglovers'>Doglovers</option>
-                        <option value='catlovers'>catlovers</option>
-
-                </Select>
-              </Flex>
-          </Flex>
-        </Flex>
-        
-        <Flex justifyContent={'center'}>
-          <Button
-            me={'1em'} 
-            onClick={prevClick} 
-            leftIcon={<FaChevronLeft/>} 
-            colorScheme='blue' 
-            variant='solid'
-            isDisabled={currentPage === 1 ? true : false}>
-          </Button>
-          
-          {buttons.map((btn,id) => <Button key={id} me={'1em'} onClick={handleClick}>{btn}</Button>)}
-          
-          <Button 
-            // me={{base:'0', xl:'1em'}}
-            onClick={nextClick}
-            rightIcon={<FaChevronRight />}
-            colorScheme='blue'
-            variant={'solid'}
-            isDisabled={currentPage === pages ? true : false}>  
-          </Button>
-        </Flex>
-        
-        <SimpleGrid
-          columns={{ base: 2, sm: 3, md: 4, lg:5 }}
-          gap={'5'} 
-          marginTop='2rem'>
-            {getPaginatedProducts().map(ps=>{ return (
-              <Card key={ps._id} producto={ps}></Card>
-            )})}
-        </SimpleGrid>
-      </Box> :
-      <Center h={'100vh'}>
-        <Stack>
-          <Heading>Just a moment</Heading>
-          <Progress size='md' isIndeterminate />
-        </Stack>
-      </Center>}
-    </Box>
-    )
-  }
+    <Flex justifyContent={"space-between"}>
+      <Stack w={"100%"}>
+        {products.length ? (
+          <Stack alignItems='center'>
+            <Sort
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              setSort={setSort}
+            />
+             <Flex
+              justifyContent="center" 
+              alignItems={"center"}
+              gap="1.5em"
+              flexDir={{ base: "column", lg: "row" }}
+              whiteSpace="nowrap"
+              w={{base: '95%', md:'80%', lg:'80%'}}
+              mt={{base: '.5em', md:'1em', lg:'1em'}}
+              ml={{base: '.5em'}}
+              mr={{base: '.5em'}}
+              minW='100%' 
+              maxW='100%'
+            >
+              <IconButton icon={<IoReloadOutline />} onClick={reload} me={'1rem'} />
+            </Flex>
+            <SimpleGrid
+                maxW='95vw'
+                minW='95vw'
+                columns={{ base: 2, sm: 3, md: 4, lg:5, xl:5 }}
+                gap={{base:'2',md:'5'}} 
+                marginTop='2rem'>
+                  {getPaginatedProducts().map(ps=>{ return (
+                    <Card key={ps._id} producto={ps}></Card>
+                  )})}
+            </SimpleGrid>
+            <PaginationDisplayer
+              products={products}
+              elements={elements}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              Component={SimpleGrid}
+            />
+          </Stack>
+        ) : (
+          <Center h={"100vh"}>
+            <Stack>
+              <Heading>Just a moment</Heading>
+              <Progress size="md" isIndeterminate />
+            </Stack>
+          </Center>
+        )}
+      </Stack>
+    </Flex>
+  );
+};

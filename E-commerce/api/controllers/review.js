@@ -35,7 +35,6 @@ const newReview = async (req, res) => {
     data.product = productFound;
     const userFound = await userModel.findOne({ email: body.users.email });
     data.user = userFound;
-    console.log(userFound);
 
     if (data) {
       const savedReview = await data.save();
@@ -51,4 +50,17 @@ const newReview = async (req, res) => {
     handleHttpError(res, "ERROR_CREATE_REVIEW");
   }
 };
-module.exports = { getReview, getReviews, newReview };
+const deleteReview = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteResponse = await reviewModel.findByIdAndRemove({ _id: id });
+    const data = {
+      deleted: deleteResponse.matchedCount,
+    };
+
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "ERROR_DELETE_REVIEW");
+  }
+};
+module.exports = { getReview, getReviews, newReview, deleteReview };

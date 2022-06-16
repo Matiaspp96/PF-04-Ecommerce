@@ -6,7 +6,6 @@ const getItems = async (req, res) => {
     const data = await userModel.find();
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_GET_ITEMS");
   }
 };
@@ -35,7 +34,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
+    const body = req.body;
     const data = await userModel.findByIdAndUpdate(id, body);
     res.send({ data });
   } catch (e) {
@@ -53,9 +52,14 @@ const deleteItem = async (req, res) => {
 
     res.send({ data });
   } catch (e) {
-    console.log(e);
     handleHttpError(res, "ERROR_DELETE_ITEM");
   }
 };
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem };
+module.exports = {
+  getItems,
+  getItem,
+  createItem,
+  updateItem,
+  deleteItem,
+};

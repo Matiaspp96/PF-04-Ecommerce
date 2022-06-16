@@ -1,7 +1,8 @@
 const { Router } = require("express");
+const { protectRoute, isAdmin } = require("../middleware/newAuth");
 const router = Router();
 const authMiddleware = require("../middleware/auth");
-const authRolMiddleware = require("../middleware/rol");
+//const authRolMiddleware = require("../middleware/rol");
 const {
   validateId,
   validateObjectDataCreate,
@@ -14,31 +15,22 @@ const {
   createItem,
   updateItem,
   deleteItem,
+  addProductCategory,
 } = require("../controllers/product");
-
-router.get("/", getItembyName);
-router.get("/:id", validateId, getItem);
 router.get("/", getItems);
-router.post(
-  "/",
-  authMiddleware,
-  authRolMiddleware("admin"),
-  validateObjectDataCreate,
-  createItem
-);
+router.get("/name", getItembyName);
+router.get("/:id", validateId, getItem);
+//para catergorías
+router.post("/addcategory", addProductCategory);
+
+router.post("/", authMiddleware, isAdmin, validateObjectDataCreate, createItem);
 router.put(
   "/:id",
   authMiddleware,
-  authRolMiddleware("admin"),
+  isAdmin,
   validateObjectDataUpdate,
   updateItem
 );
-router.delete(
-  "/:id",
-  authMiddleware,
-  authRolMiddleware("admin"),
-  validateId,
-  deleteItem
-);
+router.delete("/:id", authMiddleware, isAdmin, validateId, deleteItem);
 
 module.exports = router;

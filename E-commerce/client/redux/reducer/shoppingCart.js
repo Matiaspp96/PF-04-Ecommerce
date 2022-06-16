@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import cookie from 'js-cookie'
 import {
   ADD_ITEM,
   ADD_ITEM_INPUT,
@@ -7,14 +8,16 @@ import {
   GET_ALL_CART,
   GET_TOTAL_PRICE,
   GET_TOTAL_ITEMS,
+  DELETE_ALL_CART,
 } from '../actions/actionstype.js' 
 
 const initialState = {
   backUp: [],
-  itemsCart: [],
+  itemsCart: cookie.get('cart') ? JSON.parse(cookie.get('cart')) : [],
   totalItems: 0,
   totalPrice: 0,
 }
+
 
 export default function shoppingCartReducer(state = initialState, action) {
   let itemsCart = state.itemsCart
@@ -36,6 +39,7 @@ export default function shoppingCartReducer(state = initialState, action) {
             confirmButtonText: 'Cool'
           })
         }
+        cookie.set('cart', JSON.stringify(cart))
           return{
             ...state,
             itemsCart: cart,
@@ -80,6 +84,7 @@ export default function shoppingCartReducer(state = initialState, action) {
           confirmButtonText: 'Cool'
         })
       }
+      cookie.set('cart', JSON.stringify(cart))
       return {
         ...state,
         itemsCart: cart 
@@ -95,10 +100,16 @@ export default function shoppingCartReducer(state = initialState, action) {
         ...state,
         itemsCart: cart
       }
+      cookie.set('cart', JSON.stringify(cart))
     case GET_ALL_CART:
       return {
         ...state,
         itemsCart
+      }
+    case DELETE_ALL_CART:
+      return {
+        ...state,
+        itemsCart: []
       }
     case GET_TOTAL_PRICE:
       return {

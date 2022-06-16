@@ -33,10 +33,14 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
+    category: [
+      {
+        ref: "categories",
+        type: mongoose.Types.ObjectId,
+        /* autopopulate: { select: "name" }, */
+      },
+    ],
+
     sales: {
       type: Number,
       default: 0,
@@ -45,6 +49,10 @@ const ProductSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
+    strictPopulate: false,
+    autopopulate: true,
   }
 );
+
+ProductSchema.plugin(require("mongoose-autopopulate"));
 module.exports = mongoose.model("products", ProductSchema);

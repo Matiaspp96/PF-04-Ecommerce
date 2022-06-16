@@ -10,10 +10,10 @@ const checkAuth = async (req, res, next) => {
         handleErrorResponse(res, "NOT_ALLOW", 409);
       return;
     }
-    const token = req.headers.authorization.split(" ").pop();
+    const token = req.headers.authorization;
     const tokenData = await verifyToken(token);
     if (tokenData._id) {
-      next();
+      return next();
     } else {
       handleErrorResponse(res, "NOT_ALLOW", 409);
     }

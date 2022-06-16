@@ -1,10 +1,10 @@
 import axios from "axios"; 
 import alert from 'sweetalert2';
 import { ADD_ITEM_FAVORITES,
-    DELETE_ITEM_FAVORITES
+    DELETE_ITEM_FAVORITES,
+    GET_ALL_FAVORITES,
 } from "./actionstype";
 
-export const BASEURL = 'https://fakestoreapi.com';
 
 export const addItemToFav = (item) => {
   try {
@@ -17,23 +17,23 @@ export const addItemToFav = (item) => {
   }
 };
 
-export const deleteItemOfFav = (id) => {
+export const deleteItemOfFav = (item) => {
   try {
     return {
       type: DELETE_ITEM_FAVORITES,
-      payload: id,
+      payload: item._id,
     }
   } catch (err) {
     console.log(err)
   }
 };
 
-// export const getItemsFav = () => {
-//   try {
-//     return {
-//       type: GET_ALL_FAVORITES,
-//     }
-//   } catch (err) {
-//     console.log(err)
-//   }
-// };
+export const getItemsFav = () => {
+  try {
+    return {
+      type: GET_ALL_FAVORITES,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};

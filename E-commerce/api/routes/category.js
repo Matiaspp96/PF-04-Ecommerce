@@ -1,7 +1,9 @@
 const { Router } = require("express");
 const router = Router();
 const authMiddleware = require("../middleware/auth");
-const authRolMiddleware = require("../middleware/rol");
+const { protectRoute, isAdmin } = require("../middleware/newAuth");
+//const authRolMiddleware = require("../middleware/rol");
+
 const {
   validateId,
   validateObjectDataCreate,
@@ -17,26 +19,14 @@ const {
 
 router.get("/:id", validateId, getItem);
 router.get("/", getItems);
-router.post(
-  "/",
-  authMiddleware,
-  authRolMiddleware("admin"),
-  validateObjectDataCreate,
-  createItem
-);
+router.post("/", authMiddleware, isAdmin, validateObjectDataCreate, createItem);
 router.put(
   "/:id",
   authMiddleware,
-  authRolMiddleware("admin"),
+  isAdmin,
   validateObjectDataUpdate,
   updateItem
 );
-router.delete(
-  "/:id",
-  authMiddleware,
-  authRolMiddleware("admin"),
-  validateId,
-  deleteItem
-);
+router.delete("/:id", authMiddleware, isAdmin, validateId, deleteItem);
 
 module.exports = router;
