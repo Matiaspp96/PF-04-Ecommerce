@@ -12,7 +12,8 @@ const Review = ({reviews, id, postReview}) => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const reducerUser = useSelector((state)=> state.userReducer.user);
-    const [response,setResponse] = useState('')
+    const [response,setResponse] = useState('');
+    const [user,setUser] = useState('')
 
     const [newReview,setNewReview] = useState({
       punctuation: 1,
@@ -22,6 +23,16 @@ const Review = ({reviews, id, postReview}) => {
         email: ''
       }
     })
+
+    useEffect(() => {
+      let localUser = {};
+      if (localStorage.getItem("userInfo")) {
+        localUser = JSON.parse(localStorage.getItem("userInfo"));
+      }
+      if (Object.keys(localUser).length !== 0) {
+        setUser(localUser.name);
+      }
+    }, []);
 
     useEffect(() => {
       setIndex(0)
@@ -185,10 +196,10 @@ const Review = ({reviews, id, postReview}) => {
       <ModalContent>
         <ModalHeader>
           <Center>
-              <Avatar size='lg' name={'Weolcome guest'} src={'Welcome Guest'} />
+              <Avatar size='lg' name={user} src={user} />
           </Center>
           <Center>
-            <Text>Welcome Guest</Text>
+            <Text>{user}</Text>
           </Center>
         </ModalHeader>
         <ModalCloseButton />
