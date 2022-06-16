@@ -1,7 +1,7 @@
 const { orderModel, productModel, userModel } = require("../models");
 const { handleHttpError } = require("../utils/handleError");
 
-const { transporter, emailer } = require("../config/email");
+const { transporter, emailer, emailShipping, emailOrderCancelled } = require("../config/email");
 
 const getUserOrders = async (req, res) => {
   const { id } = req.params;
@@ -114,7 +114,14 @@ const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
     const  body  = req.body;
-    const data = await orderModel.findByIdAndUpdate(id, body);
+    console.log(body)
+    const data = await orderModel.findByIdAndUpdate(id, body).populate("buyer");
+    if(data && body.statusPurchase === 'order shipped'){
+      transporter.sendMail(emailShipping(data.buyer,data));
+    };
+    if(data && body.statusPurchase === 'order cancelled' || body.statusPay === 'cancelled'){
+      transporter.sendMail(emailOrderCancelled(data.buyer,data));
+    };
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_UPDATE_ITEMS");
