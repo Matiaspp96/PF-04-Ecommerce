@@ -4,12 +4,14 @@ import {
   GET_PRODUCTS_BY_NAME,
   ORDER_PRODUCTS,
   FILTER_BY_CATEGORIES,
-  GET_PRODUCT_REVIEWS
+  GET_PRODUCT_REVIEWS,
+  GET_PRODUCT_TOP
 } from '../actions/actionstype.js' 
 
 const initialState = {
   products: [],
   filter: [],
+  productsTop: [],
   details: {},
   reviews: {},
   backUp: [],
@@ -17,12 +19,16 @@ const initialState = {
 
 export default function productReducer(state= initialState, action) {
   switch (action.type) {
-
     case GET_PRODUCTS:
     return {
         ...state,
         products: action.payload,
         filter: action.payload,
+        productsTop: action.payload.sort((a,b)=>{
+          if(a.rating > b.rating) return -1;
+          if(a.rating < b.rating) return 1;
+          else return 0;
+        }).slice(0,12)
       }
       
     case GET_DETAIL: 
@@ -96,13 +102,22 @@ export default function productReducer(state= initialState, action) {
             products: psOrdered,
         }
     }
-
     case GET_PRODUCT_REVIEWS: 
     return {
       ...state,
       reviews: action.payload
     }
-    
+    case GET_PRODUCT_TOP:
+      let psOrdered = state.products.sort((a,b)=>{
+        if(a.rating > b.rating) return -1;
+        if(a.rating < b.rating) return 1;
+        else return 0;
+      });
+      let psTop = psOrdered.slice(0,12)
+      return {
+      ...state,
+      productsTop: psTop
+      }
     default:
       return state;
   }

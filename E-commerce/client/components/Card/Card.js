@@ -1,4 +1,4 @@
-import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box } from '@chakra-ui/react'
+import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box, useColorMode } from '@chakra-ui/react'
 import { IoCart, IoCartOutline, IoHeart, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, addItemToCartInput, deleteItemOfCart, getItemsCart, getTotalItems, getTotalPrice, removeItemOfCart } from '../../redux/actions/cart';
@@ -20,6 +20,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   const [removeCart, setRemoveCart] = useBoolean()
   const { name, price, category, image, _id, rating } = producto;
   const router = useRouter();
+  const { colorMode } = useColorMode();
 
   const [product, setProduct] = useState(producto);
   const [input, setInput] = useState();
@@ -41,10 +42,10 @@ export default function Card({ producto, quantity, cart, setCart }) {
     return cat
   }
 
-  useEffect(() => {
-    dispatch(getAllCategories());
-  }
-  , [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllCategories());
+  // }
+  // , [dispatch]);
 
   /*-------- Total Price ---------*/
   const getTotalPrice = (cart) => {
@@ -101,20 +102,22 @@ export default function Card({ producto, quantity, cart, setCart }) {
     setRemoveCart.toggle()
   }
 
-  function handleRemoveToFavOnClick(producto){
+  function handleRemoveToFavOnClick(e, producto){
     console.log(producto)
     dispatch(deleteItemOfFav(handleRemoveFromFav(producto)))
     setRemoveFavorite.toggle()
   }
 
   return (
-      <Stack
-        h={{base:'270', md:'290', lg:'365'}} 
-        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'auto', lg:'auto'}}
+      <Flex
+        flexDir='column'
+        h={{base: router.route === '/cart' ? '70vh' : '40vh', md:'290', lg: router.route === '/cart' ? '420' : '365'}} 
+        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'22.5vw', lg:'100%'}}
+        maxW={{base: router.route === '/cart' ? '90vw' : '50vw', md:'auto'}}
         overflow='auto'
         boxShadow='lg'
         >
-        <Tag
+        {<Tag
           borderRadius={'none'}
           alignSelf={'flex-start'}
           fontSize={'x-small'}
@@ -123,18 +126,20 @@ export default function Card({ producto, quantity, cart, setCart }) {
             <Text key={e}>
               {getCategoryName(e)} { e !== category[category.length-1] ? '-' : ''}
             </Text>)}
-        </Tag>
-        <Flex 
+        </Tag>}
+        <Flex
+          pt='0.5em'
+          bgColor={colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.200'} 
           flexDir='column'
           height='100%'
           justifyContent='space-between'
-          alignItems='center'  >  
+          alignItems='center'>  
           <Center>
             <Image 
               src={image} 
               alt={name} 
               backgroundSize='cover'
-              boxSize={{base:'80px', md:'100px', lg:'190px'}}
+              boxSize={{base: router.route === '/cart' ? '40vh' : '20vh', md:'100px', lg: router.route === '/cart' ? '275' :'190px'}}
               alignItems='center'/>
           </Center>
 
@@ -204,7 +209,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 />
                 { router.pathname === '/favorites' ?
                   <IconButton 
-                  onClick={handleRemoveToFavOnClick(product)}
+                  onClick={e=>handleRemoveToFavOnClick(e,product)}
                   backgroundColor='transparent'
                   icon={<IoTrashOutline size='2em'/>}
                   color={removeFavorite ? '#1884BE' : 'grey'}
@@ -219,6 +224,6 @@ export default function Card({ producto, quantity, cart, setCart }) {
               </Flex>}
           </Stack>      
         </Flex>
-      </Stack>
+      </Flex>
     )
   }

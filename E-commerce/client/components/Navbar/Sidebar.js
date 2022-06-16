@@ -78,7 +78,7 @@ const Sidebar = ({ size }) => {
             alignItems={navSize == "small" ? "center" : "flex-start"}
           >
             <Flex mt={4} align="center">
-              <Avatar size="sm" src={user.image} alt={user.name} />
+              <Avatar size="sm" src={user.avatar} alt={user.name} />
               <Flex
                 flexDir="column"
                 ml={4}
