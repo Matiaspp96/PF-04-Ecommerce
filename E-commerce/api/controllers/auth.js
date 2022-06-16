@@ -1,5 +1,5 @@
 const { encrypt, compare } = require("../utils/handleJwt");
-
+const { emailer, transporter } = require('../config/email.js')
 const {
   handleHttpError,
   handleErrorResponse,
@@ -143,12 +143,23 @@ const newPassword = async (req, res) => {
   }
 };
 
-module.exports = {
-  loginCtrl,
-  registerCtrl,
-  logOut,
-  logError,
-  forgotPassword,
-  logDataUserOauth,
-  newPassword,
-};
+const emailConfirmation = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const user = await userModel.findById(_id);
+  if(user){
+    user.emailConfirmed = true;
+    await user.save();
+    return  res.status(201).redirect(process.env.HOST_CLIENT);
+  }else{
+    res.json({ msg: "User not found" });
+  }
+
+  } catch (error) {
+    return res.status(404).json({ msg: error });
+  }
+
+}
+
+module.exports = { loginCtrl, registerCtrl, logOut, logError,forgotPassword,logDataUserOauth, newPassword, emailConfirmation};
+
