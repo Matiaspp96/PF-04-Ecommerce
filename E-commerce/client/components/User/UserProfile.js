@@ -19,36 +19,41 @@ import axios from 'axios';
 import { BASEURL } from '../../redux/actions/products';
 import { useSelector } from 'react-redux';
 import OrderUser from './OrderUser';
+import { useRouter } from 'next/router';
 
 
 const UserProfile = () => {
-    const [user, setUser] = useState(null)
-    const [order, setOrder] = useState(null)
-    const [isLoading, setIsLoading] = useState(true);
-    const userState = useSelector(state => state.userReducer.user)
-    // console.log(userState)
-    useEffect(()=>{
+  const [order, setOrder] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState("")
+  const router = useRouter();
+  const [queryId, setQueryId] = useState()
+  const userG = useSelector(state => state.userReducer.user)
+
+  useEffect(()=>{
     async function fetchDataUser(){
       // console.log(BASEURL) 
         let localUser = {};
         if(localStorage.getItem('userInfo')){
             localUser = JSON.parse(localStorage.getItem('userInfo'));
         }
-        if(Object.keys(localUser).length !== 0){
-            setUser(localUser)
-        }
-        
+
         try{
+          const user = {
+            _id: localUser._id
+          }
+          let getUser = await axios.post(`${BASEURL}/auth/data`, user);
+          setUser(getUser.data.user)
           let ordersUser = await axios.get(`${BASEURL}/orders/${localUser._id}/orderlist`)
           setOrder(ordersUser.data)
         } catch(err){
+          console.log(err)
           setOrder(0)
         }
         setIsLoading(false)
         }
     fetchDataUser()
     },[isLoading])
-    // console.log(order)
 
     if(isLoading){
         return (

@@ -21,7 +21,7 @@ export default function MenuProfile() {
     };
 
     const handleMyAccount = ()=>{
-    router.push(`${HOSTURL}/user`)
+    router.push(`${HOSTURL}/user/${user._id}`)
     };
 
     const handleAdmin = ()=>{

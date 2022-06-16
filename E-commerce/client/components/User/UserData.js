@@ -20,22 +20,10 @@ const Data = () => {
   useEffect(() => {
     const query = router.query
     setQueryId(query)
-    console.log(`esto es query ${query._id} `)
-    console.log(`esto es query ${queryId} `)
-    
-
     async function fetchUser(){
       const user = {
         _id: query._id
       }
-
-      const config = {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      console.log('llego aca en el front paso al back')
       // let getUser = await axios.get(`${BASEURL}/users/`, config);
       let getUser = await axios.post(urlUserData, user);
 
@@ -49,7 +37,8 @@ const Data = () => {
         _id :getUser.data.user._id,
         role: getUser.data.user.role,
         email:getUser.data.user.email,
-        name:getUser.data.user.name
+        name:getUser.data.user.name,
+        avatar:getUser.data.user.avatar
       }
     
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
