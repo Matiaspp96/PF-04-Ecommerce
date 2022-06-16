@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import formValidate from './formValidations';
 import { AiOutlinePhone } from 'react-icons/ai';
 import router from 'next/router';
+import { deleteAllCart } from '../../redux/actions/cart';
 
 const CheckoutForm = () => {
   const itemsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
@@ -82,7 +83,7 @@ const CheckoutForm = () => {
             [event.target.name]: event.target.value,
             cost: getTotalPrice,
             quantity: numberItems,
-            date: new Date().toDateString() 
+            date: new Date().toUTCString()
         };
         console.log(newBuyer)
         return newBuyer;
@@ -163,7 +164,7 @@ const CheckoutForm = () => {
           confirmButtonText: 'Accept'
         })
         let responsePayment = await axios.post(`${BASEURL}/payments/checkoutmp`, buyerMP, configAxios)
-        console.log(responsePayment);
+        dispatch(deleteAllCart())
         router.push(responsePayment.data.preference.body.sandbox_init_point)
       } else {
         Swal.fire({

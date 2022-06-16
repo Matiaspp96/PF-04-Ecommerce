@@ -32,6 +32,7 @@ export const REMOVE_ITEM = "REMOVE_ITEM"
 export const GET_ALL_CART = "GET_ALL_CART"
 export const GET_TOTAL_PRICE = "GET_TOTAL_PRICE"
 export const GET_TOTAL_ITEMS = "GET_TOTAL_ITEMS"
+export const DELETE_ALL_CART = "DELETE_ALL_CART"
 
 //User
 export const GET_USER_DATA = "GET_USER_DATA"

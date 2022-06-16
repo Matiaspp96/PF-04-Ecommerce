@@ -25,37 +25,44 @@ import { GiCamargueCross } from 'react-icons/gi';
     const [isLoading, setIsLoading] = useState(true)
     const [psSugestions, setPsSugestions] = useState(sugestions)
 
-    useEffect(()=>{
-      if(isLoading){
-        async function getProduct(){
-          setPsDetail(ps => {
-              let newPs={
-                  ...ps,
-                  product
-              };
-              return newPs;
-            })
-          setPsSugestions(ps => {
-              let newPs={
-                  ...ps,
-                  sugestions
-              };
-              return newPs;
-            })
-          setIsLoading(false)
-        }
-        getProduct()
-      }
-      if(psSugestions.length > 1 && psSugestions.length !== 3 && product.hasOwnProperty('_id')){
-        console.log(psSugestions, psDetail)
-        setPsSugestions(psSugestions.filter((ps)=>{
-          if(ps.category?.includes(product.category[0])){
-            return ps
-          }})
-          .slice(0,3))
-        }
-        console.log(psSugestions, psDetail)
-    })
+    const getSugestions = (arr,cat)=>{
+      let ps = arr.filter(pr=> {if(pr.category.includes(cat)){
+        return pr
+      }})
+      return ps.slice(0,3)
+    }
+
+    // useEffect(()=>{
+    //   if(isLoading){
+    //     async function getProduct(){
+    //       setPsDetail(ps => {
+    //           let newPs={
+    //               ...ps,
+    //               product
+    //           };
+    //           return newPs;
+    //         })
+    //       setPsSugestions(ps => {
+    //           let newPs={
+    //               ...ps,
+    //               sugestions
+    //           };
+    //           return newPs;
+    //         })
+    //       setIsLoading(false)
+    //     }
+    //     getProduct()
+    //   }
+    //   if(psSugestions.length > 1 && psSugestions.length !== 3 && product.hasOwnProperty('_id')){
+    //     console.log(psSugestions, psDetail)
+    //     setPsSugestions(psSugestions.filter((ps)=>{
+    //       if(ps.category?.includes(product.category[0])){
+    //         return ps
+    //       }})
+    //       .slice(0,3))
+    //     }
+    // })
+
 
     useEffect(() => {
       dispatch(getDetail(id))
@@ -244,9 +251,9 @@ import { GiCamargueCross } from 'react-icons/gi';
               <Container
               overflow={{base:'visible', lg:'auto' }}>
                 <Center fontSize='3xl' fontWeight={'bold'}>You may also like</Center>
-                {psSugestions.map(ps=>{ return (
-                          <CardMinimal key={ps._id} producto={ps} />
-                        )})}
+                {getSugestions(sugestions, product.category[0]).map(ps=>{ return (
+                    <CardMinimal key={ps._id} producto={ps} />
+                  )})}
               </Container>
           </SimpleGrid>
         </>

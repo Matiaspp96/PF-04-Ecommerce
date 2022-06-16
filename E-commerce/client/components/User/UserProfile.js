@@ -46,7 +46,7 @@ const UserProfile = () => {
         }
     fetchDataUser()
     },[isLoading])
-
+    console.log(order)
 
     if(isLoading){
         return (
