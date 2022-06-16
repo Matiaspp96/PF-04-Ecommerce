@@ -6,13 +6,17 @@ import { getProductReviews } from '../../redux/actions/products';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Box, FormHelperText, Radio, RadioGroup, Avatar, Center, Text, Flex, Container, Stack, Button, Heading, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Textarea, ModalFooter, SimpleGrid, Grid, GridItem } from '@chakra-ui/react'
 import { BASEURL } from '../../redux/actions/products';
+import Swal from "sweetalert2";
+import { useRouter } from 'next/router';
 
 const Review = ({reviews, id, postReview}) => {
+  const router = useRouter()
     const [index,setIndex] = useState(0);
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const reducerUser = useSelector((state)=> state.userReducer.user);
-    const [response,setResponse] = useState('')
+    const [response,setResponse] = useState('');
+    const [user,setUser] = useState('')
 
     const [newReview,setNewReview] = useState({
       punctuation: 1,
@@ -22,6 +26,16 @@ const Review = ({reviews, id, postReview}) => {
         email: ''
       }
     })
+
+    useEffect(() => {
+      let localUser = {};
+      if (localStorage.getItem("userInfo")) {
+        localUser = JSON.parse(localStorage.getItem("userInfo"));
+      }
+      if (Object.keys(localUser).length !== 0) {
+        setUser(localUser.name);
+      }
+    }, []);
 
     useEffect(() => {
       setIndex(0)
@@ -84,21 +98,44 @@ const Review = ({reviews, id, postReview}) => {
         try {
           const response = await axios.post(`${BASEURL}/reviews/${id}/`, newReview)
           setResponse(response)
+          setNewReview({
+            punctuation: 1,
+            opinion:'',
+            users: {
+              _id: '',
+              email: ''
+            }
+          })
+          postReview(true)
+          onClose()
+          Swal.fire({
+            title: "You leave a review!",
+            icon: "success",
+            confirmButtonText: "Cool",
+          })
+          .then((result) => {
+            router.reload(window.location.pathname);
+          });
         } catch (error) {
           setResponse(error)
+          setNewReview({
+            punctuation: 1,
+            opinion:'',
+            users: {
+              _id: '',
+              email: ''
+            }
+          })
+          onClose()
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong",
+          })
+          .then((result) => {
+            router.reload(window.location.pathname);
+          });
         }
-        
-        setNewReview({
-          punctuation: 1,
-          opinion:'',
-          users: {
-            _id: '',
-            email: ''
-          }
-        })
-        postReview(true)
-        console.log(response)
-        onClose()
       }
     
 
@@ -113,7 +150,7 @@ const Review = ({reviews, id, postReview}) => {
       <GridItem colSpan={{base:'3', xl:'1'}}>
         <Stack>
             <Center>
-              <Avatar size='lg' name={review.name} src={''} />
+              <Avatar size='lg' name={review.name} src={review.name} />
             </Center>
             <Text textAlign={'center'} fontWeight={'bold'}>{review.name}</Text>
             <Flex alignItems={'center'} justifyContent='center'>
@@ -185,10 +222,10 @@ const Review = ({reviews, id, postReview}) => {
       <ModalContent>
         <ModalHeader>
           <Center>
-              <Avatar size='lg' name={'Weolcome guest'} src={'Welcome Guest'} />
+              <Avatar size='lg' name={user} src={user} />
           </Center>
           <Center>
-            <Text>Welcome Guest</Text>
+            <Text>{user}</Text>
           </Center>
         </ModalHeader>
         <ModalCloseButton />
