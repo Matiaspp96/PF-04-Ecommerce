@@ -1,5 +1,5 @@
 const { encrypt, compare } = require("../utils/handleJwt");
-
+const { emailer, transporter } = require('../config/email.js')
 const {
   handleHttpError,
   handleErrorResponse,
@@ -51,6 +51,7 @@ const registerCtrl = async (req, res) => {
     const password = await encrypt(body.password);
   
     const data = await userModel.create({email: body.email,name: body.name, password});
+       await transporter.sendMail(emailer(data));
     res.send({ data })
   } catch (e) {
     handleHttpError(res, e);
@@ -71,9 +72,9 @@ const logOut = (req,res, next) => {
 
 
 const logDataUserOauth = async (req,res) => {
-
+  
   try{
- 
+  
     if(req.user){
     let token = await tokenSign(req.user)
     const data = {
@@ -83,6 +84,7 @@ const logDataUserOauth = async (req,res) => {
   
      return res.json(data)
     }
+   
   } catch(err){
     console.log(err)
   }
@@ -140,5 +142,23 @@ const newPassword = async (req, res) => {
   }
 };
 
-module.exports = { loginCtrl, registerCtrl, logOut, logError,forgotPassword,logDataUserOauth, newPassword};
+const emailConfirmation = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const user = await userModel.findById(_id);
+  if(user){
+    user.emailConfirmed = true;
+    await user.save();
+    return  res.status(201).redirect(process.env.HOST_CLIENT);
+  }else{
+    res.json({ msg: "User not found" });
+  }
+
+  } catch (error) {
+    return res.status(404).json({ msg: error });
+  }
+
+}
+
+module.exports = { loginCtrl, registerCtrl, logOut, logError,forgotPassword,logDataUserOauth, newPassword, emailConfirmation};
 

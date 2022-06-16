@@ -33,11 +33,13 @@ const emailer = function (users) {
     
     <h3 style="color: #000000;">ESTOS SON LOS DATOS DE TU CUENTA:</h3>
     <h4 style="color: #000000;">- Nombre: ${users.name}</h4>
-    <h4 style="color: #000000;">- password: ${users.password}</h4>
     <h4 style="color: #000000;">- Email: ${users.email}</h4>
     <h4 style="color: #000000;">- Teléfono: ${
       users.phone ? users.phone : "-"
+      
     }</h4>
+    
+    <a href="${process.env.API_URL}/api/auth/confirmmail/${users._id}" >Click para confirmar tu email</a>
     </ul>
     <ul><br><br>
     <h3 style="color: #000000;">Consejos de seguridad:</h3>
@@ -117,9 +119,97 @@ const emailOrder = function (user, data) {
     `,
   };
 };
+const emailOrderFailure = function (user, data) {
+  return {
+    from: '"Pet Elegant Ecommerce " <pet.elegant.ecommerce.henry@gmail.com>',
+    to: user.email,
+    subject: "Tenemos problema con tu metodo de pago",
+    attachDataUrls: true,
+    html: `
+    <div style="background-color: #2b9423; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h1 style="color: #fff;">Hola ${user.name}, gracias por elegirnos!</h1>
+    </ul>
+    </div>
+    <h2 style="color: #000000">Se presento un problema con tu metodo de pago: </h2>
+    
+    <h3> por favor valida con tu banco si todo esta bien.</h3>
+    <h3> para retomar el pago de tu orden, haz click en el enlace pagar</h3>
+    <a href="https://sandbox.mercadopago.com.co/checkout/v1/redirect?pref_id=${data.paymentId}" >Intentar el Pago Nuevamente</a>
+    </div>
+    
+   </span><br /><br />All rights reserved by &copy; <a href="https://petelegant.vercel.app/">Pet Elegant</a></p>
+    `,
+  };
+};
+const emailOrderPending= function (user, data) {
+  return {
+    from: '"Pet Elegant Ecommerce " <pet.elegant.ecommerce.henry@gmail.com>',
+    to: user.email,
+    subject: "Debemos esperar que tu banco nos confirme el pago",
+    attachDataUrls: true,
+    html: `
+    <div style="background-color: #2b9423; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h1 style="color: #fff;">Hola ${user.name}, gracias por elegirnos!</h1>
+    </ul>
+    </div>
+    <h2 style="color: #000000">Tu compra se procesó correctamente, a continuación te dejamos los detalles de la misma: </h2>
+    <h3>Parace que tu banco aun no aprueba el pago</h3>
+    <h3>debemos esperar la confirmacion, mientras pueder ir por un taza de cafe</h3>
+    <h3>puedes validar el estado del pago ingresando a tu cuenta en ordenes, o tambien puedes darle click en el enlace</h3>
+    <a href="${process.env.HOST_CLIENT}" ></a>
+    </div>
+    
+   </span><br /><br />All rights reserved by &copy; <a href="https://petelegant.vercel.app/">Pet Elegant</a></p>
+    `,
+  };
+};
 
+const emailSaleNotification= function (user, data) {
+  return {
+    from: '"Pet Elegant Ecommerce " <pet.elegant.ecommerce.henry@gmail.com>',
+    to: user,
+    subject: "VENDISTE!!! Prepara el paquete para enviarlo",
+    attachDataUrls: true,
+    html: `
+    <div style="background-color: #2b9423; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h1> style="color: #fff;">Nombre del comprador  ${data.buyer.name}</h1>
+    <h2> revisa el detalle de la orden en el siguente enlace</h2>
+    <a href="${process.env.HOST_CLIENT}/dashboard/orders/${data._id}" > ver orden</a>
+
+    </ul>
+    <div style="background-color: #fff; color: #000000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    ${data.products.map(
+      (e) => `
+    <img src=${e.image} width="140" height="180" align="right" >
+    <h3 style="color: color: #000000"> - ${e.name}</h3>
+    <h4 style="color: color: #000000">Precio unitario: ${e.price}</h4>
+    <h4 style="color: color: #000000">Cantidad: ${e.quantity}</h4>
+    <h4 style="color: color: #000000">Características: ${e.description}</h4>
+    `
+    )}
+    </ul>
+    </div>
+    </div>
+    <h2 style="color: #000000">Tu compra se procesó correctamente, a continuación te dejamos los detalles de la misma: </h2>
+    <h3>Parace que tu banco aun no aprueba el pago</h3>
+    <h3>debemos esperar la confirmacion, mientras pueder ir por un taza de cafe</h3>
+    <h3>puedes validar el estado del pago ingresando a tu cuenta en ordenes, o tambien puedes darle click en el enlace</h3>
+    <a href="${process.env.HOST_CLIENT}" ></a>
+    </div>
+    
+   </span><br /><br />All rights reserved by &copy; <a href="https://petelegant.vercel.app/">Pet Elegant</a></p>
+    `,
+  };
+};
 module.exports = {
   transporter,
   emailer,
   emailOrder,
+  emailOrderFailure,
+  emailOrderPending,
+  emailSaleNotification
 };

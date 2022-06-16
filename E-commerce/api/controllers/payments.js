@@ -1,7 +1,8 @@
 const mercadopago = require('mercadopago');
 const orderModel = require(`../models/orders`);
 const userModel = require('../models/users');
-const { emailOrder, transporter} = require('../config/email');
+const productModel = require('../models/products');
+const { emailOrder, transporter, emailOrderFailure, emailOrderPending, emailSaleNotification} = require('../config/email');
 const {handleHttpError} = require('../utils/handleError');
 mercadopago.configure({
     access_token: process.env.ACCESS_TOKEN_MP,
@@ -61,8 +62,16 @@ const initPaymentMp = async (req, res) => {
 const successPay= async (req, res) => { 
     //lista
     try{
-        const order = await orderModel.findOne({paymentId : req.query.preference_id}).populate('buyer');
-
+        const order = await orderModel.findOne({paymentId : req.query.preference_id})
+        .populate('buyer')
+        .populate('products');
+        const updateStock = await order.products.map( async (product) => {
+           let quantity = product.quantity; 
+           let productUpdate = await productModel.findOne({_id: product._id});
+           productUpdate.stock = productUpdate.stock - quantity;
+           await productUpdate.save();
+        });
+        Promise.all(updateStock);
         order.statusPay = req.query.status;
         order.payment = req.query.payment_type;
         order.merchant_id = req.query.merchant_order_id;
@@ -74,7 +83,12 @@ const successPay= async (req, res) => {
         };
           //enviar email
         await transporter.sendMail(emailOrder(user, order));
-    
+        let admins = await userModel.find({role:'admin'});
+        console.log(admins)
+         admins.map(async (admin) => {
+               await transporter.sendMail(emailSaleNotification(admin.email, order));
+         });
+         Promise.all(admins);
         return res.redirect(process.env.HOST_CLIENT);
     }catch (e){
         handleHttpError(res, e);   
@@ -97,9 +111,8 @@ const pendingPay= async (req, res) => {
             email:order.buyer.email,
         };
           //enviar email DE PENDIENTE
-        //await transporter.sendMail(emailOrder(user, order));
-    
-        return res.redirect(process.env.HOST_CLIENT);
+        await transporter.sendMail(emailOrderPending(user, order));
+         return res.redirect(process.env.HOST_CLIENT);
     }catch (e){
         handleHttpError(res, e);   
     };
@@ -107,17 +120,24 @@ const pendingPay= async (req, res) => {
 const failurePay= async (req, res) => { 
 
     try{
-        const order = await orderModel.findOne({paymentId : req.query.preference_id});
+        const order = await orderModel.findOne({paymentId : req.query.preference_id}).populate('buyer');
         order.statusPay = req.query.status;
         order.payment = req.query.payment_type;
         order.statusPurchase = 'payment not received';
         await order.save();
+        const user = {
+            name:order.buyer.name,
+            email:order.buyer.email,
+        };
+         //redirigir al usuario a la pagina de usuarios/ordenes
+         await transporter.sendMail(emailOrderFailure(user, order));
+         return res.redirect(process.env.HOST_CLIENT);
+
     }catch (e){
         handleHttpError(res, e);
     }
     
-    //redirigir al usuario a la pagina de usuarios/ordenes
-    return res.redirect(process.env.HOST_CLIENT);
+   
 };
 const statusPay= async (req, res) => { 
 //en construccion
