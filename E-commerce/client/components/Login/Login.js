@@ -15,7 +15,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  SlideFade
+  SlideFade,
+  useColorMode
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
@@ -26,6 +27,7 @@ import { getUserData } from "../../redux/actions/user";
 import Link from "next/link";
 import { signInValidations } from "../../utils/authValidations";
 import { BASEURL } from '../../redux/actions/products'
+import background from "../../components/Banner/Img/Bulldog Hooded Sweater Black.webp";
 
 const Login = () => {
   const [errors, setErrors] = useState({});
@@ -40,6 +42,7 @@ const Login = () => {
   useEffect(() => {
     setErrors(signInValidations(user));
   }, [user]);
+  const { colorMode } = useColorMode();
 
   async function logIn(e) {
     e.preventDefault();
@@ -113,9 +116,19 @@ const Login = () => {
       direction={{ base: "column", md: "row" }}
       bgColor={"#eceff1"}
     >
-      
 
-      <Flex p={8} flex={1} align={"center"} justify={"center"}>
+      {/* <Image
+        pos='absolute'
+          alt={"Login Image"}
+          objectFit={"contain"}
+          w={"40vw"}
+          src={"/Dog.jpg"}
+          zIndex='0'
+        /> */}
+      <Flex 
+      bgImage={`url(/Dog.jpg)`}
+      bgPos='-75px 0px'
+      p={8} flex={1} align={"center"} justify={"center"}>
         <Stack spacing={8} mx={"auto"} maxW={"lg"}>
         <Breadcrumb>
         <BreadcrumbItem>
@@ -126,7 +139,7 @@ const Login = () => {
           <BreadcrumbLink href="/login">Login</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-          <Stack align={"center"}>
+          <Stack bgColor='whiteAlpha.900' align={"center"} >
             <Heading fontSize={"4xl"} textAlign={"center"}>
               Log in
             </Heading>
@@ -135,7 +148,7 @@ const Login = () => {
             </Text>
           </Stack>
 
-          <Box rounded={"lg"} bg={"white"} boxShadow={"lg"} p={8}>
+          <Box boxShadow={colorMode === 'light' ? '5px 10px 8px #888888' : 'none'} rounded={"lg"} bg={"white"}  p={8}>
             <Stack spacing={4}>
               <FormControl isRequired>
                 <FormLabel>Email address</FormLabel>
@@ -178,6 +191,7 @@ const Login = () => {
 
               <Stack spacing={10} pt={2}>
                 <Button
+                  boxShadow={colorMode === 'light' ? '5px 10px 8px #888888' : 'none'}
                   size="lg"
                   colorScheme={"blue"}
                   variant={"solid"}
@@ -190,6 +204,7 @@ const Login = () => {
                 </Button>
 
                 <Button
+                  boxShadow={colorMode === 'light' ? '5px 10px 8px #888888' : 'none'}
                   colorScheme={"blue"}
                   variant={"outline"}
                   onClick={handleGoogleLog}

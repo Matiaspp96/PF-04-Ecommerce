@@ -15,14 +15,12 @@ function Cart() {
     })()
   }, [dispatch])
 
-  return (   
-    <SlideFade in="true">
+  return (    
     <Stack alignItems='center'>
       <Navbar />
       <ProductCart />
       <Footer />
     </Stack>
-    </SlideFade>
   )
 }
 
