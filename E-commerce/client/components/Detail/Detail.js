@@ -243,7 +243,7 @@ import { GiCamargueCross } from 'react-icons/gi';
                     </Flex>
                   </TabPanel>
                   <TabPanel>
-                    <Review reviews={product.reviews} id={id} postReview={setNewReviewAdded}/>
+                    <Review reviews={product.reviews.map(rs=>{return rs._id})} id={id} postReview={setNewReviewAdded}/>
                   </TabPanel>
                 </TabPanels>
               </Tabs>
