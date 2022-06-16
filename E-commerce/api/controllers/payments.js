@@ -1,7 +1,8 @@
-const mercadopago = require('mercadopago');
+const mercadopago = require("mercadopago");
 const orderModel = require(`../models/orders`);
-const userModel = require('../models/users');
-const {handleHttpError} = require('../utils/handleError');
+const userModel = require("../models/users");
+const { handleHttpError } = require("../utils/handleError");
+const { transporter, emailOrder } = require("../config/email");
 
 mercadopago.configure({
   access_token: process.env.ACCESS_TOKEN_MP,
