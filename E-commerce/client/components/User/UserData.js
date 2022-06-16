@@ -15,10 +15,14 @@ const Data = () => {
     password: "",
   });
   const router = useRouter();
+  const [queryId, setQueryId] = useState()
 
   useEffect(() => {
     const query = router.query
-    console.log(query._id)
+    setQueryId(query)
+    console.log(`esto es query ${query._id} `)
+    console.log(`esto es query ${queryId} `)
+    
 
     async function fetchUser(){
       const user = {
@@ -61,7 +65,7 @@ const Data = () => {
     if(query._id){
       fetchUser()
     }
-  },[dispatch, user]);
+  },[dispatch, router]);
 
   function handleClick(e){
     e.preventDefault();
