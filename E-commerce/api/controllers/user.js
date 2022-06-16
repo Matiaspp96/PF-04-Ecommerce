@@ -12,10 +12,8 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
   try {
-    const { name } = req.params;
-    const data = await userModel.findOne({
-      name: { $regex: name, $options: "i" },
-    });
+    const { id } = req.params;
+    const data = await userModel.findById(id);
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_GET_ITEM");
@@ -36,7 +34,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const  body  = req.body;
+    const body = req.body;
     const data = await userModel.findByIdAndUpdate(id, body);
     res.send({ data });
   } catch (e) {
