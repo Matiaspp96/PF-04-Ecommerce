@@ -40,7 +40,8 @@ export default function BannerPets (){
         <Flex  h={{base:'fit-content', md:'fit-content', lg:'fit-content'}}
         as={motion.div}
         ref={carousel}
-        drag='x' dragConstraints={{
+        drag='x' 
+        dragConstraints={{
             right: 0,
             left: -width
         }}
