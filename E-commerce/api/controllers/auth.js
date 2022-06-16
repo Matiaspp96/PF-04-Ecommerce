@@ -71,18 +71,17 @@ const logOut = (req,res, next) => {
 
 
 const logDataUserOauth = async (req,res) => {
-  console.log(req)
+  console.log(req.user)
   try{
- 
     if(req.user){
     let token = await tokenSign(req.user)
     const data = {
      token: token,
      user: req.user,
-    };
-  
-     return res.json(data)
     }
+  
+    return res.json(data)
+    } else throw new Error('hola')
   } catch(err){
     console.log(err)
   }
