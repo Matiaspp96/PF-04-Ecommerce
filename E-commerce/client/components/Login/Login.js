@@ -37,7 +37,6 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-
   useEffect(() => {
     setErrors(signInValidations(user));
   }, [user]);

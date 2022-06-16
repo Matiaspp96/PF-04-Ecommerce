@@ -19,6 +19,7 @@ const Navbar = (props) => {
         bgColor='#1884BE'
         zIndex='2'
         textColor='whiteAlpha.800'
+        boxShadow='2xl'
         >
             <NavBarContainer {...props}>
                 <Link href='/'>

@@ -272,8 +272,8 @@ const CheckoutForm = () => {
               </InputGroup>
               {error.zip ? <FormHelperText color='red.400'>{error.zip}</FormHelperText> : null}
               </FormControl>
-              <FormControl>
-                  <FormLabel>Phone (optional)</FormLabel>
+              <FormControl isRequired>
+                  <FormLabel>Phone</FormLabel>
                   <InputGroup>
                   <InputLeftElement pointerEvents='none'><AiOutlinePhone color='gray.300' /></InputLeftElement>
                   <Input placeholder='Phone...' id='phone' name='phone' value={buyer.phone} onChange={e => handleChange(e)} type='num' autoComplete='off'/>

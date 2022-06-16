@@ -84,11 +84,11 @@ export default function Cards() {
       bgColor='#aadae3'
       bgGradient={colorMode === 'light' ? 'linear-gradient(to-t, #b2e1e3 40%, #51ACAD 170%)' : 'linear-gradient(to-t, #02192e 40%, #51ACAD 170%)'}
       w='100%'
-      as={motion.div} initial={{x: '-50%', opacity:0, scale: 0.5}}
+      as={motion.div} initial={{x: '-30%', opacity:0, scale: 0.5}}
       animate={{x: 0, opacity:1, scale: 1}} 
       overflow='hidden'
       borderRadius='20px'
-      boxShadow='lg'
+      boxShadow={colorMode === 'light' ? '5px 10px 8px #888888' : 'none'}
       // _before={{content:`''`, opacity:0.5, background:'linear-gradient(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100% )'}}
       // _after={{content:`''`, opacity:0.5, background:'linear-gradient(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,1) 100% )'}}
       >

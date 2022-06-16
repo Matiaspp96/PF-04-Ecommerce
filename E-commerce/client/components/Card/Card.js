@@ -111,11 +111,11 @@ export default function Card({ producto, quantity, cart, setCart }) {
   return (
       <Flex
         flexDir='column'
-        h={{base: router.route === '/cart' ? '70vh' : '40vh', md:'290', lg: router.route === '/cart' ? '420' : '365'}} 
-        w={{base: router.route === '/cart' ? '90vw' : 'auto', md:'22.5vw', lg:'100%'}}
-        maxW={{base: router.route === '/cart' ? '90vw' : '50vw', md:'auto'}}
+        h={{base: router.route === '/cart' || router.route === '/favorites' ? '65vh' : '43vh', md:'290', lg: router.route === '/cart' ? '420' : '365'}} 
+        w={{base: router.route === '/cart' || router.route === '/favorites' ? '90vw' : '45vw', md:'22.5vw', lg:'95%'}}
+        maxW={{base: router.route === '/cart' || router.route === '/favorites' ? '90vw' : '45vw', md:'auto'}}
         overflow='auto'
-        boxShadow='lg'
+        borderBottomRadius='15px'
         >
         {<Tag
           borderRadius={'none'}
@@ -132,6 +132,8 @@ export default function Card({ producto, quantity, cart, setCart }) {
           bgColor={colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.200'} 
           flexDir='column'
           height='100%'
+          borderTopRightRadius='15px'
+          boxShadow='xl'
           justifyContent='space-between'
           alignItems='center'>  
           <Center>
@@ -143,7 +145,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
               alignItems='center'/>
           </Center>
 
-          <Stack pl={'1rem'} pe={'1rem'} w='100%'>
+          <Flex flexDir='column' pl={'1rem'} pe={'1rem'} w='100%'>
             <Link 
               href={{
                 pathname: 'product/[id]',
@@ -159,23 +161,23 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 </a>
             </Link>
                 
-            <Flex justifyContent={'space-around'} columnGap='0.2em'>
-              <Text color={'#1884BE'}>${price}</Text>
+            <Flex justifyContent={'space-around'} alignItems='center' h='2.5rem' columnGap='0.2em'>
+              <Text fontSize='xl' color={'#1884BE'}>${price}</Text>
               {cart ?
-              <Flex alignItems='center' >
-                <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleRemoveCartOnClick(e,product)}>-</Button>
+              <Flex alignItems='center' justifyContent='center'>
+                <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleRemoveCartOnClick(e,product)}>-</Button>
                 <Input value={input}
                 onKeyDown={e => handleKeyDown(e)} 
                 onChange={e => handleInputProducts(e, product)}
-                size='1.2em' w='1.5em' h='1.5em' borderRadius='5px'
-                type='text' display='flex' textAlign='center' placeholder={quantity}></Input> 
-                <Button size='1.2em' w='1.5em' h='1.5em' display='flex' alignItems='strech' onClick={e=>handleAddCartOnClick(e,product)}>+</Button>
+                w='4rem' h='2rem' borderRadius='5px'
+                type='number' display='flex' textAlign='center' placeholder={quantity}></Input> 
+                <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleAddCartOnClick(e,product)}>+</Button>
               </Flex>
               : null}
               <Flex alignItems={'center'}>
                 <Text
                   fontWeight={300}
-                  fontSize={'smaller'}
+                  fontSize='md'
                   me={'.4em'}>
                     {rating}
                 </Text>
@@ -222,7 +224,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                   />
                 }
               </Flex>}
-          </Stack>      
+          </Flex>      
         </Flex>
       </Flex>
     )
