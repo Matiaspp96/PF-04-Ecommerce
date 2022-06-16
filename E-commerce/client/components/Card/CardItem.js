@@ -21,7 +21,7 @@ export default function CardItem({ producto, quantity }) {
         <Link href={`/product/${_id}`}>
                 {name.substring(0,10)}
         </Link>
-        <Text >Quantity:<Text color={'#1884BE'}>{quantity}</Text></Text>
+        <Text >Quantity:</Text><Text color={'#1884BE'}>{quantity}</Text>
         <Text color={'#1884BE'}>${quantity * price}</Text>
     </Flex>
     )
