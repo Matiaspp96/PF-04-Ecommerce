@@ -1,18 +1,29 @@
 import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { orderProducts } from "../../redux/actions/products";
+import { orderByPrice } from "../../redux/actions/products";
+import { orderByName } from "../../redux/actions/products";
 import { filterByCategory } from "../../redux/actions/categories";
 import { Flex, Text, Select, Button, MenuList, MenuItemOption, Menu, MenuButton, MenuOptionGroup, Image } from "@chakra-ui/react";
 import {ChevronDownIcon} from '@chakra-ui/icons'
 import { getAllCategories } from "../../redux/actions/categories";
 
-const Sort = ({ setCurrentPage, setSort }) => {
+const Sort = ({ setCurrentPage, setOrderName, setOrderPrice }) => {
   const [, setCategories] = useState("");
+  // const [, setOrderPrice] = useState("");
+  // const [, setOrderName] = useState("");
+
   const dispatch = useDispatch();
 
-  const handleSort= (e) => {
-    setSort(e)
-    dispatch(orderProducts(e));
+  const handleSortName= (e) => {
+    setOrderName(e)
+    dispatch(orderByName(e)); 
+    setCurrentPage(1)
+  };
+
+  const handleSortPrice= (e) => {
+    setOrderPrice(e)
+    dispatch(orderByPrice(e));
     setCurrentPage(1)
   };
 
@@ -60,12 +71,22 @@ const Sort = ({ setCurrentPage, setSort }) => {
             justifyContent='center'
             alignContent='center'
             type='radio'
-            onChange={handleSort}>
+            onChange={handleSortPrice}
+            title='Price'
+            defaultValue='MIN'>
             <MenuItemOption value='MIN'>Lower price</MenuItemOption>
             <MenuItemOption value='MAX'>Higher price</MenuItemOption>
+          </MenuOptionGroup>
+          <MenuOptionGroup 
+            justifyContent='center'
+            alignContent='center'
+            type='radio'
+            onChange={handleSortName}
+            title='Order'
+            defaultValue='A-Z'>
             <MenuItemOption value='A-Z'>A-Z</MenuItemOption>
             <MenuItemOption value='Z-A'>Z-A</MenuItemOption>
-          </MenuOptionGroup>
+            </MenuOptionGroup>
         </MenuList>
       </Menu>
       <Menu>
@@ -76,7 +97,7 @@ const Sort = ({ setCurrentPage, setSort }) => {
           <MenuOptionGroup 
             justifyContent='center'
             alignContent='center'
-            type='radio'
+            type='radio' // type='checkbox'
             onChange={handleFilterByCategories}
             defaultValue='All'>
             <MenuItemOption value='All'>All</MenuItemOption>

@@ -74,16 +74,17 @@ const CheckoutForm = () => {
     
   const getTotalPrice = itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
 
-
+  
   function handleChange(event){
     setBuyer(buyer => {
+      let dateNew = new Date().toLocaleDateString() + " " + new Date().toTimeString().slice(0,8)
         let newBuyer={
             ...buyer,
             users: {email: email},
             [event.target.name]: event.target.value,
             cost: getTotalPrice,
             quantity: numberItems,
-            date: new Date().toUTCString()
+            date: dateNew,
         };
         console.log(newBuyer)
         return newBuyer;
