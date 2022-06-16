@@ -151,7 +151,6 @@ const Review = ({reviews, id, postReview}) => {
         <Stack>
             <Center>
               <Avatar size='lg' name={review.name} src={review.name} />
-              {console.log(review)}
             </Center>
             <Text textAlign={'center'} fontWeight={'bold'}>{review.name}</Text>
             <Flex alignItems={'center'} justifyContent='center'>
