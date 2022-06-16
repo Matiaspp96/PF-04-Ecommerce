@@ -8,6 +8,7 @@ import {
   GET_ALL_CART,
   GET_TOTAL_PRICE,
   GET_TOTAL_ITEMS,
+  DELETE_ALL_CART,
 } from '../actions/actionstype.js' 
 
 const initialState = {
@@ -104,6 +105,11 @@ export default function shoppingCartReducer(state = initialState, action) {
       return {
         ...state,
         itemsCart
+      }
+    case DELETE_ALL_CART:
+      return {
+        ...state,
+        itemsCart: []
       }
     case GET_TOTAL_PRICE:
       return {

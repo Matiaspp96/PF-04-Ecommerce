@@ -16,9 +16,9 @@ const {
 
 router.get(
   "/:id",
-  authMiddleware,
-  isAdmin,
-  validateId,
+  // authMiddleware,
+  // isAdmin,
+  // validateId,
   getItem
 );
 router.get("/", 
