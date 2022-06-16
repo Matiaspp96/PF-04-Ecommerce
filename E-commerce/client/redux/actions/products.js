@@ -8,13 +8,17 @@ import {
     CREATE_PRODUCT,
     UPDATE_PRODUCT,
     DELETE_PRODUCT,
-    GET_PRODUCT_REVIEWS
+    GET_PRODUCT_REVIEWS,
+    GET_PRODUCT_TOP
 } from "./actionstype";
 
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
+export const HOSTURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : `${process.env.HOST_CLIENT}`;
+
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
+    console.log(BASEURL)
   // config de axios, enviar headers con token tomado desde localstorage. 
   //  USAR EN RUTAS PROTEGIDAS 
   //  const localUser = localStorage.getItem(
@@ -142,6 +146,17 @@ export const getProductReviews = (id)=> async (dispatch) => {
     return dispatch ({
       type: GET_PRODUCT_REVIEWS,
       payload: response.data.data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export const getProductsTop = () => async (dispatch) => {
+  try {
+    return dispatch ({
+      type: GET_PRODUCT_TOP,
     })
   } catch (error) {
     console.log(error)

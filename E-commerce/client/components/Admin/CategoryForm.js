@@ -47,6 +47,7 @@ const CategoryForm = ({ onClose }) => {
     dispatch(getAllCategories());
   }, [dispatch]);
   const categories = useSelector((state) => state.categoriesReducer.categories);
+  
   const handleSubmit = async () => {
     let axiosConfig = configAxios();
     try {

@@ -48,9 +48,7 @@ const Sort = ({ setCurrentPage, setSort }) => {
       whiteSpace="nowrap"
       w={{base: '95%', md:'80%', lg:'80%'}}
       mt={{base: '.5em', md:'1em', lg:'1em'}}
-      ml={{base: '.5em'}}
-      mr={{base: '.5em'}}
-      minW='100%' 
+      minW={{base:'75%' ,md:'100%', lg:'100%'}} 
       maxW='100%'
     >
       <Menu closeOnSelect={false}>

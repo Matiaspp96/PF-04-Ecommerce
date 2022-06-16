@@ -1,10 +1,29 @@
 const { orderModel, productModel, userModel } = require("../models");
 const { handleHttpError } = require("../utils/handleError");
 
-const { transporter, emailer } = require("../config/email");
+const { transporter, emailer, emailShipping, emailOrderCancelled } = require("../config/email");
+
+const getUserOrders = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await userModel.findOne({ _id: id }).populate({
+      path: "orders",
+      populate: { path: "products" },
+    });
+
+    if (user.orders.length > 0) {
+      res.json(user.orders);
+    } else {
+      res.status(404).send("The user does not have purchase orders");
+    }
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, "ERROR_GET_ORDERS");
+  }
+};
 
 const getItems = async (req, res) => {
-
   try {
     const data = await orderModel.find().populate("products").populate("buyer");
     if (data.length) {
@@ -45,7 +64,6 @@ const createItem = async (req, res) => {
   } = req.body;
 
   try {
-
     const newOrder = new orderModel({
       phone,
       shipping,
@@ -58,7 +76,7 @@ const createItem = async (req, res) => {
     newOrder.products = products;
 
     const foundUser = await userModel.findOne({ email: users.email });
- 
+
     if (!foundUser) {
       const newUser = new userModel({
         name: users.name,
@@ -82,7 +100,7 @@ const createItem = async (req, res) => {
         { email: users.email },
         { $addToSet: { shipping: savedOrder.shipping } }
       );
- 
+
       return res.status(201).send(savedOrder);
     }
     return res.status(404).send("Error: the order has not been created.");
@@ -95,8 +113,15 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
-    const data = await orderModel.findByIdAndUpdate(id, body);
+    const  body  = req.body;
+    console.log(body)
+    const data = await orderModel.findByIdAndUpdate(id, body).populate("buyer");
+    if(data && body.statusPurchase === 'order shipped'){
+      transporter.sendMail(emailShipping(data.buyer,data));
+    };
+    if(data && body.statusPurchase === 'order cancelled' || body.statusPay === 'cancelled'){
+      transporter.sendMail(emailOrderCancelled(data.buyer,data));
+    };
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_UPDATE_ITEMS");
@@ -141,4 +166,5 @@ module.exports = {
   updateItem,
   deleteItem,
   purchaseEmail,
+  getUserOrders,
 };

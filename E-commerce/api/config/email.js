@@ -205,11 +205,73 @@ const emailSaleNotification= function (user, data) {
     `,
   };
 };
+
+const emailShipping = function (user, data) {
+  return {
+    from: '"Pet Elegant Ecommerce " <pet.elegant.ecommerce.henry@gmail.com>',
+    to: user.email,
+    subject: "Tu Compra va en Camino",
+    attachDataUrls: true,
+    html: `
+    <div style="background-color: #2b9423; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h1 style="color: #fff;">Hola ${user.name}, gracias por elegirnos!</h1>
+    </ul>
+    </div>
+    
+   
+    <h3 style="color: #000000">El plazo de entrega varía según la modalidad elegida:</h3>
+    <li style="color: #000000;">Envío a domicilio: hasta 7 días hábiles. Las entregas se realizan de lunes a viernes, solamente al titular de la compra, presentando DNI y tarjeta con la que se realizó el pedido.</li>
+    <li style="color: #000000;">Retiro en sucursal: hasta 7 días hábiles. Recibirás confirmación por esta vía cuando el pedido esté disponible para retiro en sucursal.</li>
+  
+    <h3 style="color: #000000">La compra sólo podrá retirarla el titular de la tarjeta utilizada para la compra presentando la siguiente documentación:</h3>
+    <li style="color: #000000;">Factura de compra (impresa o en tu celular).</li>
+    <li style="color: #000000;">DNI del titular de la tarjeta con la que se realizó el pago.</li>
+    <li style="color: #000000;">Tarjeta de crédito utilizada para realizar la compra.</li>
+    <br /><br />
+    <p style="color: #000000">Número de Orden: <span style="font-weight: bold; text-decoration: underline;">${
+      data._id
+    }</span><br /><br />All rights reserved by &copy; <a href="https://petelegant.vercel.app/">Pet Elegant</a></p>
+    `,
+  };
+};
+const emailOrderCancelled = function (user, data) {
+  return {
+    from: '"Pet Elegant Ecommerce " <pet.elegant.ecommerce.henry@gmail.com>',
+    to: user.email,
+    subject: "Hemos cancelado tu orden :(",
+    attachDataUrls: true,
+    html: `
+    <div style="background-color: #2b9423; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h1 style="color: #fff;">Hola ${user.name}, gracias por elegirnos!</h1>
+    <h2> En breve nos estaremos comunicando contigo para brindarte una solucion</h2>
+    </ul>
+    </div>
+    
+   
+    <h3 style="color: #000000">El plazo de entrega varía según la modalidad elegida:</h3>
+    <li style="color: #000000;">Envío a domicilio: hasta 7 días hábiles. Las entregas se realizan de lunes a viernes, solamente al titular de la compra, presentando DNI y tarjeta con la que se realizó el pedido.</li>
+    <li style="color: #000000;">Retiro en sucursal: hasta 7 días hábiles. Recibirás confirmación por esta vía cuando el pedido esté disponible para retiro en sucursal.</li>
+  
+    <h3 style="color: #000000">La compra sólo podrá retirarla el titular de la tarjeta utilizada para la compra presentando la siguiente documentación:</h3>
+    <li style="color: #000000;">Factura de compra (impresa o en tu celular).</li>
+    <li style="color: #000000;">DNI del titular de la tarjeta con la que se realizó el pago.</li>
+    <li style="color: #000000;">Tarjeta de crédito utilizada para realizar la compra.</li>
+    <br /><br />
+    <p style="color: #000000">Número de Orden: <span style="font-weight: bold; text-decoration: underline;">${
+      data._id
+    }</span><br /><br />All rights reserved by &copy; <a href="https://petelegant.vercel.app/">Pet Elegant</a></p>
+    `,
+  };
+};
 module.exports = {
   transporter,
   emailer,
   emailOrder,
   emailOrderFailure,
   emailOrderPending,
-  emailSaleNotification
+  emailSaleNotification,
+  emailShipping,
+  emailOrderCancelled
 };

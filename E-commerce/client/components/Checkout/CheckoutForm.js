@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import formValidate from './formValidations';
 import { AiOutlinePhone } from 'react-icons/ai';
 import router from 'next/router';
+import { deleteAllCart } from '../../redux/actions/cart';
 
 const CheckoutForm = () => {
   const itemsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
@@ -64,7 +65,6 @@ const CheckoutForm = () => {
           ...buyerMP,
           items: itemsMP,
           phone: 0,
-          total_amount:getTotalPrice
         })
         setIsLoading(false)
       }
@@ -82,7 +82,8 @@ const CheckoutForm = () => {
             users: {email: email},
             [event.target.name]: event.target.value,
             cost: getTotalPrice,
-            quantity: numberItems, 
+            quantity: numberItems,
+            date: new Date().toUTCString()
         };
         console.log(newBuyer)
         return newBuyer;
@@ -148,10 +149,12 @@ const CheckoutForm = () => {
           payment: ""
         });
         console.log(response.data._id)
-        setBuyerMP({
+        setBuyerMP(buyerMP=>{
+          let newBuyerMP = {
           ...buyerMP,
-          idOrder: await response.data._id
-        });
+          idOrder: response.data._id
+          }
+        return newBuyerMP})
         buyerMP.idOrder = response.data._id;
     
         Swal.fire({
@@ -161,7 +164,7 @@ const CheckoutForm = () => {
           confirmButtonText: 'Accept'
         })
         let responsePayment = await axios.post(`${BASEURL}/payments/checkoutmp`, buyerMP, configAxios)
-        console.log(responsePayment);
+        dispatch(deleteAllCart())
         router.push(responsePayment.data.preference.body.sandbox_init_point)
       } else {
         Swal.fire({
@@ -192,7 +195,7 @@ const CheckoutForm = () => {
   return (
   <Stack w='95vw'>
       <Flex gap='0.3rem'><Link href='/'>Home</Link><Link href='/cart'>/ Cart</Link>/ Checkout</Flex>
-      <Flex  flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
+      <Flex zIndex='1' flexDir={['column' ,'row']} ml={['0.5em','0.5em','2em','2em']} justify='center' >
           <Flex flexDir='column' minW='40%' gap='2em' p={['1rem','3rem']} border='1px solid #348099' borderRadius='20px'
           boxShadow='xl'>
               <Heading as='h4' size='md'>Shipping information</Heading>
@@ -281,7 +284,7 @@ const CheckoutForm = () => {
                   Submit
               </Button>
           </Flex>
-          <Stack zIndex='-1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
+          <Stack zIndex='1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
               <Center>
               <Heading as='h4' size='md' >Your Order: {numberItems} Items</Heading>
               </Center>

@@ -24,10 +24,10 @@ export const handleRemoveFromCart = (e, item) => {
     return product
 }
 
-export const handleRemoveFromFav = (e, item) => {
-    e.preventDefault();
+export const handleRemoveFromFav = (item) => {
     const product = {
         _id: item._id,
+        name: item.name
     };
     return product
 }

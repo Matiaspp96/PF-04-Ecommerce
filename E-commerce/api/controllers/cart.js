@@ -24,7 +24,6 @@ const addItem = async (req, res) => {
 
     res.send("El item se agrego correctamente" + user);
   } catch (err) {
-    console.log(err);
     handleHttpError(res, "ERROR_ADD_ITEM_CART");
   }
 };
@@ -39,7 +38,6 @@ const deleteItemsCart = async (req, res) => {
     );
     res.json(user);
   } catch (err) {
-    console.log(err);
     handleHttpError(res, "ERROR_DELETE_ITEMS");
   }
 };

@@ -6,7 +6,8 @@ import { ADD_ITEM,
     REMOVE_ITEM,
     GET_ALL_CART,
     GET_TOTAL_PRICE,
-    GET_TOTAL_ITEMS
+    GET_TOTAL_ITEMS,
+    DELETE_ALL_CART
 } from "./actionstype";
 
 export const BASEURL = 'https://fakestoreapi.com';
@@ -60,6 +61,16 @@ export const getItemsCart = () => {
   try {
     return {
       type: GET_ALL_CART,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+export const deleteAllCart = () => {
+  try {
+    return {
+      type: DELETE_ALL_CART,
     }
   } catch (err) {
     console.log(err)

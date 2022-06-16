@@ -44,7 +44,7 @@ export default function Cards() {
     <Flex justifyContent={"space-between"}>
       <Stack w={"100%"}>
         {products.length ? (
-          <Stack>
+          <Stack alignItems='center'>
             <Sort
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
@@ -69,7 +69,7 @@ export default function Cards() {
                 maxW='95vw'
                 minW='95vw'
                 columns={{ base: 2, sm: 3, md: 4, lg:5, xl:5 }}
-                gap={'5'} 
+                gap={{base:'2',md:'5'}} 
                 marginTop='2rem'>
                   {getPaginatedProducts().map(ps=>{ return (
                     <Card key={ps._id} producto={ps}></Card>
