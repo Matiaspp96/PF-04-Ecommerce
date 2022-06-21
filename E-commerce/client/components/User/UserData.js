@@ -8,6 +8,10 @@ import { useRouter } from "next/router";
 
 const urlUserData = `${BASEURL}/auth/data`;
 
+export async function getStaticProps(){
+  
+}
+
 const Data = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({

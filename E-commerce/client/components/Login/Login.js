@@ -16,7 +16,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   SlideFade,
-  useColorMode
+  useColorMode,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
@@ -27,7 +27,6 @@ import { getUserData } from "../../redux/actions/user";
 import Link from "next/link";
 import { signInValidations } from "../../utils/authValidations";
 import { BASEURL } from '../../redux/actions/products'
-import background from "../../components/Banner/Img/Bulldog Hooded Sweater Black.webp";
 
 const Login = () => {
   const [errors, setErrors] = useState({});
@@ -129,8 +128,8 @@ const Login = () => {
       bgImage={`url(/Dog.jpg)`}
       bgPos='-75px 0px'
       p={8} flex={1} align={"center"} justify={"center"}>
-        <Stack spacing={8} mx={"auto"} maxW={"lg"}>
-        <Breadcrumb>
+        <Stack spacing={8} mx={"auto"} maxW={"lg"} >
+        <Breadcrumb color={colorMode === 'light' ? 'whiteAlpha.900' : 'blackAlpha.900'}>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
@@ -139,16 +138,16 @@ const Login = () => {
           <BreadcrumbLink href="/login">Login</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-          <Stack bgColor='whiteAlpha.900' align={"center"} >
+          <Stack bgColor={colorMode === 'light' ? 'whiteAlpha.900' : 'blackAlpha.500'} align={"center"} >
             <Heading fontSize={"4xl"} textAlign={"center"}>
               Log in
             </Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
+            <Text fontSize={"lg"} color={colorMode === 'light' ? "gray.600" : 'whiteAlpha.900'}>
               and make your pets happy 😻
             </Text>
           </Stack>
 
-          <Box boxShadow={colorMode === 'light' ? '5px 10px 8px #888888' : 'none'} rounded={"lg"} bg={"white"}  p={8}>
+          <Box boxShadow='5px 10px 8px #888888' rounded={"lg"} bg={colorMode === 'light' ? 'white' : 'black'}  p={8}>
             <Stack spacing={4}>
               <FormControl isRequired>
                 <FormLabel>Email address</FormLabel>
