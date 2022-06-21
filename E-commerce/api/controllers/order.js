@@ -1,10 +1,29 @@
 const { orderModel, productModel, userModel } = require("../models");
 const { handleHttpError } = require("../utils/handleError");
 
-const { transporter, emailer } = require("../config/email");
+const { transporter, emailer, emailShipping, emailOrderCancelled } = require("../config/email");
+
+const getUserOrders = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await userModel.findOne({ _id: id }).populate({
+      path: "orders",
+      populate: { path: "products" },
+    });
+
+    if (user.orders.length > 0) {
+      res.json(user.orders);
+    } else {
+      res.status(404).send("The user does not have purchase orders");
+    }
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, "ERROR_GET_ORDERS");
+  }
+};
 
 const getItems = async (req, res) => {
-  console.log('hola')
   try {
     const data = await orderModel.find().populate("products").populate("buyer");
     if (data.length) {
@@ -43,7 +62,7 @@ const createItem = async (req, res) => {
     cost,
     quantity,
   } = req.body;
-  console.log("products", products);
+
   try {
     const newOrder = new orderModel({
       phone,
@@ -57,7 +76,7 @@ const createItem = async (req, res) => {
     newOrder.products = products;
 
     const foundUser = await userModel.findOne({ email: users.email });
-    console.log(`Esto es ${foundUser}`);
+
     if (!foundUser) {
       const newUser = new userModel({
         name: users.name,
@@ -81,7 +100,7 @@ const createItem = async (req, res) => {
         { email: users.email },
         { $addToSet: { shipping: savedOrder.shipping } }
       );
-      console.log("este es el id de la orden " + savedOrder._id);
+
       return res.status(201).send(savedOrder);
     }
     return res.status(404).send("Error: the order has not been created.");
@@ -94,8 +113,15 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
-    const data = await orderModel.findByIdAndUpdate(id, body);
+    const  body  = req.body;
+    console.log(body)
+    const data = await orderModel.findByIdAndUpdate(id, body).populate("buyer");
+    if(data && body.statusPurchase === 'order shipped'){
+      transporter.sendMail(emailShipping(data.buyer,data));
+    };
+    if(data && body.statusPurchase === 'order cancelled' || body.statusPay === 'cancelled'){
+      transporter.sendMail(emailOrderCancelled(data.buyer,data));
+    };
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "ERROR_UPDATE_ITEMS");
@@ -140,4 +166,5 @@ module.exports = {
   updateItem,
   deleteItem,
   purchaseEmail,
+  getUserOrders,
 };

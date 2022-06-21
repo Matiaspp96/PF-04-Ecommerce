@@ -65,6 +65,7 @@ const Sidebar = ({ size }) => {
           bgColor="#1884BE"
           pos="sticky"
           h='auto'
+          minH={'100vh'}
           w={navSize === "small" ? "6vw" : "13vw"}
           flexDir="column"
           justifyContent="space-between"
@@ -77,7 +78,7 @@ const Sidebar = ({ size }) => {
             alignItems={navSize == "small" ? "center" : "flex-start"}
           >
             <Flex mt={4} align="center">
-              <Avatar size="sm" src={user.image} alt={user.name} />
+              <Avatar size="sm" src={user.avatar} alt={user.name} />
               <Flex
                 flexDir="column"
                 ml={4}

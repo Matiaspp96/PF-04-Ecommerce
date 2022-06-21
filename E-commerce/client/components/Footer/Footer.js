@@ -10,40 +10,36 @@ import {
   Stack,
   Text,
   Flex,
+  AspectRatio,
 } from '@chakra-ui/react'
 
-import { FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
+import { FaLinkedin, FaTwitter, FaInstagram, FaFacebook} from 'react-icons/fa'
+import { useState } from 'react'
+import {useRouter} from 'next/router'
+
 
 
 export default function Footer (){
+  const router = useRouter()
+
+  // const [map, setMap] = useState("Mendoza")
   return (
     
-    <Container as="footer" role="contentinfo" maxW='60%'>
+    <Flex as="footer" role="contentinfo" maxW='60%' alignItems='center' direction={{base: 'column'}} justifyContent='center'>
     <Stack
       spacing="8"
       direction={{ base: 'column', md: 'row' }}
       justify="space-between"
       py={{ base: '12', md: '16' }}
     >
-      <Flex spacing={{ base: '6', md: '8' }} align="start">
-        <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
-      </Flex>
-      <Stack
-        direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
-        spacing={{ base: '12', md: '8' }}
+      <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
+      <Flex 
+        as='footer2'
+        direction={{ base: 'row', md: 'row', lg: 'row' }}
+        spacing={{ base: '4', md: '8' }}
+        justifyContent='center'
       >
-        <Stack direction="row" wrap='wrap' alignItems='center' spacing="8">
-          <Stack spacing="4" minW="36" flex="1">
-            <Text fontSize="sm" fontWeight="semibold" color="subtle">
-              Product
-            </Text>
-            <Stack spacing="3" shouldWrapChildren>
-              <Button variant="link">options1</Button>
-              <Button variant="link">options2</Button>
-              <Button variant="link">options3</Button>
-            </Stack>
-          </Stack>
-          <Stack spacing="4" minW="36">
+        <Flex direction={{base: 'column'}} wrap='wrap' alignItems='center' spacing="8" minW="36">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
               Legal
             </Text>
@@ -52,20 +48,19 @@ export default function Footer (){
               <Button variant="link">Terms</Button>
               <Button variant="link">License</Button>
             </Stack>
-          </Stack>
-        </Stack>
-        <Stack spacing="4">
-          <Text fontSize="sm" fontWeight="semibold" color="subtle">
-            Stay up to date
+        </Flex>
+        <Flex spacing="4" direction={{base: 'column'}} wrap='wrap' alignItems='center' minW="36" justifyContent={'flex-start'}>
+          <Text fontSize="sm" fontWeight="semibold" color="subtle" alignItems="center">
+               Up to date
           </Text>
-          <Stack spacing="4" direction={{ base: 'column', sm: 'row' }} maxW={{ lg: '360px' }}>
+          <Flex spacing="4" direction={{base: 'column'}} wrap='wrap' alignItems='center' minW="36">
             <Input placeholder="Enter your email" type="email" required />
             <Button variant="primary" type="submit" flexShrink={0}>
               Subscribe
             </Button>
-          </Stack>
-        </Stack>
-      </Stack>
+          </Flex>
+        </Flex>
+      </Flex>
     </Stack>
     <Divider />
     <Stack
@@ -78,19 +73,15 @@ export default function Footer (){
       <Text fontSize="sm" color="subtle">
         &copy; {new Date().getFullYear()} E-Commerce. All rights reserved.
         <br/>
-        Calle Falsa 123. Springfield
+       Patricias Argentinas 665, Maipú, Mendoza, Argentina.
       </Text>
       <ButtonGroup variant="ghost">
-        <IconButton
-          as="a"
-          href="#"
-          aria-label="LinkedIn"
-          icon={<FaLinkedin fontSize="1.25rem" />}
-        />
+        <IconButton as="a" href="#"aria-label="LinkedIn" icon={<FaLinkedin fontSize="1.25rem" />}/>
         <IconButton as="a" href="#" aria-label="GitHub" icon={<FaInstagram fontSize="1.25rem" />} />
         <IconButton as="a" href="#" aria-label="Twitter" icon={<FaTwitter fontSize="1.25rem" />} />
+        <IconButton as="a" href="#" aria-label="Facebook" icon={<FaFacebook fontSize="1.25rem" />} />
       </ButtonGroup>
     </Stack>
-  </Container>
+    </Flex>
   )
 }

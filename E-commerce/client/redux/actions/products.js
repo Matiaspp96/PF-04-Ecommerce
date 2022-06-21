@@ -4,11 +4,13 @@ import {
     GET_PRODUCTS,
     GET_PRODUCTS_BY_NAME,
     GET_DETAIL,
-    ORDER_PRODUCTS,
+    ORDER_PRODUCTS_BY_NAME,
+    ORDER_PRODUCTS_BY_PRICE,
     CREATE_PRODUCT,
     UPDATE_PRODUCT,
     DELETE_PRODUCT,
-    GET_PRODUCT_REVIEWS
+    GET_PRODUCT_REVIEWS,
+    GET_PRODUCT_TOP
 } from "./actionstype";
 
 export const BASEURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : `${process.env.API_URL}/api`;
@@ -17,7 +19,7 @@ export const HOSTURL = process.env.NODE_ENV === 'development' ? 'http://localhos
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
-  console.log(BASEURL)
+    console.log(BASEURL)
   // config de axios, enviar headers con token tomado desde localstorage. 
   //  USAR EN RUTAS PROTEGIDAS 
   //  const localUser = localStorage.getItem(
@@ -74,21 +76,24 @@ export const getDetail = (id) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err)
-    alert.fire({
-      title: 'Error!',
-      text: 'We cant find these products',
-      icon: 'error',
-      confirmButtonText: 'Cool'
-    })
+    
   }
 };
 
-export const orderProducts = (way)=>{
+export const orderByPrice = (way)=>{
   return {
-    type: ORDER_PRODUCTS,
+    type: ORDER_PRODUCTS_BY_PRICE,
     payload: way
   }
 }
+
+export const orderByName = (e)=>{
+  return {
+    type: ORDER_PRODUCTS_BY_NAME,
+    payload: e
+  }
+}
+
 export const addProduct = (product) => async (dispatch) => {
   try {
     const response = await axios.post(`${BASEURL}/products`, product);
@@ -150,6 +155,17 @@ export const getProductReviews = (id)=> async (dispatch) => {
     return dispatch ({
       type: GET_PRODUCT_REVIEWS,
       payload: response.data.data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export const getProductsTop = () => async (dispatch) => {
+  try {
+    return dispatch ({
+      type: GET_PRODUCT_TOP,
     })
   } catch (error) {
     console.log(error)

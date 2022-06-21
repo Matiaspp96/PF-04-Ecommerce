@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     surname: {
       type: String,
     },
-    nickname: {
+    avatar: {
       type: String,
       required: false,
     },
@@ -28,10 +28,12 @@ const UserSchema = new mongoose.Schema(
     },
     cart: [
       {
-        _id: {
-          ref: "products",
-          type: mongoose.Types.ObjectId,
-        },
+        ref: "products",
+        type: mongoose.Types.ObjectId,
+        /* autopopulate: {
+          select: ["name", "image", "description", "price", "sales"],
+        }, */
+
         quantity: Number,
       },
     ],
@@ -77,5 +79,7 @@ UserSchema.methods.encryptPassword = (password) => {
 UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
+
+UserSchema.plugin(require("mongoose-autopopulate"));
 
 module.exports = mongoose.model("users", UserSchema);

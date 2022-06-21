@@ -34,7 +34,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
+    const body = req.body;
     const data = await userModel.findByIdAndUpdate(id, body);
     res.send({ data });
   } catch (e) {

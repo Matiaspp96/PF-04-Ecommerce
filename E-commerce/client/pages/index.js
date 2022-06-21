@@ -5,13 +5,12 @@ import Cards from '../components/Card/Cards.js'
 import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer.js'
-import { getAllProducts } from '../redux/actions/products.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { Stack,Flex,Text,Select  } from '@chakra-ui/react'
-import { addItemToCart } from '../redux/actions/cart.js'
-import { getSession } from 'next-auth/react';
-import { getUserData } from '../redux/actions/user.js'
 import Banner from '../components/Banner/Banner'
+import ProductsTop from '../components/Card/ProductsTop'
+import Map from '../components/Maps/Map'
+
 
 
 export default function Home() {
@@ -35,7 +34,9 @@ export default function Home() {
     <Flex flexDir="column" alignItems="center">
       <Navbar />
       <Banner />
+      <ProductsTop />
       <Cards />
+      <Map />
       <Footer />
     </Flex>
   );

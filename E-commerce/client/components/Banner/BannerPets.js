@@ -37,10 +37,11 @@ export default function BannerPets (){
     }
 
     return (
-        <Flex  h={{base:'fit-content', md:'5em', lg:'fit-content'}}
+        <Flex  h={{base:'fit-content', md:'fit-content', lg:'fit-content'}}
         as={motion.div}
         ref={carousel}
-        drag='x' dragConstraints={{
+        drag='x' 
+        dragConstraints={{
             right: 0,
             left: -width
         }}
@@ -57,7 +58,7 @@ export default function BannerPets (){
         >{images.map(img => {
             return(
             <Box pos='relative'
-            zIndex='0' key={Math.random()} as={motion.div} minW='fit-content' minH='fit-content' overflow='hidden' borderRadius='20px'>
+            zIndex='2' key={Math.random()} minW='fit-content' minH='fit-content' overflow='hidden' borderRadius='20px'>
                 <Image src={img} width='250' height='360' key={img}/>
             </Box>
             )

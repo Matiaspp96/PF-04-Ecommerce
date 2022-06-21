@@ -1,93 +1,151 @@
-const mercadopago = require('mercadopago');
-const { transporter, emailOrder } = require('../config/email');
+const mercadopago = require("mercadopago");
 const orderModel = require(`../models/orders`);
+const userModel = require('../models/users');
+const productModel = require('../models/products');
+const { emailOrder, transporter, emailOrderFailure, emailOrderPending, emailSaleNotification} = require('../config/email');
 const {handleHttpError} = require('../utils/handleError');
-
 mercadopago.configure({
-    access_token: process.env.ACCESS_TOKEN_MP,
+  access_token: process.env.ACCESS_TOKEN_MP,
 });
 
 const initPaymentMp = async (req, res) => {
-   
-      
-    const {description, quantity, currency_id, unit_price, email,phone,name,total_amount, metadata, idOrder} = req.body;
-    console.log(req.body)
-    const order = await orderModel.findById(idOrder);
-    console.log(order);
-    let dataPay = {
-        payer: {
-                phone: {
-                    area_code: "",
-                    number: Number(phone)
-                },
-                address: {
-                    zip_code: "",
-                    street_name: "",
-                    street_number: 5
-                },
-                email: email,
-                identification: {
-                    number: "",
-                    type: ""
-                },
-                name: name,
-                surname: "",
-                date_created: null,
-                last_purchase: null
-            
+  const { items, email, phone, name, idOrder } = req.body;
+  const order = await orderModel.findById(idOrder);
+
+  let dataPay = {
+    payer: {
+      phone: {
+        area_code: "",
+        number: Number(phone),
+      },
+      email: email,
+      identification: {
+        number: "",
+        type: "",
+      },
+      name: name,
+      surname: "",
+      date_created: null,
+      last_purchase: null,
+    },
+    items: items,
+    payment_methods: {
+      excluded_payment_types: [
+        {
+          id: "ticket",
         },
-        shipments: {
-            default_shipping_method: 2,
-            receiver_address: {
-                zip_code: "",
-                street_name: "",
-                street_number: 4,
-                floor: "",
-                apartment: "",
-                city_name: null,
-                state_name: null,
-                country_name: null
-            }
+        {
+          id: "pse",
         },
-    
-		items: [
-			{
-				 title: description,
-			     unit_price: Number(unit_price),
-				 quantity: Number(quantity)
-			},
-           
-		],
-        total_amount: null,
-		back_urls: {
-			"success": "http://localhost:3001/api/payments/success",
-			"failure": "http://localhost:3001/api/payments/failure",
-			"pending": "http://localhost:3001/api/payments/pending"
-		},
-		auto_return: "approved",
-        // metadata : {
-        //     email : metadata.email
-        // }
-	};
-   
-    try {
-        const preference = await mercadopago.preferences.create(dataPay);
-        //OJO SETEAR EL ID DE LA PREFERENCIA LA ORDER, PARA PODER DARLE PERSISTENCIA AL ESTADO DEL PAGO
-        // EN PREFERENCE VIEDE COMO id, pero en la respuesta del estado del pago viene por query como preference_id
-     
-        order.paymentId = preference.body.id;
+      ],
+      installments: 6,
+    },
+    back_urls: {
+      success: `${process.env.API_URL}/api/payments/success`,
+      failure: `${process.env.API_URL}/api/payments/failure`,
+      pending: `${process.env.API_URL}/api/payments/pending`,
+    },
+    auto_return: "approved",
+  };
+
+  try {
+    const preference = await mercadopago.preferences.create(dataPay);
+    order.paymentId = preference.body.id;
+    await order.save();
+
+    res.send({ preference });
+  } catch (e) {
+    handleHttpError(res, e);
+  }
+};
+const successPay= async (req, res) => { 
+    //lista
+    try{
+        const order = await orderModel.findOne({paymentId : req.query.preference_id})
+        .populate('buyer')
+        .populate('products');
+        const updateStock = await order.products.map( async (product) => {
+           let quantity = product.quantity; 
+           let productUpdate = await productModel.findOne({_id: product._id});
+           productUpdate.stock = productUpdate.stock - quantity;
+           await productUpdate.save();
+        });
+        Promise.all(updateStock);
+        order.statusPay = req.query.status;
+        order.payment = req.query.payment_type;
+        order.merchant_id = req.query.merchant_order_id;
+        order.statusPurchase = 'payment received';
         await order.save();
-        console.log(order.paymentId)
-        // transporter.sendMail(emailOrder(users));
-        res.send({ preference });
-    } catch (e) {
-        handleHttpError(res, e);
-    }
+        const user = {
+            name:order.buyer.name,
+            email:order.buyer.email,
+        };
+          //enviar email
+        await transporter.sendMail(emailOrder(user, order));
+        let admins = await userModel.find({role:'admin'});
+    
+         admins.map(async (admin) => {
+               await transporter.sendMail(emailSaleNotification(admin.email, order));
+         });
+         Promise.all(admins);
+
+        return res.redirect(process.env.HOST_CLIENT);
+
+    }catch (e){
+        handleHttpError(res, e);   
+    };
+};
+const pendingPay = async (req, res) => {
+
+    try{
+        const order = await orderModel.findOne({paymentId : req.query.preference_id}).populate('buyer');
+
+        order.statusPay = req.query.status;
+        order.payment = req.query.payment_type;
+        order.merchant_id = req.query.merchant_order_id;
+        order.statusPurchase = 'validating payment';
+        await order.save();
+        const user = {
+            name:order.buyer.name,
+            email:order.buyer.email,
+        };
+          //enviar email DE PENDIENTE
+         await transporter.sendMail(emailOrderPending(user, order));
+         return res.redirect(process.env.HOST_CLIENT);
+    }catch (e){
+        handleHttpError(res, e);   
+    };
+    
+   
+};
+const failurePay = async (req, res) => {
+  try {
+    const order = await orderModel.findOne({
+      paymentId: req.query.preference_id,
+    }).populate('buyer');
+    order.statusPay = req.query.status;
+    order.payment = req.query.payment_type;
+    order.statusPurchase = "payment not received";
+    await order.save();
+    const user = {
+      name:order.buyer.name,
+      email:order.buyer.email,
+  };
+   //redirigir al usuario a la pagina de usuarios/ordenes
+   await transporter.sendMail(emailOrderFailure(user, order));
+   return res.redirect(process.env.HOST_CLIENT);
+  } catch (e) {
+    handleHttpError(res, e);
+  }
+};
+const statusPay = async (req, res) => {
+  //en construccion
 };
 
-const pendingPay= async (req, res) => { 
-    console.log(req.query);
-
-}
-
-module.exports = { initPaymentMp };
+module.exports = {
+  initPaymentMp,
+  successPay,
+  pendingPay,
+  failurePay,
+  statusPay,
+};

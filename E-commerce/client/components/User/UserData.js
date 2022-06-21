@@ -1,10 +1,10 @@
 import { Center, Stack, Heading, Progress } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../redux/actions/user";
 import { BASEURL } from "../../redux/actions/products";
+import { useRouter } from "next/router";
 
 const urlUserData = `${BASEURL}/auth/data`;
 
@@ -19,29 +19,32 @@ const Data = () => {
     password: "",
   });
   const router = useRouter();
-  useEffect(() => {
-    (async () => {
-      console.log('paso por aca')
-      const config = {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      console.log('llego aca en el front paso al back')
-      let getUser = await axios.get(urlUserData, config);
+  const [queryId, setQueryId] = useState()
 
-      //redux
+  useEffect(() => {
+    const query = router.query
+    setQueryId(query)
+    async function fetchUser(){
+      const user = {
+        _id: query._id
+      }
+      // let getUser = await axios.get(`${BASEURL}/users/`, config);
+      let getUser = await axios.post(urlUserData, user);
+
+      console.log(getUser)
+
+      // redux
       dispatch(getUserData(getUser.data.user));
-      //store local
+      // store local
       let localInfo = {
         token : getUser.data.token,
         _id :getUser.data.user._id,
         role: getUser.data.user.role,
         email:getUser.data.user.email,
-        name:getUser.data.user.name
+        name:getUser.data.user.name,
+        avatar:getUser.data.user.avatar
       }
-      console.log(getUser.data)
+    
       localStorage.setItem("userInfo", JSON.stringify(localInfo));
 
       setUser({
@@ -51,8 +54,11 @@ const Data = () => {
       if (getUser.status === 200) {
         return router.push("/");
       }
-    })();
-  }, [dispatch, router]);
+    }
+    if(query._id){
+      fetchUser()
+    }
+  },[dispatch, router]);
 
   function handleClick(e){
     e.preventDefault();

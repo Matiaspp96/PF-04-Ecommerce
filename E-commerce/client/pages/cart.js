@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar/Navbar'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Center, Grid, Stack, Text } from '@chakra-ui/react'
+import { Box, Center, Grid, SlideFade, Stack, Text } from '@chakra-ui/react'
 import { getItemsCart } from '../redux/actions/cart';
 import ProductCart from '../components/Card/ProductsCart';
 import Footer from '../components/Footer/Footer';
@@ -15,7 +15,7 @@ function Cart() {
     })()
   }, [dispatch])
 
-  return (   
+  return (    
     <Stack alignItems='center'>
       <Navbar />
       <ProductCart />

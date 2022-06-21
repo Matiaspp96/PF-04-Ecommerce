@@ -3,9 +3,9 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Center, Grid, Stack, Text } from '@chakra-ui/react'
 import Footer from '../components/Footer/Footer';
-import UserProfile from '../components/User/UserProfile';
+import MenuHistory from '../components/Orderhistory/MenuHistory'
 
-function Cart() {
+function Orders() {
   const dispatch = useDispatch();
 //   useEffect(()=>{
 //     (async () => {
@@ -16,10 +16,10 @@ function Cart() {
   return (   
     <Stack alignItems='center'>
       <Navbar />
-      <UserProfile />
+      <MenuHistory />
       <Footer />
     </Stack>
   )
 }
 
-export default Cart
+export default Orders

@@ -31,7 +31,7 @@ const Checkout = () => {
         if(user){
             router.push('/checkout/order')
         } else {
-            router.push('/cart/login')}
+            router.push('/login')}
     }
 
     return (
@@ -46,8 +46,8 @@ const Checkout = () => {
         font-size= '24px'
         onClick={e => handleAddOrder(e)}
         >PURCHARSE</Button>
-        <Text>Your Cart: {numberItems} Items</Text>
-        <Text>Total: ${getTotalPrice()}</Text>
+        <Text >Your Cart: {numberItems} Items</Text>
+        <Text fontWeight='bold'>Total: ${getTotalPrice()}</Text>
         <InputGroup flexDir='column' flexWrap='wrap'>
             <TagLabel>Gift card or discount code</TagLabel>
             <Flex flexDir='row'>

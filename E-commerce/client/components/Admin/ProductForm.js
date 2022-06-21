@@ -216,51 +216,56 @@ export default function ProductForm({ id }) {
           )}
 
           <SimpleGrid columns={2} spacing={10} alignItems={"center"}>
-            <FormControl isRequired>
+            <FormControl>
               <Stack justifyContent={"space-between"} h={"auto"} mb={"3rem"}>
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
-                  <FormLabel>Product Name:</FormLabel>
-                  <Input
-                    name="name"
-                    type={"text"}
-                    onChange={handleChange}
-                    value={product.name}
-                  ></Input>
-                  {errors.name && <Text color={"red"}>{errors.name}</Text>}
+                  <FormControl isRequired>
+                    <FormLabel>Product Name:</FormLabel>
+                    <Input
+                      name="name"
+                      type={"text"}
+                      onChange={handleChange}
+                      value={product.name}
+                    ></Input>
+                    {errors.name && <Text color={"red"}>{errors.name}</Text>}
+                  </FormControl>
                 </Stack>
 
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
-                  <FormLabel>Description:</FormLabel>
-                  <Textarea
-                    name="description"
-                    onChange={handleChange}
-                    value={product.description}
-                  ></Textarea>
+                  <FormControl isRequired>
+                    <FormLabel>Description:</FormLabel>
+                    <Textarea
+                      name="description"
+                      onChange={handleChange}
+                      value={product.description}
+                    ></Textarea>
+                  </FormControl>
                   {errors.description && (
                     <Text color={"red"}>{errors.description}</Text>
                   )}
                 </Stack>
 
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
-                  <FormLabel>Category:</FormLabel>
-
-                  <Box>
-                    {categories.map((cs, idx) => {
-                      return (
-                        <Checkbox
-                          key={cs._id}
-                          m={".3rem"}
-                          id={cs._id}
-                          value={product.category[idx]}
-                          isChecked={isInProduct(cs._id)}
-                          name={"category"}
-                          onChange={(e) => handleChange(e)}
-                        >
-                          {cs.name}
-                        </Checkbox>
-                      );
-                    })}
-                  </Box>
+                  <FormControl isRequired>
+                    <FormLabel>Category:</FormLabel>
+                    <Box>
+                      {categories.map((cs, idx) => {
+                        return (
+                          <Checkbox
+                            key={cs._id}
+                            m={".3rem"}
+                            id={cs._id}
+                            value={product.category[idx]}
+                            isChecked={isInProduct(cs._id)}
+                            name={"category"}
+                            onChange={(e) => handleChange(e)}
+                          >
+                            {cs.name}
+                          </Checkbox>
+                        );
+                      })}
+                    </Box>
+                  </FormControl>
 
                   {errors.category && (
                     <Text color={"red"}>{errors.category}</Text>
@@ -274,53 +279,59 @@ export default function ProductForm({ id }) {
                   columns={3}
                   spacing={6}
                 >
-                
                   <Stack>
-                    <FormLabel>Price:</FormLabel>
-                    <Input
-                      name="price"
-                      onChange={handleChange}
-                      type={"number"}
-                      value={product.price}
-                    ></Input>
+                    <FormControl isRequired>
+                      <FormLabel>Price:</FormLabel>
+                      <Input
+                        name="price"
+                        onChange={handleChange}
+                        type={"number"}
+                        value={product.price}
+                      ></Input>
+                    </FormControl>
+
                     {errors.price && <Text color={"red"}>{errors.price}</Text>}
                   </Stack>
                   <Stack>
-                    <FormLabel>Stock:</FormLabel>
-                    <Input
-                      name="stock"
-                      onChange={handleChange}
-                      type={"number"}
-                      value={product.stock}
-                    ></Input>
-                    {errors.stock && <Text color={"red"}>{errors.stock}</Text>}
+                    <FormControl>
+                      <FormLabel>Stock:</FormLabel>
+                      <Input
+                        name="stock"
+                        onChange={handleChange}
+                        type={"number"}
+                        value={product.stock}
+                      ></Input>
+                    </FormControl>
                   </Stack>
                 </SimpleGrid>
                 <Stack bgColor={"white"} boxShadow="xl" p={"1rem"}>
-                  <FormLabel>Image:</FormLabel>
-                  <Flex>
-                    <Input
-                      type="file"
-                      onChange={previewFile}
-                      border={"none"}
-                    ></Input>
+                  <FormControl isRequired>
+                    <FormLabel>Image:</FormLabel>
+                    <Flex>
+                      <Input
+                        type="file"
+                        onChange={previewFile}
+                        border={"none"}
+                      ></Input>
 
-                    <Button
-                      bgColor={"#1884BE"}
-                      borderRadius={"none"}
-                      boxShadow="xl"
-                      color={"white"}
-                      fontSize={"1rem"}
-                      onClick={cloudinaryUpload}
-                      isDisabled={imgSrc? false : true}
-                      _hover={{
-                        background: "white",
-                        color: "#1884BE",
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </Flex>
+                      <Button
+                        bgColor={"#1884BE"}
+                        borderRadius={"none"}
+                        boxShadow="xl"
+                        color={"white"}
+                        fontSize={"1rem"}
+                        onClick={cloudinaryUpload}
+                        isDisabled={imgSrc ? false : true}
+                        _hover={{
+                          background: "white",
+                          color: "#1884BE",
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </Flex>
+                  </FormControl>
+
                   {errors.image && <Text color={"red"}>{errors.image}</Text>}
                 </Stack>
                 <Button

@@ -6,5 +6,11 @@ const validateId = [
     validateResult(req, res, next);
   },
 ];
+const validateUserRoleUpdate = [
+  check("role").exists().notEmpty(),
+(req, res, next) => {
+  validateResult(req, res, next);
+},
+];
 
-module.exports = { validateId };
+module.exports = { validateId, validateUserRoleUpdate };

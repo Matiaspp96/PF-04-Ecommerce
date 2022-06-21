@@ -12,6 +12,8 @@ import CardItem from '../Card/CardItem'
 import Swal from 'sweetalert2';
 import formValidate from './formValidations';
 import { AiOutlinePhone } from 'react-icons/ai';
+import router from 'next/router';
+import { deleteAllCart } from '../../redux/actions/cart';
 
 const CheckoutForm = () => {
   const itemsCart = useSelector(state=> state.shoppingCartReducer.itemsCart);
@@ -21,6 +23,10 @@ const CheckoutForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [user, setUser] = useState('');
+  //se agrega la propiedad quantity a product
+  itemsCart.forEach(element => {
+    element.product.quantity = element.quantity;
+  });
   const productsCart = itemsCart?.map((item) => item.product);
   let itemsMP = itemsCart?.map((item) => typeof item === 'object' ? {description:item.product.name, unit_price:item.product.price, quantity:item.quantity } : null);
   const [buyerMP, setBuyerMP] = useState();
@@ -35,7 +41,8 @@ const CheckoutForm = () => {
 
         if(localStorage.getItem('userInfo')){
           localUser = JSON.parse(localStorage.getItem('userInfo'));
-        }
+        };
+       
         setUser(localUser)
         setEmail(localUser.email)
         setBuyer({
@@ -67,15 +74,17 @@ const CheckoutForm = () => {
     
   const getTotalPrice = itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
 
-
+  
   function handleChange(event){
     setBuyer(buyer => {
+      let dateNew = new Date().toLocaleDateString() + " " + new Date().toTimeString().slice(0,8)
         let newBuyer={
             ...buyer,
             users: {email: email},
             [event.target.name]: event.target.value,
             cost: getTotalPrice,
-            quantity: numberItems, 
+            quantity: numberItems,
+            date: dateNew,
         };
         console.log(newBuyer)
         return newBuyer;
@@ -147,6 +156,8 @@ const CheckoutForm = () => {
           idOrder: response.data._id
           }
         return newBuyerMP})
+        buyerMP.idOrder = response.data._id;
+    
         Swal.fire({
           title: 'Order created',
           text: 'We transfer you to the payment✔️',
@@ -154,7 +165,8 @@ const CheckoutForm = () => {
           confirmButtonText: 'Accept'
         })
         let responsePayment = await axios.post(`${BASEURL}/payments/checkoutmp`, buyerMP, configAxios)
-        console.log(responsePayment)
+        dispatch(deleteAllCart())
+        router.push(responsePayment.data.preference.body.sandbox_init_point)
       } else {
         Swal.fire({
           title: 'Complete all required fields',
@@ -261,8 +273,8 @@ const CheckoutForm = () => {
               </InputGroup>
               {error.zip ? <FormHelperText color='red.400'>{error.zip}</FormHelperText> : null}
               </FormControl>
-              <FormControl>
-                  <FormLabel>Phone (optional)</FormLabel>
+              <FormControl isRequired>
+                  <FormLabel>Phone</FormLabel>
                   <InputGroup>
                   <InputLeftElement pointerEvents='none'><AiOutlinePhone color='gray.300' /></InputLeftElement>
                   <Input placeholder='Phone...' id='phone' name='phone' value={buyer.phone} onChange={e => handleChange(e)} type='num' autoComplete='off'/>
