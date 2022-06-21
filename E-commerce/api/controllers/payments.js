@@ -110,7 +110,7 @@ const pendingPay = async (req, res) => {
             email:order.buyer.email,
         };
           //enviar email DE PENDIENTE
-        await transporter.sendMail(emailOrderPending(user, order));
+         await transporter.sendMail(emailOrderPending(user, order));
          return res.redirect(process.env.HOST_CLIENT);
     }catch (e){
         handleHttpError(res, e);   
@@ -122,17 +122,21 @@ const failurePay = async (req, res) => {
   try {
     const order = await orderModel.findOne({
       paymentId: req.query.preference_id,
-    });
+    }).populate('buyer');
     order.statusPay = req.query.status;
     order.payment = req.query.payment_type;
     order.statusPurchase = "payment not received";
     await order.save();
+    const user = {
+      name:order.buyer.name,
+      email:order.buyer.email,
+  };
+   //redirigir al usuario a la pagina de usuarios/ordenes
+   await transporter.sendMail(emailOrderFailure(user, order));
+   return res.redirect(process.env.HOST_CLIENT);
   } catch (e) {
     handleHttpError(res, e);
   }
-
-  //redirigir al usuario a la pagina de usuarios/ordenes
-  return res.redirect(process.env.HOST_CLIENT);
 };
 const statusPay = async (req, res) => {
   //en construccion

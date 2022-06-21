@@ -74,16 +74,17 @@ const CheckoutForm = () => {
     
   const getTotalPrice = itemsCart?.reduce((acc,item) => acc + item.totalPrice, 0).toFixed(2) 
 
-
+  
   function handleChange(event){
     setBuyer(buyer => {
+      let dateNew = new Date().toLocaleDateString() + " " + new Date().toTimeString().slice(0,8)
         let newBuyer={
             ...buyer,
             users: {email: email},
             [event.target.name]: event.target.value,
             cost: getTotalPrice,
             quantity: numberItems,
-            date: new Date().toUTCString()
+            date: dateNew,
         };
         console.log(newBuyer)
         return newBuyer;
@@ -272,8 +273,8 @@ const CheckoutForm = () => {
               </InputGroup>
               {error.zip ? <FormHelperText color='red.400'>{error.zip}</FormHelperText> : null}
               </FormControl>
-              <FormControl>
-                  <FormLabel>Phone (optional)</FormLabel>
+              <FormControl isRequired>
+                  <FormLabel>Phone</FormLabel>
                   <InputGroup>
                   <InputLeftElement pointerEvents='none'><AiOutlinePhone color='gray.300' /></InputLeftElement>
                   <Input placeholder='Phone...' id='phone' name='phone' value={buyer.phone} onChange={e => handleChange(e)} type='num' autoComplete='off'/>

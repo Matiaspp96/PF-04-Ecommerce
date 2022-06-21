@@ -15,7 +15,6 @@ import {
 
 import { FaLinkedin, FaTwitter, FaInstagram, FaFacebook} from 'react-icons/fa'
 import { useState } from 'react'
-import Map from '../Maps/Map'
 import {useRouter} from 'next/router'
 
 
@@ -26,32 +25,21 @@ export default function Footer (){
   // const [map, setMap] = useState("Mendoza")
   return (
     
-    <Container as="footer" role="contentinfo" maxW='60%'>
+    <Flex as="footer" role="contentinfo" maxW='60%' alignItems='center' direction={{base: 'column'}} justifyContent='center'>
     <Stack
       spacing="8"
       direction={{ base: 'column', md: 'row' }}
       justify="space-between"
       py={{ base: '12', md: '16' }}
     >
-      <Flex spacing={{ base: '6', md: '8' }} align="start">
-        <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
-      </Flex>
-      <Stack
-        direction={{ base: 'column-reverse', md: 'column', lg: 'row' }}
-        spacing={{ base: '12', md: '8' }}
+      <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
+      <Flex 
+        as='footer2'
+        direction={{ base: 'row', md: 'row', lg: 'row' }}
+        spacing={{ base: '4', md: '8' }}
+        justifyContent='center'
       >
-        <Stack direction="row" wrap='wrap' alignItems='center' spacing="8">
-          <Stack spacing="4" minW="36" flex="1">
-            <Text fontSize="sm" fontWeight="semibold" color="subtle">
-              Product
-            </Text>
-            <Stack spacing="3" shouldWrapChildren>
-              <Button variant="link">options1</Button>
-              <Button variant="link">options2</Button>
-              <Button variant="link">options3</Button>
-            </Stack>
-          </Stack>
-          <Stack spacing="4" minW="36">
+        <Flex direction={{base: 'column'}} wrap='wrap' alignItems='center' spacing="8" minW="36">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
               Legal
             </Text>
@@ -60,20 +48,19 @@ export default function Footer (){
               <Button variant="link">Terms</Button>
               <Button variant="link">License</Button>
             </Stack>
-          </Stack>
-        </Stack>
-        <Stack spacing="4">
-          <Text fontSize="sm" fontWeight="semibold" color="subtle">
-            Stay up to date
+        </Flex>
+        <Flex spacing="4" direction={{base: 'column'}} wrap='wrap' alignItems='center' minW="36" justifyContent={'flex-start'}>
+          <Text fontSize="sm" fontWeight="semibold" color="subtle" alignItems="center">
+               Up to date
           </Text>
-          <Stack spacing="4" direction={{ base: 'column', sm: 'row' }} maxW={{ lg: '360px' }}>
+          <Flex spacing="4" direction={{base: 'column'}} wrap='wrap' alignItems='center' minW="36">
             <Input placeholder="Enter your email" type="email" required />
             <Button variant="primary" type="submit" flexShrink={0}>
               Subscribe
             </Button>
-          </Stack>
-        </Stack>
-      </Stack>
+          </Flex>
+        </Flex>
+      </Flex>
     </Stack>
     <Divider />
     <Stack
@@ -95,7 +82,6 @@ export default function Footer (){
         <IconButton as="a" href="#" aria-label="Facebook" icon={<FaFacebook fontSize="1.25rem" />} />
       </ButtonGroup>
     </Stack>
-      {router.pathname === '/' ? <Map /> : null}   
-    </Container>
+    </Flex>
   )
 }
