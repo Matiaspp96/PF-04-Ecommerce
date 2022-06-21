@@ -17,6 +17,7 @@ export const HOSTURL = process.env.NODE_ENV === 'development' ? 'http://localhos
 // export const BASEURL = `${process.env.API_URL}/api`;
 
 export const getAllProducts = () => async (dispatch) => {
+  console.log(BASEURL)
   // config de axios, enviar headers con token tomado desde localstorage. 
   //  USAR EN RUTAS PROTEGIDAS 
   //  const localUser = localStorage.getItem(

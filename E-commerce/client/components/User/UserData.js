@@ -8,6 +8,10 @@ import { BASEURL } from "../../redux/actions/products";
 
 const urlUserData = `${BASEURL}/auth/data`;
 
+export async function getStaticProps(){
+  
+}
+
 const Data = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({
