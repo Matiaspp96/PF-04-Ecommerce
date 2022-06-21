@@ -13,7 +13,8 @@ import {
   Text,
   Box,
   Image,
-  Flex
+  Flex,
+  Container
 } from '@chakra-ui/react'
 import { FaEdit} from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
@@ -98,19 +99,21 @@ export default function MenuHistory() {
                 return(
                   <Tr key={order._id}>
                     <Td p={1} textAlign={"center"}>
-                      <Td p={1} >
+                      <Td p={1} alignItems={"center"} >
                         {order.products.map(ps=> {
                           return (
                           <Flex 
-                            flexDirection={'row'}
+                            flexDirection={'column'}
                             alignItems='center'
-                            width={'10vw'}
+                            width={{base:'30vw',md:'15vw',lg:'15vw'}}
                             hover={{
                               cursor: 'pointer'
                             }}
                             onClick= { () => router.push(`/product/${ps._id}`)} key={ps.name}>
                               <Image src={ps.image} boxSize={"50px"} alt={ps.name} />
-                              <Text>{ps.name} </Text>
+                              <Link href={`/product/${ps._id}`}>
+                                  {ps.name.substring(0,10)}
+                              </Link>
                           </Flex>
                           )
                           })}
@@ -119,7 +122,7 @@ export default function MenuHistory() {
                     <Td p={1} textAlign={"center"}>{order.date}</Td>
                     <Td p={1} textAlign={"center"}>{order.statusPay}</Td>
                     <Td p={1} textAlign={"center"}>
-                      {order.products.map(ps=>{return <Text mt={'1.5rem'} mb={'1.5rem'} key={ps.name}>{ps.quantity}</Text>})}
+                      {order.products.map(ps=>{return <Text p={'1.5rem 0'} key={ps.name}>{ps.quantity}</Text>})}
                       </Td>
                     <Td p={1} textAlign={"center"}>${order.cost}</Td>
                   </Tr>

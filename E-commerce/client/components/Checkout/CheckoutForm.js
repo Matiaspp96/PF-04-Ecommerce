@@ -287,16 +287,17 @@ const CheckoutForm = () => {
           </Flex>
           <Stack zIndex='1' boxShadow='lg' bgColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} w={['100%','30%']} mt={{base:'5em', md:'0'}} p='1.5rem' borderRadius='15px'>
               <Center>
-              <Heading as='h4' size='md' >Your Order: {numberItems} Items</Heading>
+              <Heading as='h4' size='md' >Your Order: {itemsCart.length} Items</Heading>
               </Center>
           <Grid justifyItems='center' gap='0.5rem'>
           { itemsCart?.map(ps=>{ return (
-                  <CardItem key={ps.product._id} producto={ps.product} quantity={ps.quantity}></CardItem>
-              
-                  )})
+            <CardItem key={ps.product._id} producto={ps.product} quantity={ps.quantity}></CardItem>
+            
+            )})
           }
           </Grid>
           <Text fontWeight='bold'>Total: ${getTotalPrice}</Text>
+          <Text size='md' >Quantity Products: {numberItems} products</Text>
           <InputGroup flexDir='column' flexWrap='wrap'>
               <TagLabel>Gift card or discount code</TagLabel>
               <Flex flexDir='row'>

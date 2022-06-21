@@ -1,4 +1,4 @@
-import { Flex, Image, Text, Stack, Box } from "@chakra-ui/react";
+import { Flex, Image, Text, Stack, Box, Tag } from "@chakra-ui/react";
 import Link from 'next/link';
 import { IoStarSharp } from 'react-icons/io5'
 import { useRouter } from 'next/router'
@@ -21,8 +21,10 @@ export default function CardItem({ producto, quantity }) {
         <Link href={`/product/${_id}`}>
                 {name.substring(0,10)}
         </Link>
-        <Text >Quantity:</Text><Text color={'#1884BE'}>{quantity}</Text>
-        <Text color={'#1884BE'}>${quantity * price}</Text>
+        <Flex flexDir='column'>
+        <Text >Quantity<Text color={'#1884BE'}>{quantity}</Text></Text>
+        <Text >Subtotal<Text color={'#1884BE'}>${quantity * price}</Text></Text>
+        </Flex>
     </Flex>
     )
 }

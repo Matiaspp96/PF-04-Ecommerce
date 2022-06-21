@@ -111,7 +111,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   return (
       <Flex
         flexDir='column'
-        h={{base: router.route === '/cart' || router.route === '/favorites' ? '65vh' : '43vh', md:'290', lg: router.route === '/cart' ? '420' : '365'}} 
+        h={{base: router.route === '/cart' || router.route === '/favorites' ? '65vh' : '43vh', md:'290', lg: router.route === '/cart' ? '430' : '365'}} 
         w={{base: router.route === '/cart' || router.route === '/favorites' ? '90vw' : '45vw', md:'22.5vw', lg:'95%'}}
         maxW={{base: router.route === '/cart' || router.route === '/favorites' ? '90vw' : '45vw', md:'auto'}}
         overflow='auto'
@@ -141,7 +141,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
               src={image} 
               alt={name} 
               backgroundSize='cover'
-              boxSize={{base: router.route === '/cart' ? '40vh' : '20vh', md:'100px', lg: router.route === '/cart' ? '275' :'190px'}}
+              boxSize={{base: router.route === '/cart' ? '40vh' : '20vh', md:'100px', lg: router.route === '/cart' ? '250' :'190px'}}
               alignItems='center'/>
           </Center>
 

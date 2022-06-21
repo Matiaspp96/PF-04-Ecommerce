@@ -107,6 +107,7 @@ export default function shoppingCartReducer(state = initialState, action) {
         itemsCart
       }
     case DELETE_ALL_CART:
+      cookie.remove('cart')
       return {
         ...state,
         itemsCart: []

@@ -46,12 +46,13 @@ const Checkout = () => {
         font-size= '24px'
         onClick={e => handleAddOrder(e)}
         >PURCHARSE</Button>
-        <Text >Your Cart: {numberItems} Items</Text>
+        <Text>Your Cart: {productsCart.length} Items</Text>
+        <Text>Quantity Products: {numberItems}</Text>
         <Text fontWeight='bold'>Total: ${getTotalPrice()}</Text>
         <InputGroup flexDir='column' flexWrap='wrap'>
             <TagLabel>Gift card or discount code</TagLabel>
             <Flex flexDir='row'>
-            <Input w={{base:'90%', md:'90%' }} placeholder='Card...'></Input>
+            <Input w={{base:'90%', md:'90%' }} placeholder='Code or Gift...'></Input>
             <Button><IoGiftOutline /></Button>
             </Flex>
         </InputGroup>        
