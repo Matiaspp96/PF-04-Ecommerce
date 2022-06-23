@@ -7,4 +7,4 @@ import DogBl from './Bulldog Hooded Sweater Blue.webp'
 import DogP from './Bulldog Hooded Sweater Pink.webp'
 import DogR from './Bulldog Hooded Sweater Rojo.webp'
 
-export default [CatLB, DogBl, CatB, DogB, CatG, DogP, CatR, DogR, CatLB, DogBl, CatB, DogB, CatG, DogP, CatR, DogR]
+export default [CatLB, DogBl, CatB, DogB, CatG, DogP, CatR, DogR]
