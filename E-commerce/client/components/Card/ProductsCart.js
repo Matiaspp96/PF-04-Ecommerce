@@ -51,7 +51,7 @@ export default function ProductCart() {
         margin={{base: '.5em', md:'1em 0em', lg:'2em 0em'}} height='auto'
         >
         <Grid templateColumns={{ base: '1fr', sm: '1fr', md:'repeat(3, 1fr)', lg:'repeat(3, 1fr)' }}
-        gap={5} >
+        gap={5} justifyItems='center' >
         {
           productsCart?.map(ps=>{ return (
             <Card key={ps.product._id} producto={ps.product} quantity={ps.quantity} cart={cart} setCart={setCart}></Card>

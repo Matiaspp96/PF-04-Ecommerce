@@ -1,6 +1,8 @@
-import { Text, Flex, Stack, Image, IconButton, useBoolean, Tag, Center, Input, Button, Box, useColorMode } from '@chakra-ui/react'
+import { Text, Flex, Stack, IconButton, useBoolean, Tag, Center, Input, Button, Box, useColorMode, InputGroup, NumberInput, NumberInputField, NumberIncrementStepper, NumberDecrementStepper, NumberInputStepper } from '@chakra-ui/react'
 import { IoCart, IoCartOutline, IoHeart, IoHeartOutline, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
+import Image from 'next/image'
 import { addItemToCart, addItemToCartInput, deleteItemOfCart, getItemsCart, getTotalItems, getTotalPrice, removeItemOfCart } from '../../redux/actions/cart';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
 import { handleAddToCartOrFav, handleRemoveFromCart, handleRemoveFromFav } from '../../utils/handles';
@@ -18,7 +20,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
   const [removeFavorite, setRemoveFavorite] = useBoolean()
   const [addCart, setAddCart] = useBoolean()
   const [removeCart, setRemoveCart] = useBoolean()
-  const { name, price, category, image, _id, rating } = producto;
+  const { name, price, category, image, _id, rating, stock } = producto;
   const router = useRouter();
   const { colorMode } = useColorMode();
 
@@ -27,9 +29,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
   
   useEffect(()=>{
     dispatch(getItemsCart())
+    console.log(productsCart)
   }, [dispatch])
   
-
   const categories = useSelector((state) => state.categoriesReducer.categories);
 
   const getCategoryName = (id)=>{
@@ -42,10 +44,10 @@ export default function Card({ producto, quantity, cart, setCart }) {
     return cat
   }
 
-  // useEffect(() => {
-  //   dispatch(getAllCategories());
-  // }
-  // , [dispatch]);
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }
+  , [dispatch]);
 
   /*-------- Total Price ---------*/
   const getTotalPrice = (cart) => {
@@ -54,13 +56,15 @@ export default function Card({ producto, quantity, cart, setCart }) {
 
   /*-------- Input quantity ---------*/
   const handleInputProducts = async (e, product) => {
-    e.preventDefault()
-    setInput(e.target.value)
-    setProduct({...product, quantity: Number(e.target.value)})
+    console.log(e, product)
+    if(Number(e.target.value) < stock + 1){
+      setInput(e.target.value)
+      setProduct({...product, quantity: Number(e.target.value)})
+    }
   }
   
   const handleKeyDown = (event) => { 
-    if(event.key === "Enter"){             
+    if(event.key === "Enter"){    
       event.preventDefault();         
       handleAddCartOnInput(event, product)
     }    
@@ -73,9 +77,9 @@ export default function Card({ producto, quantity, cart, setCart }) {
   }
 
   function handleAddCartOnClick(e, product){
-    dispatch(addItemToCart(handleAddToCartOrFav(e, product)))
-    dispatch(getTotalItems())
-    setAddCart.on()
+      dispatch(addItemToCart(handleAddToCartOrFav(e, product)))
+      dispatch(getTotalItems())
+      setAddCart.on()
   }
 
   function handleAddFavOnClick(e, producto){
@@ -110,12 +114,14 @@ export default function Card({ producto, quantity, cart, setCart }) {
 
   return (
       <Flex
+        as={motion.div}
         flexDir='column'
-        h={{base: router.route === '/cart' || router.route === '/favorites' ? '65vh' : '43vh', md:'290', lg: router.route === '/cart' ? '430' : '365'}} 
-        w={{base: router.route === '/cart' || router.route === '/favorites' ? '90vw' : '45vw', md:'22.5vw', lg:'95%'}}
+        h={{base: router.route === '/cart' || router.route === '/favorites' ? '58vh' : '46vh', md:'290', lg: router.route === '/cart' ? '430' : '365'}} 
+        w={{base: router.route === '/cart' || router.route === '/favorites' ? '85vw' : '45vw', md:'22.5vw', lg:'100%'}}
         maxW={{base: router.route === '/cart' || router.route === '/favorites' ? '90vw' : '45vw', md:'auto'}}
         overflow='auto'
         borderBottomRadius='15px'
+        whileHover={{ scale: 1.1 }}
         >
         {<Tag
           borderRadius={'none'}
@@ -137,12 +143,16 @@ export default function Card({ producto, quantity, cart, setCart }) {
           justifyContent='space-between'
           alignItems='center'>  
           <Center>
+            {/* <Box pos='relative'
+            zIndex='2' key={Math.random()} minW='fit-content' minH='fit-content' overflow='hidden' borderRadius='20px'>> */}
             <Image 
               src={image} 
               alt={name} 
-              backgroundSize='cover'
-              boxSize={{base: router.route === '/cart' ? '40vh' : '20vh', md:'100px', lg: router.route === '/cart' ? '250' :'190px'}}
+              // backgroundSize='cover'
+              width={ router.route === '/cart' ? '250' : '190'} height={ router.route === '/cart' ? '250' : '190'}
+              // boxSize={{base: router.route === '/cart' ? '40vh' : '20vh', md:'100px', lg: router.route === '/cart' ? '250' :'190px'}}
               alignItems='center'/>
+            {/* </Box> */}
           </Center>
 
           <Flex flexDir='column' pl={'1rem'} pe={'1rem'} w='100%'>
@@ -162,16 +172,25 @@ export default function Card({ producto, quantity, cart, setCart }) {
             </Link>
                 
             <Flex justifyContent={'space-around'} alignItems='center' h='2.5rem' columnGap='0.2em'>
-              <Text fontSize='xl' color={'#1884BE'}>${price}</Text>
+              <Text fontSize='md' color={'#1884BE'}>${price}</Text>
               {cart ?
               <Flex alignItems='center' justifyContent='center'>
-                <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleRemoveCartOnClick(e,product)}>-</Button>
+                {/* <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleRemoveCartOnClick(e,product)}>-</Button>
                 <Input value={input}
                 onKeyDown={e => handleKeyDown(e)} 
                 onChange={e => handleInputProducts(e, product)}
-                w='4rem' h='2rem' borderRadius='5px'
+                w='3.5rem' h='2rem' borderRadius='5px'
                 type='number' display='flex' textAlign='center' placeholder={quantity}></Input> 
-                <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleAddCartOnClick(e,product)}>+</Button>
+                <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleAddCartOnClick(e,product)}>+</Button> */}
+                <InputGroup>
+                  <NumberInput min={1} max={stock}>
+                    <NumberInputField placeholder={quantity} value={input} onChange={e => handleInputProducts(e, product)} onKeyDown={e => handleKeyDown(e)} />
+                    <NumberInputStepper>
+                    <NumberIncrementStepper value={input} onClick={e=> {if(quantity < stock ) {handleAddCartOnClick(e,product)}}} />
+                    <NumberDecrementStepper onClick={e=>handleRemoveCartOnClick(e,product)}/>
+                    </NumberInputStepper>
+                  </NumberInput>
+                </InputGroup>
               </Flex>
               : null}
               <Flex alignItems={'center'}>
@@ -188,12 +207,12 @@ export default function Card({ producto, quantity, cart, setCart }) {
             {cart ?
               <Flex justifyContent={'space-evenly'} width='100%' alignItems='center'>
                 <IconButton 
-                  onClick={e=>handleAddCartOnClick(e,product)}
+                  onClick={e=>{if(quantity < stock ) {handleAddCartOnClick(e,product)}}}
                   backgroundColor='transparent'
                   icon={<IoCart size='2em'/>}
                   color={addCart ? '#1884BE' : 'grey'}
                 />
-                <Text color={'#1884BE'}>{quantity}</Text> 
+                {quantity === stock ? <Text color={'#1884BE'}>{quantity} Max</Text> : <Text color={'#1884BE'}>{quantity}</Text>} 
                 <IconButton 
                   onClick={e=>handleRemoveOnClick(e,product)}
                   backgroundColor='transparent'
