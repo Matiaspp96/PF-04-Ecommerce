@@ -184,7 +184,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleAddCartOnClick(e,product)}>+</Button> */}
                 <InputGroup>
                   <NumberInput min={1} max={stock}>
-                    <NumberInputField placeholder={quantity} value={input} onChange={e => handleInputProducts(e, product)} onKeyDown={e => handleKeyDown(e)} />
+                    <NumberInputField w='6rem' placeholder={quantity} value={input} onChange={e => handleInputProducts(e, product)} onKeyDown={e => handleKeyDown(e)} />
                     <NumberInputStepper>
                     <NumberIncrementStepper value={input} onClick={e=> {if(quantity < stock ) {handleAddCartOnClick(e,product)}}} />
                     <NumberDecrementStepper onClick={e=>handleRemoveCartOnClick(e,product)}/>
