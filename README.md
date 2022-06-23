@@ -14,6 +14,7 @@ https://petelegant.vercel.app
 
 ## Authors
 
+- [@Matias Palomo](https://www.github.com/Matiaspp96)
 - [@Virginia Camuerga](https://www.github.com/K4rmu)
 - [@Cristian Fernandez](https://www.github.com/cristiannok)
 - [@Sebastian Contini](https://www.github.com/sebagdm)
