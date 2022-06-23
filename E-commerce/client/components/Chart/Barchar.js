@@ -85,7 +85,7 @@ const Barchar = () => {
         labels,
       };
     },
-    [totalOrders, labels]
+    [totalOrders]
   );
 
   return (
