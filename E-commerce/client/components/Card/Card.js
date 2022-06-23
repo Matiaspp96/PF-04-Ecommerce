@@ -44,10 +44,10 @@ export default function Card({ producto, quantity, cart, setCart }) {
     return cat
   }
 
-  useEffect(() => {
-    dispatch(getAllCategories());
-  }
-  , [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllCategories());
+  // }
+  // , [dispatch]);
 
   /*-------- Total Price ---------*/
   const getTotalPrice = (cart) => {

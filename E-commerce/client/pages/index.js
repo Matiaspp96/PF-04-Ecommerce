@@ -36,7 +36,6 @@ export default function Home() {
       <Banner />
       <ProductsTop />
       <Cards />
-      <Map />
       <Footer />
     </Flex>
   );
