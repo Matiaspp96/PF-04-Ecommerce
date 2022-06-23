@@ -14,7 +14,6 @@ import {getAllCategories} from '../../redux/actions/categories';
 
 export default function Card({ producto, quantity, cart, setCart }) {
   const dispatch = useDispatch()
-  const productsCart = useSelector((state)=> state.shoppingCartReducer.itemsCart);
   // const favs = useSelector((state)=> state.favoritesReducer.itemsFav);
   const [addFavorite, setAddFavorite] = useBoolean()
   const [removeFavorite, setRemoveFavorite] = useBoolean()
@@ -29,7 +28,6 @@ export default function Card({ producto, quantity, cart, setCart }) {
   
   useEffect(()=>{
     dispatch(getItemsCart())
-    console.log(productsCart)
   }, [dispatch])
   
   const categories = useSelector((state) => state.categoriesReducer.categories);
@@ -56,7 +54,6 @@ export default function Card({ producto, quantity, cart, setCart }) {
 
   /*-------- Input quantity ---------*/
   const handleInputProducts = async (e, product) => {
-    console.log(e, product)
     if(Number(e.target.value) < stock + 1){
       setInput(e.target.value)
       setProduct({...product, quantity: Number(e.target.value)})
@@ -107,7 +104,6 @@ export default function Card({ producto, quantity, cart, setCart }) {
   }
 
   function handleRemoveToFavOnClick(e, producto){
-    console.log(producto)
     dispatch(deleteItemOfFav(handleRemoveFromFav(producto)))
     setRemoveFavorite.toggle()
   }

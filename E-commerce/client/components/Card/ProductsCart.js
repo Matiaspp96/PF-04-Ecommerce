@@ -24,7 +24,7 @@ export default function ProductCart() {
     setIsLoading(false)
   }
     fetchDataCart()
-  }, [cart,dispatch])
+  }, [cart,dispatch,productsCart])
 
   if(isLoading){
     return (

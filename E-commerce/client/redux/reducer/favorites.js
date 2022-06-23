@@ -3,7 +3,7 @@ import cookie from 'js-cookie'
 import {
     ADD_ITEM_FAVORITES,
     DELETE_ITEM_FAVORITES,
-    GET_ALL_FAV,
+    GET_ALL_FAVORITES,
   } from '../actions/actionstype.js' 
   
   const initialState = {
@@ -33,7 +33,6 @@ import {
           } 
 
       case DELETE_ITEM_FAVORITES:
-        console.log(action.payload, itemsFav)
         let index = itemsFav.findIndex(e => e._id === action.payload)
         let newFav = [...itemsFav];
         if(index >= 0){
@@ -57,8 +56,7 @@ import {
           ...state,
           itemsFav: newFav
         }
-      case GET_ALL_FAV:
-        console.log(itemsFav)
+      case GET_ALL_FAVORITES:
         return {
           ...state,
           itemsFav

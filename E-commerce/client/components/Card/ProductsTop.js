@@ -42,7 +42,7 @@ export default function Cards() {
     useEffect(()=>{
       // setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth + 470)
       setWidth(2220)
-  })
+  },[])
 
 
     const scroll = keyframes`

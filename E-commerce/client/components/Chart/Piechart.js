@@ -72,7 +72,7 @@ const Piechart = () => {
         labels,
       };
     },
-    [products]
+    [products, id, labels]
   );
 
   return (

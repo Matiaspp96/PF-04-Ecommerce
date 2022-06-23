@@ -141,7 +141,7 @@ const OrderDetail = ({ id }) => {
                     <Flex key={ps._id}>
                       <Stack>
                         <Center>
-                          <Image src={ps.image} maxW={"40%"}></Image>
+                          <Image src={ps.image} maxW={"40%"} alt={ps.name}></Image>
                         </Center>
 
                         <Text textAlign={"center"}>{ps.name}</Text>
