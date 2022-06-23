@@ -180,7 +180,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <Button alignItems='center' w='2rem' h='2rem' display='flex' onClick={e=>handleAddCartOnClick(e,product)}>+</Button> */}
                 <InputGroup>
                   <NumberInput min={1} max={stock}>
-                    <NumberInputField w='6rem' placeholder={quantity} value={input} onChange={e => handleInputProducts(e, product)} onKeyDown={e => handleKeyDown(e)} />
+                    <NumberInputField w='6rem' bgColor='whiteAlpha.900' placeholder={quantity} value={input} onChange={e => handleInputProducts(e, product)} onKeyDown={e => handleKeyDown(e)} />
                     <NumberInputStepper>
                     <NumberIncrementStepper value={input} onClick={e=> {if(quantity < stock ) {handleAddCartOnClick(e,product)}}} />
                     <NumberDecrementStepper onClick={e=>handleRemoveCartOnClick(e,product)}/>
@@ -205,6 +205,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <IconButton 
                   onClick={e=>{if(quantity < stock ) {handleAddCartOnClick(e,product)}}}
                   backgroundColor='transparent'
+                  aria-label='add to cart'
                   icon={<IoCart size='2em'/>}
                   color={addCart ? '#1884BE' : 'grey'}
                 />
@@ -212,6 +213,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <IconButton 
                   onClick={e=>handleRemoveOnClick(e,product)}
                   backgroundColor='transparent'
+                  aria-label='trash to cart'
                   icon={<IoTrashOutline size='2em'/>}
                   color={removeCart ? '#1884BE' : 'grey'}
                 /> 
@@ -221,6 +223,7 @@ export default function Card({ producto, quantity, cart, setCart }) {
                 <IconButton 
                   onClick={e=>{handleAddCartOnClick(e,product)}}
                   backgroundColor='transparent'
+                  aria-label='add to cart'
                   icon={addCart ? <IoCart size='2em'/> : <IoCartOutline size='2em'/>}
                   color={addCart ? '#1884BE' : 'grey'}
                 />
@@ -228,12 +231,14 @@ export default function Card({ producto, quantity, cart, setCart }) {
                   <IconButton 
                   onClick={e=>handleRemoveToFavOnClick(e,product)}
                   backgroundColor='transparent'
+                  aria-label='remove from favorites'
                   icon={<IoTrashOutline size='2em'/>}
                   color={removeFavorite ? '#1884BE' : 'grey'}
                   /> 
                   : <IconButton 
                   onClick={e=>handleAddFavOnClick(e,product)}
                   backgroundColor='transparent'
+                  aria-label='add to favorites'
                   icon={addFavorite ? <IoHeart size='2em'/> : <IoHeartOutline size='2em'/>}
                   color={addFavorite ? '#1884BE' : 'grey'}
                   />
