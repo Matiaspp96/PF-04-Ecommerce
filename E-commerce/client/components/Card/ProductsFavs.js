@@ -18,7 +18,7 @@ export default function Cards() {
     setIsLoading(false)
   }
     fetchData()
-  }, [favorites, dispatch, isLoading])
+  }, [productsFavs, dispatch, isLoading])
 
 
   if(isLoading){

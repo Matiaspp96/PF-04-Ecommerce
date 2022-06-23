@@ -41,8 +41,8 @@ export default function Cards() {
 
     useEffect(()=>{
       // setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth + 470)
-      setWidth(2220)
-  })
+      setWidth(2200)
+  },[])
 
 
     const scroll = keyframes`
@@ -84,8 +84,9 @@ export default function Cards() {
       bgColor='#aadae3'
       bgGradient={colorMode === 'light' ? 'linear-gradient(to-t, #b2e1e3 40%, #51ACAD 170%)' : 'linear-gradient(to-t, #02192e 40%, #51ACAD 170%)'}
       w='100%'
-      as={motion.div} initial={{x: '-30%', opacity:0, scale: 0.5}}
+      as={motion.div} initial={{opacity: 0, scale: 0.5}}
       animate={{x: 0, opacity:1, scale: 1}} 
+      transition={{type: 'spring' , duration: 1, bounce: 0.3}}
       overflow='hidden'
       borderRadius='20px'
       boxShadow={colorMode === 'light' ? '5px 10px 8px #888888' : 'none'}
@@ -115,7 +116,7 @@ export default function Cards() {
         {
           top?.map(ps=>{ return (
             <Box pos='relative' 
-            zIndex='2' key={ps._id} minW='fit-content' minH='fit-content' overflow='hidden' pb='5rem'>
+            zIndex='2' key={ps._id} pb='5rem'>
               <Card key={ps._id} producto={ps}></Card>
             </Box>
             )})

@@ -15,6 +15,7 @@ import {
 
 import { FaLinkedin, FaTwitter, FaInstagram, FaFacebook} from 'react-icons/fa'
 import { useState } from 'react'
+import NextLink from 'next/link'
 import {useRouter} from 'next/router'
 
 
@@ -34,13 +35,16 @@ export default function Footer (){
     >
       <Image src='/Logo.png' alt = 'Logo Ecommerce' width="300px" height="200px"/>
       <Flex 
-        as='footer2'
         direction={{ base: 'row', md: 'row', lg: 'row' }}
         spacing={{ base: '4', md: '8' }}
         justifyContent='center'
+        alignItems='center'
       >
         <Flex direction={{base: 'column'}} wrap='wrap' alignItems='center' spacing="8" minW="36">
-            <Text fontSize="sm" fontWeight="semibold" color="subtle">
+            <NextLink href="/branch">
+                <Button>Sucursales</Button>
+            </NextLink>
+            <Text fontSize="sm" mt='1rem' fontWeight="semibold" color="subtle">
               Legal
             </Text>
             <Stack spacing="3" shouldWrapChildren>

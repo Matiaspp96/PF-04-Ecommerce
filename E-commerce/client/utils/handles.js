@@ -9,7 +9,8 @@ export const handleAddToCartOrFav = (e, item) => {
         image: item.image,
         quantity: item.quantity,
         category: item.category,
-        rating: item.rating
+        rating: item.rating,
+        stock: item.stock
     };
     return product
 }

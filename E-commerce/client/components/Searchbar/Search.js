@@ -53,6 +53,7 @@ const Search = ({ toggle, isOpen }) => {
           borderEndRadius='15px' 
           color='blackAlpha.800'
           bgColor='gray.300'
+          aria-label='search products'
           onClick={(e) => handleSubmit(e)} type='submit'> <IoSearchSharp/>      
         </Button>
       </InputGroup>
