@@ -3,7 +3,7 @@
 
 Trabajo Academico en Henry Bootcamp
 
-El sitio web de Pet Elegant es una Single Page Application (SPA). Tiene un diseño compacto y limpio, es rapidísimo y fácilmente navegable. Dado que su grupo objetivo son personas con amor hacia sus mascotas, que quisieran poner en el centro y como protagonistas a sus perros y gatos, con el cuidado y respeto que ellos se merecen. Por eso, el sitio web busca la satisfacción tanto del Pet Lover como de la mascota.
+El sitio web de Pet Elegant tiene un diseño compacto y limpio, es rapidísimo y fácilmente navegable. Dado que su grupo objetivo son personas con amor hacia sus mascotas, que quisieran poner en el centro y como protagonistas a sus perros y gatos, con el cuidado y respeto que ellos se merecen. Por eso, el sitio web busca la satisfacción tanto del Pet Lover como de la mascota.
 
 
 ## Demo
