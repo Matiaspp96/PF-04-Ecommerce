@@ -10,8 +10,8 @@ const NavBarContainer = ({ children, ...props }) => {
 			h='auto'
 			alignItems='center'
 			justifyItems='center'
-			mr='10px'
-			ml='12px'
+			mr={{ base: '0px', md: '10px' }}
+			ml={{ base: '0px', md: '12px' }}
 			minH={{ base: '40px' }}
 		>
 			{children}

@@ -27,7 +27,9 @@ import { getUserData } from '../../redux/actions/user';
 import Link from 'next/link';
 import { signInValidations } from '../../utils/authValidations';
 import { BASEURL } from '../../redux/actions/products';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectWallet } from './ConnectWallet';
+import { AiOutlineGoogle } from 'react-icons/ai'
 
 const Login = () => {
 	const [errors, setErrors] = useState({});
@@ -119,9 +121,7 @@ const Login = () => {
 				>
 					<Stack spacing={8} mx={'auto'} maxW={'lg'}>
 						<Breadcrumb
-							color={
-								colorMode === 'light' ? 'whiteAlpha.900' : 'blackAlpha.900'
-							}
+							color='blackAlpha.900'
 						>
 							<BreadcrumbItem>
 								<BreadcrumbLink href='/'>Home</BreadcrumbLink>
@@ -151,7 +151,7 @@ const Login = () => {
 						<Box
 							boxShadow='5px 10px 8px #888888'
 							rounded={'lg'}
-							bg={colorMode === 'light' ? 'white' : 'black'}
+							bg={colorMode === 'light' ? 'white' : '#1a202c'}
 							p={8}
 						>
 							<Stack spacing={4}>
@@ -196,18 +196,21 @@ const Login = () => {
 									</Text>
 								</Link>
 
-								<Stack spacing={10} pt={2}>
+								<Stack spacing={5} pt={2}>
 									<Button
 										boxShadow={
 											colorMode === 'light' ? '5px 10px 8px #888888' : 'none'
 										}
-										size='lg'
-										colorScheme={'blue'}
+										bgColor='#3182ce'
+										color='#ffffff'
 										variant={'solid'}
 										onClick={e => {
 											logIn(e);
 										}}
 										isDisabled={Object.keys(errors).length !== 0}
+										_hover={
+											{ transform: 'scale(1.02)' }
+										}
 									>
 										Log in
 									</Button>
@@ -219,10 +222,26 @@ const Login = () => {
 										colorScheme={'blue'}
 										variant={'outline'}
 										onClick={handleGoogleLog}
+										_hover={
+											{ transform: 'scale(1.02)' }
+										}
+										gap='1rem'
 									>
-										Log in with google
+										<AiOutlineGoogle />Log in with google
 									</Button>
-									<ConnectButton />
+									<Box _hover={
+										{
+											// transform: 'scale(1.02)',
+											// transition: 'transform 100ms ease-out'
+										}
+									}>
+										<ConnectWallet />
+									</Box>
+									{/* <Flex justifyContent='center' _hover={
+										{ transform: 'scale(1.02)' }
+									} >
+										<ConnectButton />
+									</Flex> */}
 								</Stack>
 
 								<Flex pt={6} justifyContent={'center'}>
@@ -250,8 +269,8 @@ const Login = () => {
 						src={'/Logo.png'}
 					/>
 				</Flex>
-			</Stack>
-		</SlideFade>
+			</Stack >
+		</SlideFade >
 	);
 };
 

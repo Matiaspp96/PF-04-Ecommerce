@@ -1,16 +1,10 @@
 import {
-	Box,
-	Button,
-	ButtonGroup,
-	Container,
 	Flex,
-	Heading,
-	Spacer,
-	Stack,
-	Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Image from 'next/image'
+import Logo from '../../public/Logo.webp'
 import MenuToggle from '../Menu/MenuToggle';
 import Search from '../Searchbar/Search';
 import NavBarContainer from './NavBarContainer';
@@ -37,16 +31,42 @@ const Navbar = props => {
 			boxShadow='2xl'
 		>
 			<NavBarContainer {...props}>
-				<Link href='/'>Pet Elegant</Link>
-				<Search toggle={toggle} isOpen={isOpen} />
+				<Link href='/'>
+					<Image
+						className='cursor-pointer'
+						src={Logo}
+						alt='Logo'
+						width='70'
+						height='40'
+					/>
+				</Link>
+				<Search />
 				<Flex
-					flexDir={{ base: 'row', md: 'row-reverse' }}
+					display={{ base: 'none', md: 'flex' }}
+					flexDir='row-reverse'
 					alignItems='center'
 					gap='1rem'
 				>
-					<MenuToggle toggle={toggle} isOpen={isOpen} />
 					<MenuProfile />
 					<MenuLinks isOpen={isOpen} />
+				</Flex>
+				<Flex
+					display={{ base: 'flex', md: 'none' }}
+					alignItems='center'
+					columnGap='10px'
+				>
+					<MenuProfile />
+					<MenuToggle toggle={toggle} isOpen={isOpen} />
+				</Flex>
+				<Flex
+					display={{ base: isOpen ? 'flex' : 'none', md: 'none' }}
+					flexDir='column'
+					width='100%'
+					alignItems='center'
+					rowGap={2}
+				>
+					<MenuLinks isOpen={isOpen} />
+					<Search toggle={toggle} isOpen={isOpen} />
 				</Flex>
 			</NavBarContainer>
 		</Flex>

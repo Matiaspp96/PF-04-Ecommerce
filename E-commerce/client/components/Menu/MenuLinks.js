@@ -54,15 +54,17 @@ const MenuLinks = ({ isOpen }) => {
 		<Box
 			display={{ base: isOpen ? 'block' : 'none', md: 'block' }}
 			flexBasis={{ base: '100%', md: 'auto' }}
+			width='100%'
 		>
 			<Flex
 				flexDir='row'
+				width='100%'
 				spacing={4}
 				align='center'
 				gap={{ base: '0.5rem', lg: '1em' }}
 				justify={['space-between', 'space-between', 'flex-end', 'center']}
 				direction={['column', 'row', 'row', 'row']}
-				pt={[4, 4, 0, 0]}
+				pt={[2, 2, 0, 0]}
 			>
 				<NextLink href='/'>
 					<Link display='flex' alignItems='baseline' gap='0.1rem'>

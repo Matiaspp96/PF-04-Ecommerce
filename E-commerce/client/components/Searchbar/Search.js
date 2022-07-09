@@ -1,22 +1,15 @@
 import {
 	Input,
 	InputGroup,
-	InputLeftElement,
-	Spacer,
 	Stack,
-	Text,
 	Button,
-	useColorMode,
-	color,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import { useState } from 'react';
 import { IoSearchSharp } from 'react-icons/io5';
 import { getProductsByName } from '../../redux/actions/products';
 import { useDispatch } from 'react-redux';
 
 const Search = ({ toggle, isOpen }) => {
-	const { colorMode } = useColorMode();
 	const dispatch = useDispatch();
 	const [name, setName] = useState('');
 
@@ -43,10 +36,10 @@ const Search = ({ toggle, isOpen }) => {
 		<Stack
 			spacing={4}
 			width={{ base: '50%', md: '50%' }}
-			ali={{ base: 'center' }}
+			display={{ base: isOpen ? 'flex' : 'none', md: 'flex' }}
 		>
 			<InputGroup
-				display={{ base: isOpen ? 'flex' : 'none', md: 'flex' }}
+				display='flex'
 				ali={{ base: 'center' }}
 			>
 				<Input

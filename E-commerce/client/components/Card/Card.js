@@ -1,14 +1,10 @@
 import {
 	Text,
 	Flex,
-	Stack,
 	IconButton,
 	useBoolean,
 	Tag,
 	Center,
-	Input,
-	Button,
-	Box,
 	useColorMode,
 	InputGroup,
 	NumberInput,
@@ -34,7 +30,6 @@ import {
 	deleteItemOfCart,
 	getItemsCart,
 	getTotalItems,
-	getTotalPrice,
 	removeItemOfCart,
 } from '../../redux/actions/cart';
 import { addItemToFav, deleteItemOfFav } from '../../redux/actions/favorites';
@@ -45,8 +40,7 @@ import {
 } from '../../utils/handles';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import router, { Router, useRouter } from 'next/router';
-import { getAllCategories } from '../../redux/actions/categories';
+import { useRouter } from 'next/router';
 
 export default function Card({ producto, quantity, cart, setCart }) {
 	const dispatch = useDispatch();
