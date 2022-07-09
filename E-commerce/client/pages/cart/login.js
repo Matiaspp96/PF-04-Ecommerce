@@ -1,9 +1,7 @@
-import CartLogin from "../../components/Login/CartLogin";
+import CartLogin from '../../components/Login/CartLogin';
 
 function LoginPage() {
-  return (
-    <CartLogin/>
-  )
+	return <CartLogin />;
 }
 
-export default LoginPage
+export default LoginPage;

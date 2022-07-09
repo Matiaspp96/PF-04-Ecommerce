@@ -1,16 +1,9 @@
-import axios from "axios";
-import Data from "../components/User/UserData";
-import { BASEURL } from "../redux/actions/products";
-import { wrapper } from "../redux/store";
+import Data from '../components/User/UserData';
 
 function userDataGoogle() {
+	// console.log(getUser)
 
-
-  // console.log(getUser)
-
-  return (
-    <Data />
-  )
+	return <Data />;
 }
 
 // export const getServerSideProps = wrapper.getServerSideProps(
@@ -47,4 +40,4 @@ function userDataGoogle() {
 //     }
 // );
 
-export default userDataGoogle
+export default userDataGoogle;

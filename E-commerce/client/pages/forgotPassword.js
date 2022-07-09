@@ -1,9 +1,7 @@
-import Reset from "../components/Login/Reset"
+import Reset from '../components/Login/Reset';
 
 const forgotPassword = () => {
-  return (
-    <Reset/>
-  )
-}
+	return <Reset />;
+};
 
-export default forgotPassword
+export default forgotPassword;

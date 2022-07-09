@@ -1,7 +1,7 @@
-import Token from "../../components/Login/Token";
+import Token from '../../components/Login/Token';
 
 const newPasswordPage = () => {
-  return <Token />;
+	return <Token />;
 };
 
 export default newPasswordPage;
