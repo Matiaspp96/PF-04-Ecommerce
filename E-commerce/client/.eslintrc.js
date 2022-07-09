@@ -24,5 +24,7 @@ module.exports = {
   ],
   rules: {
     'react/prop-types': 'off',
+    "allowImplicit": false,
+    "ignoreRestSiblings": true
   }
 }
