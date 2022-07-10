@@ -67,7 +67,7 @@ export const ConnectWallet = () => {
                                 <div style={{ display: 'flex', gap: 10 }}>
                                     <button
                                         onClick={openChainModal}
-                                        style={{ display: 'flex', alignItems: 'center' }}
+                                        style={{ display: 'flex', alignItems: 'center', width: 'max-content' }}
                                         type="button"
                                     >
                                         {chain.hasIcon && (
